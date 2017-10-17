@@ -22,11 +22,11 @@ import java.util.*;
 public class MpGenerator {
 
     // 项目的绝对路径
-    public static final  String   outPutBaseDir      = "E:/workspaceIDEA/inside/";
+    public static final  String   outPutBaseDir      = "E:/workspaceIDEA/gt_inside_general/inside/";
     // 生成*.java 的文件路径
     public static final  String   outPutJavaModel    = outPutBaseDir + "src/main/java";
     // 需要生成的表----------------------------------------------------------改这里
-    public static final  String[] generatorTableName = new String[] {"t_dev_project"};
+    public static final  String[] generatorTableName = new String[] {"t_user"};
     // 作者
     private static final String   author             = "psr";
     // 去除表前缀 例如：bus_user 填入bus 生成的 user
@@ -49,7 +49,8 @@ public class MpGenerator {
     // 驱动
     public static final  String   driverName         = "com.mysql.jdbc.Driver";
     // url
-    public static final  String   url                = "jdbc:mysql://113.106.202.51:3306/inside?characterEncoding=utf8";
+//    public static final  String   url                = "jdbc:mysql://113.106.202.51:3306/inside?characterEncoding=utf8";
+    public static final  String   url                = "jdbc:mysql://192.168.3.10:3306/inside?characterEncoding=utf8";
     // 数据库用户名
     public static final  String   username           = "root";
     // 密码
