@@ -4,9 +4,13 @@ import Router from 'vue-router'
 import {
   appTvShow
 } from '@/components/app/tvShow/router.js'
-
+const login = ()=> import('@/components/login/login')
 Vue.use(Router)
-var routes = []
+var routes = [{
+  path:'/login',
+  name:'login',
+  component:login
+}]
 // 合并多个路由的数组
 routes = routes.concat(appTvShow)
 
