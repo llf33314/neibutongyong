@@ -1,12 +1,22 @@
 package com.gt.inside.core.service.devproject.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.gt.inside.common.dto.PageDTO;
+import com.gt.inside.common.dto.ResponseDTO;
+import com.gt.inside.common.enums.ResponseEnums;
 import com.gt.inside.core.bean.devproject.DevProjectVO;
+import com.gt.inside.core.bean.devproject.req.DevProjectAddReq;
+import com.gt.inside.core.bean.devproject.req.DevProjectListReq;
+import com.gt.inside.core.bean.devproject.req.DevProjectModifyReq;
+import com.gt.inside.core.bean.devproject.res.DevProjectListRes;
 import com.gt.inside.core.dao.devproject.DevProjectDAO;
 import com.gt.inside.core.entity.devproject.DevProject;
+import com.gt.inside.core.exception.devproject.DevProjectException;
 import com.gt.inside.core.service.devproject.DevProjectService;
 import com.gt.inside.core.util.DateTimeKit;
+import com.gt.inside.core.util.ObjectUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -52,5 +62,63 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectDAO, DevProject
             updateBatchById(updateList);
         }
         return devProjectVOList;
+    }
+
+    /**
+     * 分页获取开发项目
+     *
+     * @param devProjectListReq
+     * @return
+     * @exception DevProjectException
+     */
+    @Override
+    public ResponseDTO<List<DevProjectListRes>> listDevProjectByPage(DevProjectListReq devProjectListReq) throws DevProjectException {
+        Page<DevProject> page = new Page<>(devProjectListReq.getCurrent(), devProjectListReq.getSize());
+        EntityWrapper<DevProject> entityWrapper = new EntityWrapper<>();
+        if (ObjectUtil.isNotEmpty(devProjectListReq) && ObjectUtil.isNotEmpty(devProjectListReq.getProjectStatus())){
+            entityWrapper.eq("project_status", devProjectListReq.getProjectStatus());
+        }
+        List<DevProject> devProjectList = selectPage(page, entityWrapper).getRecords();
+        List<DevProjectListRes> devProjectListResList = new ArrayList<>();
+        for (DevProject devProject : devProjectList){
+            DevProjectListRes devProjectListRes = new DevProjectListRes();
+            devProjectListRes.setId(devProject.getId());
+            devProjectListRes.setProjectName(devProject.getProjectName());
+            devProjectListRes.setProjectTime(devProject.getProjectTime());
+            devProjectListRes.setProjectStatus(devProject.getProjectStatus());
+            devProjectListResList.add(devProjectListRes);
+        }
+        PageDTO pageDTO = new PageDTO(page.getPages(), page.getTotal());
+        return ResponseDTO.createBySuccessPage("分页获取开发项目成功", devProjectListResList, pageDTO);
+    }
+
+    /**
+     * 新增开发项目
+     *
+     * @param devProjectAddReq
+     * @exception DevProjectException
+     */
+    @Override
+    public void addDevProject(DevProjectAddReq devProjectAddReq) throws DevProjectException {
+        DevProject devProject = new DevProject();
+        devProject.setProjectName(devProjectAddReq.getProjectName());
+        devProject.setProjectTime(devProjectAddReq.getProjectTime());
+        insert(devProject);
+    }
+
+    /**
+     * 编辑开发项目
+     *
+     * @param devProjectModifyReq
+     */
+    @Override
+    public void modifyDevProject(DevProjectModifyReq devProjectModifyReq) {
+        DevProject devProject = selectById(devProjectModifyReq.getId());
+        if (ObjectUtil.isEmpty(devProject)){
+            throw new DevProjectException(ResponseEnums.MODIFYNULL);
+        }
+        devProject.setProjectName(devProjectModifyReq.getProjectName());
+        devProject.setProjectTime(devProjectModifyReq.getProjectTime());
+        updateById(devProject);
     }
 }
