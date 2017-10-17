@@ -1,4 +1,4 @@
-package com.gt.inside.entity;
+package com.gt.inside.core.entity.devproject;
 
 import java.io.Serializable;
 

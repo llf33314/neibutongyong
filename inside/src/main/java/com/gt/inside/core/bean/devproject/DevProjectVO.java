@@ -1,4 +1,4 @@
-package com.gt.inside.bean;
+package com.gt.inside.core.bean.devproject;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package com.gt.inside.util;
+package com.gt.inside.core.util;
 
 import org.springframework.util.StringUtils;
 

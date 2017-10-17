@@ -1,4 +1,4 @@
-package com.gt.inside.exception;
+package com.gt.inside.core.exception.devproject;
 
 import com.gt.inside.common.enums.ResponseEnums;
 import com.gt.inside.common.exception.SystemException;

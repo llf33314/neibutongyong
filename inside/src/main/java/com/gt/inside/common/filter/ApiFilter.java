@@ -1,5 +1,7 @@
 package com.gt.inside.common.filter;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,8 @@ import java.io.IOException;
  */
 public class ApiFilter implements Filter {
 
+    private static Logger logger = Logger.getLogger(ApiFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -21,11 +25,16 @@ public class ApiFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-        String uri = httpServletRequest.getRequestURI();
-        System.out.println(uri);
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Accept, Origin, XRequestedWith, Content-Type, LastModified, tocken");
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
 
-        StringBuffer url = httpServletRequest.getRequestURL();
-        System.out.println(url.toString());
+        servletResponse.setCharacterEncoding("UTF-8");
+        servletResponse.setContentType("application/json; charset=utf-8");
+
+        logger.debug("api filter");
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

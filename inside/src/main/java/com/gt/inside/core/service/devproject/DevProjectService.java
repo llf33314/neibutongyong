@@ -1,7 +1,7 @@
-package com.gt.inside.service;
+package com.gt.inside.core.service.devproject;
 
-import com.gt.inside.bean.DevProjectVO;
-import com.gt.inside.entity.DevProject;
+import com.gt.inside.core.bean.devproject.DevProjectVO;
+import com.gt.inside.core.entity.devproject.DevProject;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
