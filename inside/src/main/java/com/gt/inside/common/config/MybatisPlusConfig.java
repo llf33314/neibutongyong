@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author psr
  * @create 2017/6/20
  */
-@MapperScan( "com.gt.inside.dao" )
+@MapperScan( "com.gt.inside.core.dao" )
 @Configuration
 public class MybatisPlusConfig {
     /**

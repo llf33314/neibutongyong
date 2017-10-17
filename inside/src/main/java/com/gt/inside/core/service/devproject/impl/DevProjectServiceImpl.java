@@ -1,12 +1,12 @@
-package com.gt.inside.service.impl;
+package com.gt.inside.core.service.devproject.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.gt.inside.bean.DevProjectVO;
-import com.gt.inside.dao.DevProjectDAO;
-import com.gt.inside.entity.DevProject;
-import com.gt.inside.service.DevProjectService;
-import com.gt.inside.util.DateTimeKit;
+import com.gt.inside.core.bean.devproject.DevProjectVO;
+import com.gt.inside.core.dao.devproject.DevProjectDAO;
+import com.gt.inside.core.entity.devproject.DevProject;
+import com.gt.inside.core.service.devproject.DevProjectService;
+import com.gt.inside.core.util.DateTimeKit;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

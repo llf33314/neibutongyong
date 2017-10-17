@@ -1,6 +1,6 @@
-package com.gt.inside.dao;
+package com.gt.inside.core.dao.devproject;
 
-import com.gt.inside.entity.DevProject;
+import com.gt.inside.core.entity.devproject.DevProject;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**

@@ -1,9 +1,9 @@
-package com.gt.inside.controller;
+package com.gt.inside.core.controller.devproject;
 
-import com.gt.inside.bean.DevProjectVO;
+import com.gt.inside.core.bean.devproject.DevProjectVO;
 import com.gt.inside.common.dto.ResponseDTO;
-import com.gt.inside.exception.DevProjectException;
-import com.gt.inside.service.DevProjectService;
+import com.gt.inside.core.exception.devproject.DevProjectException;
+import com.gt.inside.core.service.devproject.DevProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

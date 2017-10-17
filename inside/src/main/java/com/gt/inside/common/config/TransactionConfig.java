@@ -54,7 +54,7 @@ public class TransactionConfig {
     public AspectJExpressionPointcutAdvisor pointcutAdvisor(TransactionInterceptor txInterceptor){
         AspectJExpressionPointcutAdvisor pointcutAdvisor = new AspectJExpressionPointcutAdvisor();
         pointcutAdvisor.setAdvice(txInterceptor);
-        pointcutAdvisor.setExpression("execution (* com.gt.inside.service.*.*(..))");
+        pointcutAdvisor.setExpression("execution (* com.gt.inside.core.service.*.*(..))");
         return pointcutAdvisor;
     }
 
