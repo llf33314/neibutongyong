@@ -3,7 +3,7 @@
     <section class="content">
       <div class="logo-row">
         <div class="logo-cont">
-          <img src="./../../assets/img/logo.png">
+          <img src="./../../../assets/img/logo.png">
         </div>
       </div>
       <h1 class="login-title">多粉天眼系统</h1>
