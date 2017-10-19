@@ -1,4 +1,4 @@
-import axios from './../../../http'
+import axios from './../../../../http'
 
 let base = 'http://192.168.3.98:7075'
 /* 登录请求 */
