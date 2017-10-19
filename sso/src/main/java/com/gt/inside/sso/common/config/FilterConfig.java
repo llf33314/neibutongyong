@@ -1,6 +1,7 @@
 package com.gt.inside.sso.common.config;
 
 import com.gt.inside.sso.common.filter.ApiFilter;
+import com.gt.inside.sso.common.filter.MobileFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +27,23 @@ public class FilterConfig {
     }
 
     @Bean
+    public FilterRegistrationBean mobileFilterRegistration(){
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy();
+        registrationBean.setFilter(delegatingFilterProxy);
+        registrationBean.setFilter(mobileFilter());
+        registrationBean.addUrlPatterns("/m/*"); //这里一定要加通配符  否则只会拦截 hostname/  这样的地址
+        return registrationBean;
+    }
+
+    @Bean
     public Filter apiFilter(){
         return new ApiFilter();
+    }
+
+    @Bean
+    public Filter mobileFilter(){
+        return new MobileFilter();
     }
 
 }

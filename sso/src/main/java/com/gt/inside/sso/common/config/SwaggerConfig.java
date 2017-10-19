@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
     // 扫描包
-	private static final String  BASEPACKAGE         = "com.gt.inside.core.controller";
+	private static final String  BASEPACKAGE         = "com.gt.inside.sso.core.controller";
     // 标题
     private static final String  TITLE               = "Inside API";
     // 描述

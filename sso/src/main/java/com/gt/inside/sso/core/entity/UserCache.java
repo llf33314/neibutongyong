@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 菜单表
+ * 用户缓存表
  * </p>
  *
  * @author psr
@@ -21,8 +21,8 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@TableName("t_menu")
-public class Menu extends Model<Menu> {
+@TableName("t_user_cache")
+public class UserCache extends Model<UserCache> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,26 +32,49 @@ public class Menu extends Model<Menu> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
-     * 菜单名
+     * 用户id
      */
-	private String menuName;
+	private Integer userId;
     /**
-     * 菜单路径
+     * 用户信息
      */
-	private String menuUrl;
+	private String userInfo;
     /**
-     * 菜单图标
+     * 登录时间
      */
-	private String menuIcon;
-    /**
-     * 创建时间
-     */
-	private Date creatTime;
-    /**
-     * 删除标识（0：正常，1：删除）
-     */
-	private Integer deleteFlag;
+	private Date loginTime;
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(String userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public Date getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(Date loginTime) {
+		this.loginTime = loginTime;
+	}
 
 	@Override
 	protected Serializable pkVal() {

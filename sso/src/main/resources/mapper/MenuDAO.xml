@@ -9,11 +9,38 @@
 		<result column="menu_url" property="menuUrl" />
 		<result column="menu_icon" property="menuIcon" />
 		<result column="creat_time" property="creatTime" />
+		<result column="delete_flag" property="deleteFlag" />
+	</resultMap>
+
+	<!-- 菜单DTO查询映射结果 -->
+	<resultMap id="MenuDTOResultMap" type="com.gt.inside.api.dto.MenuDTO">
+		<result column="menu_name" property="menuName" />
+		<result column="menu_url" property="menuUrl" />
+		<result column="menu_icon" property="menuIcon" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, menu_name, menu_url, menu_icon, creat_time
+        id, menu_name, menu_url, menu_icon, creat_time, delete_flag
     </sql>
+
+	<!-- 菜单DTO -->
+	<sql id="MenuDTO_Column_List">
+		menu_name, menu_url, menu_icon
+	</sql>
+
+	<select id="selectListUserRoleMenuDTO" parameterType="java.lang.Integer" resultMap="MenuDTOResultMap">
+		SELECT <include refid="MenuDTO_Column_List"/>
+		FROM t_menu tm, t_user_role tur, t_role tr, t_role_menu trm
+		WHERE tur.role_id = trm.role_id AND tm.id = trm.menu_id AND tr.id = trm.role_id
+		AND tm.delete_flag = 0 AND tr.delete_flag = 0
+		AND tur.user_id = #{userId, jdbcType=INTEGER};
+	</select>
+
+	<select id="selectListAllMenuDTO" parameterType="java.lang.Integer" resultMap="MenuDTOResultMap">
+		SELECT <include refid="MenuDTO_Column_List"/>
+		FROM t_menu tm
+		WHERE tm.delete_flag = 0;
+	</select>
 
 </mapper>

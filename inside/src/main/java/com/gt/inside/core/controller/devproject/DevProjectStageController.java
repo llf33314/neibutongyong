@@ -23,12 +23,12 @@ import java.util.List;
 /**
  * Created by psr on 2017/10/10 0010.
  */
-@Api(value = "/api/dev/project", description = "开发项目后台管理")
+@Api(value = "/app/dev/project", description = "开发项目后台管理")
 @RestController
-@RequestMapping(value = "/api/dev/project")
-public class DevProjectApiController extends BaseController {
+@RequestMapping(value = "/app/dev/project")
+public class DevProjectStageController extends BaseController {
 
-    private static Logger logger = Logger.getLogger(DevProjectApiController.class);
+    private static Logger logger = Logger.getLogger(DevProjectStageController.class);
 
     @Autowired
     DevProjectService devProjectService;

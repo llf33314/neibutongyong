@@ -1,7 +1,10 @@
 package com.gt.inside.sso.core.dao;
 
+import com.gt.inside.api.dto.MenuDTO;
 import com.gt.inside.sso.core.entity.Menu;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface MenuDAO extends BaseMapper<Menu> {
 
+    List<MenuDTO> selectListUserRoleMenuDTO(int userId);
+
+    List<MenuDTO> selectListAllMenuDTO();
 }

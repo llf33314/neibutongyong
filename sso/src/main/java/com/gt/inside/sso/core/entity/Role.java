@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 菜单表
+ * 角色表
  * </p>
  *
  * @author psr
@@ -21,8 +21,8 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@TableName("t_menu")
-public class Menu extends Model<Menu> {
+@TableName("t_role")
+public class Role extends Model<Role> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,21 +32,17 @@ public class Menu extends Model<Menu> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
-     * 菜单名
+     * 角色名
      */
-	private String menuName;
+	private String roleName;
     /**
-     * 菜单路径
+     * 角色权限（0：普通，1：最高权限）
      */
-	private String menuUrl;
-    /**
-     * 菜单图标
-     */
-	private String menuIcon;
+	private Integer rolePower;
     /**
      * 创建时间
      */
-	private Date creatTime;
+	private Date createTime;
     /**
      * 删除标识（0：正常，1：删除）
      */

@@ -10,11 +10,12 @@
 		<result column="user_pwd" property="userPwd" />
 		<result column="user_status" property="userStatus" />
 		<result column="create_time" property="createTime" />
+		<result column="delete_flag" property="deleteFlag" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, login_name, user_name, user_pwd, user_status, create_time
+        id, login_name, user_name, user_pwd, user_status, create_time, delete_flag
     </sql>
 
 </mapper>

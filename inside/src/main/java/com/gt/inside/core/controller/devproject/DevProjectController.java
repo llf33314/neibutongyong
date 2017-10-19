@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * Created by psr on 2017/10/10 0010.
  */
-@Api(value = "/app/dev/project", description = "开发项目")
+@Api(value = "/m/dev/project", description = "开发项目")
 @RestController
-@RequestMapping(value = "/app/dev/project")
+@RequestMapping(value = "/m/dev/project")
 public class DevProjectController {
 
     private static Logger logger = Logger.getLogger(DevProjectController.class);
