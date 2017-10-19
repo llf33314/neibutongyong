@@ -1,4 +1,4 @@
-package com.gt.inside.core.util;
+package com.gt.inside.api.util;
 
 import java.io.File;
 import java.io.FileInputStream;

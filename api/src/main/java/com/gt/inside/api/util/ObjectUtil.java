@@ -1,4 +1,4 @@
-package com.gt.inside.core.util;
+package com.gt.inside.api.util;
 
 /**
  * Created by psr on 2017/10/17 0017.
