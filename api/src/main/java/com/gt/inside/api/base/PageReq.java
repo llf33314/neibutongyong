@@ -1,10 +1,11 @@
-package com.gt.inside.common.base;
+package com.gt.inside.api.base;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
+
 
 /**
  * Created by psr on 2017/8/30 0030.

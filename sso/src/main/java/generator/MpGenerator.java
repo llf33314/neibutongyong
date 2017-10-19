@@ -22,7 +22,7 @@ import java.util.*;
 public class MpGenerator {
 
     // 项目的绝对路径
-    public static final  String   outPutBaseDir      = "E:/workspaceIDEA/gt_inside_general/inside/";
+    public static final  String   outPutBaseDir      = "E:/workspaceIDEA/gt_inside_general/sso/";
     // 生成*.java 的文件路径
     public static final  String   outPutJavaModel    = outPutBaseDir + "src/main/java";
     // 需要生成的表----------------------------------------------------------改这里

@@ -1,8 +1,8 @@
-package com.gt.inside.common.dto;
+package com.gt.inside.api.dto;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.gt.inside.common.enums.ResponseEnums;
+import com.gt.inside.api.enums.ResponseEnums;
 
 import java.io.Serializable;
 

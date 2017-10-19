@@ -1,7 +1,7 @@
 package com.gt.inside.core.controller.user;
 
-import com.gt.inside.common.base.BaseController;
-import com.gt.inside.common.dto.ResponseDTO;
+import com.gt.inside.api.base.BaseController;
+import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.core.bean.user.res.MenuRes;
 import com.gt.inside.core.exception.user.UserException;
 import com.gt.inside.core.service.user.UserService;

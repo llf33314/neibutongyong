@@ -1,6 +1,6 @@
 package com.gt.inside.core.bean.devproject.req;
 
-import com.gt.inside.common.base.PageReq;
+import com.gt.inside.api.base.PageReq;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

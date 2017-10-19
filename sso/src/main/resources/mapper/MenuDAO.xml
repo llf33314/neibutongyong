@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.sso.core.dao.MenuDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.sso.core.entity.Menu">
+		<id column="id" property="id" />
+		<result column="menu_name" property="menuName" />
+		<result column="menu_url" property="menuUrl" />
+		<result column="menu_icon" property="menuIcon" />
+		<result column="creat_time" property="creatTime" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, menu_name, menu_url, menu_icon, creat_time
+    </sql>
+
+</mapper>

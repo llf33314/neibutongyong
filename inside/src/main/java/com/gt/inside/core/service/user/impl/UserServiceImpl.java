@@ -2,7 +2,7 @@ package com.gt.inside.core.service.user.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.gt.inside.common.enums.ResponseEnums;
+import com.gt.inside.api.enums.ResponseEnums;
 import com.gt.inside.core.bean.user.req.LoginReq;
 import com.gt.inside.core.bean.user.res.MenuRes;
 import com.gt.inside.core.dao.user.UserDAO;

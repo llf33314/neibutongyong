@@ -1,8 +1,8 @@
-package com.gt.inside.common.dto;
+package com.gt.inside.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.gt.inside.common.enums.ResponseEnums;
+import com.gt.inside.api.enums.ResponseEnums;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

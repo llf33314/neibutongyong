@@ -1,4 +1,4 @@
-package com.gt.inside.common.dto;
+package com.gt.inside.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

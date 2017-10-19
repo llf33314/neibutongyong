@@ -1,4 +1,4 @@
-package com.gt.inside.common.enums;
+package com.gt.inside.sso.common.enums;
 
 /**
  * 响应成功Code 类

@@ -1,7 +1,8 @@
 package com.gt.inside.core.exception.devproject;
 
-import com.gt.inside.common.enums.ResponseEnums;
-import com.gt.inside.common.exception.SystemException;
+
+import com.gt.inside.api.enums.ResponseEnums;
+import com.gt.inside.api.exception.SystemException;
 
 /**
  * Created by psr on 2017/10/10 0010.

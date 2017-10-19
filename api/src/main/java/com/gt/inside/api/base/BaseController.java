@@ -1,12 +1,10 @@
-package com.gt.inside.common.base;
+package com.gt.inside.api.base;
 
-import com.gt.inside.common.dto.ResponseDTO;
-import com.gt.inside.common.exception.ResponseEntityException;
+import com.gt.inside.api.exception.ResponseEntityException;
 import org.apache.log4j.Logger;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

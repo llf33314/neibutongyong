@@ -1,7 +1,7 @@
 package com.gt.inside.core.service.devproject;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.gt.inside.common.dto.ResponseDTO;
+import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.core.bean.devproject.DevProjectVO;
 import com.gt.inside.core.bean.devproject.req.DevProjectAddReq;
 import com.gt.inside.core.bean.devproject.req.DevProjectListReq;

@@ -1,7 +1,7 @@
-package com.gt.inside.common.exception;
+package com.gt.inside.api.exception;
 
 
-import com.gt.inside.common.enums.ResponseEnums;
+import com.gt.inside.api.enums.ResponseEnums;
 
 /**
  * 系统统一异常类

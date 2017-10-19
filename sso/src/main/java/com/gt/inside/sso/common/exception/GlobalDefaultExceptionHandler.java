@@ -1,4 +1,4 @@
-package com.gt.inside.common.exception;
+package com.gt.inside.sso.common.exception;
 
 import com.gt.inside.api.dto.ErrorDTO;
 import com.gt.inside.api.exception.ResponseEntityException;
