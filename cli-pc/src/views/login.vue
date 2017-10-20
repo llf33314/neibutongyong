@@ -50,12 +50,6 @@ export default {
                     required: true,
                     message: '请填写用户名',
                     trigger: 'blur'
-                }, {
-                    type: 'string',
-                    min: 6,
-                    message: '密码长度不能小于6位',
-                    trigger: 'blur'
-
                 }],
                 password: [{
                     required: true,
