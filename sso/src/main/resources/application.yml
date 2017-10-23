@@ -7,6 +7,10 @@ server:
 sso:
   task:
     over_time: 3
+  redirect:
+    url: http://www.duofriend.com/
+  sign:
+    key: GTRYANSSO
 
 ################### mybatis
 #mybatis plus
@@ -39,6 +43,10 @@ mybatis-plus:
 
 ################ redis and mysql
 spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
   datasource:
 #    url: jdbc:mysql://113.106.202.51:3306/inside?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false
     url: jdbc:mysql://192.168.3.10:3306/inside?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false

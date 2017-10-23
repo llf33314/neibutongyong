@@ -3,8 +3,10 @@ package com.gt.inside.sso.common.filter;
 import com.alibaba.fastjson.JSONObject;
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.api.enums.ResponseEnums;
+import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.api.util.SignFilterUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,9 @@ import java.io.IOException;
 public class ApiFilter implements Filter {
 
     private static Logger logger = Logger.getLogger(ApiFilter.class);
+
+    @Value("${sso.sign.key}")
+    private String signKey;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -39,19 +44,23 @@ public class ApiFilter implements Filter {
         servletResponse.setContentType("application/json; charset=utf-8");
 
         logger.debug("api filter");
-//        String signKey = "sso";
-//        Integer code = SignFilterUtils.postByHttp(servletRequest, signKey);
-//        logger.debug(code);
-//        if (ResponseEnums.SIGN_TIME_OUT.getCode() == code){
-//            // 超过指定时间
-//            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.SIGN_TIME_OUT)));
-//            return;
-//        }else if (ResponseEnums.SIGN_ERROR.getCode() == code){
-//            // 签名验证错误
-//            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.SIGN_ERROR)));
-//            return;
-//        }
+        Integer code = SignFilterUtils.postByHttp(servletRequest, signKey);
+        logger.debug(code);
+        if (ResponseEnums.SIGN_TIME_OUT.getCode() == code){
+            // 超过指定时间
+            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.SIGN_TIME_OUT)));
+            return;
+        }else if (ResponseEnums.SIGN_ERROR.getCode() == code){
+            // 签名验证错误
+            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.SIGN_ERROR)));
+            return;
+        }
         String token = ((HttpServletRequest)servletRequest).getHeader("token");
+        if (CommonUtil.isEmpty(token)){
+            // token为空
+            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.TOKEN_NULL)));
+            return;
+        }
         logger.debug("api token --> " + token);
 
         filterChain.doFilter(servletRequest, servletResponse);

@@ -15,6 +15,7 @@ public enum ResponseEnums {
     SIGN_ERROR(303,"签名错误"),
     SIGN_SUCCESS(304,"签名验证成功"),
     LOGIN_NEED(305, "Token已过期，请重新登录"),
+    TOKEN_NULL(301, "Token不能为空"),
     // 400+针对自己业务
     LOGIN_NULL(401, "登录用户名或密码错误"),
     MODIFY_NULL(402, "编辑对象不存在"),

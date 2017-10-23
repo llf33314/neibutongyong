@@ -34,6 +34,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "用户登录", notes = "用户登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseDTO login(@RequestBody @ApiParam("用户登录对象") LoginReq loginReq, BindingResult bindingResult){
+        InvalidParameter(bindingResult);
         try {
             LoginRes loginRes = userLoginService.login(loginReq);
             return ResponseDTO.createBySuccess("用户登录成功", loginRes);
