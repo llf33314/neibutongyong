@@ -1,9 +1,26 @@
 package com.gt.inside.api.util;
 
+import com.gt.inside.api.enums.Content;
+import com.gt.inside.api.enums.ResponseEnums;
+import com.gt.inside.api.exception.SystemException;
+
 /**
  * Created by psr on 2017/10/17 0017.
  */
-public class ObjectUtil {
+public class CommonUtil {
+
+    /**
+     * 获取tockenID
+     * @param tocken
+     * @return
+     */
+    public static Integer getTokenID(String tocken){
+        if (!tocken.startsWith(Content.tokenKey)){
+            throw new SystemException(ResponseEnums.TOKEN_ERROR);
+        }
+        String tockenIdStr = tocken.replace(Content.tokenKey, "");
+        return Integer.valueOf(tockenIdStr);
+    }
 
     /**
      * 判断对象是否为空

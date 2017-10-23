@@ -170,6 +170,14 @@ public class ResponseDTO<T> implements Serializable {
         return new ResponseDTO<>( errorCode, errorMessage );
     }
 
+    /**
+     * 创建枚举返回
+     * @param responseEnums
+     */
+    public static < T > ResponseDTO< T > createByEnums(ResponseEnums responseEnums) {
+        return createByErrorCodeMessage( responseEnums.getCode(), responseEnums.getDesc() );
+    }
+
     //使之不在json序列化结果当中，作用用于判断
     @JsonIgnore
     public boolean isSuccess() {
@@ -191,6 +199,7 @@ public class ResponseDTO<T> implements Serializable {
     public PageDTO getPage() {
         return page;
     }
+
 }
 
 

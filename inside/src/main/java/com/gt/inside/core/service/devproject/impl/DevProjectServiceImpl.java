@@ -7,7 +7,7 @@ import com.gt.inside.api.dto.PageDTO;
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.api.enums.ResponseEnums;
 import com.gt.inside.api.util.DateTimeKit;
-import com.gt.inside.api.util.ObjectUtil;
+import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.core.bean.devproject.DevProjectVO;
 import com.gt.inside.core.bean.devproject.req.DevProjectAddReq;
 import com.gt.inside.core.bean.devproject.req.DevProjectListReq;
@@ -75,7 +75,7 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectDAO, DevProject
     public ResponseDTO<List<DevProjectListRes>> listDevProjectByPage(DevProjectListReq devProjectListReq) throws DevProjectException {
         Page<DevProject> page = new Page<>(devProjectListReq.getCurrent(), devProjectListReq.getSize());
         EntityWrapper<DevProject> entityWrapper = new EntityWrapper<>();
-        if (ObjectUtil.isNotEmpty(devProjectListReq) && ObjectUtil.isNotEmpty(devProjectListReq.getProjectStatus())){
+        if (CommonUtil.isNotEmpty(devProjectListReq) && CommonUtil.isNotEmpty(devProjectListReq.getProjectStatus())){
             entityWrapper.eq("project_status", devProjectListReq.getProjectStatus());
         }
         List<DevProject> devProjectList = selectPage(page, entityWrapper).getRecords();
@@ -114,8 +114,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectDAO, DevProject
     @Override
     public void modifyDevProject(DevProjectModifyReq devProjectModifyReq) {
         DevProject devProject = selectById(devProjectModifyReq.getId());
-        if (ObjectUtil.isEmpty(devProject)){
-            throw new DevProjectException(ResponseEnums.MODIFYNULL);
+        if (CommonUtil.isEmpty(devProject)){
+            throw new DevProjectException(ResponseEnums.MODIFY_NULL);
         }
         devProject.setProjectName(devProjectModifyReq.getProjectName());
         devProject.setProjectTime(devProjectModifyReq.getProjectTime());

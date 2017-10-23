@@ -1,5 +1,9 @@
 package com.gt.inside.sso.common.filter;
 
+import com.alibaba.fastjson.JSONObject;
+import com.gt.inside.api.dto.ResponseDTO;
+import com.gt.inside.api.enums.ResponseEnums;
+import com.gt.inside.api.util.SignFilterUtils;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -28,13 +32,27 @@ public class ApiFilter implements Filter {
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
         httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Accept, Origin, XRequestedWith, Content-Type, LastModified, tocken");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Accept, Origin, XRequestedWith, Content-Type, LastModified, token");
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
 
         servletResponse.setCharacterEncoding("UTF-8");
         servletResponse.setContentType("application/json; charset=utf-8");
 
         logger.debug("api filter");
+//        String signKey = "sso";
+//        Integer code = SignFilterUtils.postByHttp(servletRequest, signKey);
+//        logger.debug(code);
+//        if (ResponseEnums.SIGN_TIME_OUT.getCode() == code){
+//            // 超过指定时间
+//            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.SIGN_TIME_OUT)));
+//            return;
+//        }else if (ResponseEnums.SIGN_ERROR.getCode() == code){
+//            // 签名验证错误
+//            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.SIGN_ERROR)));
+//            return;
+//        }
+        String token = ((HttpServletRequest)servletRequest).getHeader("token");
+        logger.debug("api token --> " + token);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

@@ -3,7 +3,7 @@ package com.gt.inside.core.service.user.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.gt.inside.api.enums.ResponseEnums;
-import com.gt.inside.api.util.ObjectUtil;
+import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.core.bean.user.req.LoginReq;
 import com.gt.inside.core.bean.user.res.MenuRes;
 import com.gt.inside.core.dao.user.UserDAO;
@@ -43,8 +43,8 @@ public class UserServiceImpl extends ServiceImpl<UserDAO, User> implements UserS
         entityWrapper.eq("login_name", loginReq.getLoginName());
         entityWrapper.eq("user_pwd", loginReq.getPassword());
         User user = selectOne(entityWrapper);
-        if (ObjectUtil.isEmpty(user)){
-            throw new UserException(ResponseEnums.LOGINNULL);
+        if (CommonUtil.isEmpty(user)){
+            throw new UserException(ResponseEnums.LOGIN_NULL);
         }
     }
 

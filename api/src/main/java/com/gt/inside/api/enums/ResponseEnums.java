@@ -10,10 +10,14 @@ public enum ResponseEnums {
     // 200+针对请求失败
     ERROR(200, "请求失败"),
     // 300+针对统一业务
-
+    TOKEN_ERROR(301, "无效的Token"),
+    SIGN_TIME_OUT(302,"签名请求超时"),
+    SIGN_ERROR(303,"签名错误"),
+    SIGN_SUCCESS(304,"签名验证成功"),
+    LOGIN_NEED(305, "Token已过期，请重新登录"),
     // 400+针对自己业务
-    LOGINNULL(401, "登录用户名或密码错误"),
-    MODIFYNULL(402, "编辑对象不存在"),
+    LOGIN_NULL(401, "登录用户名或密码错误"),
+    MODIFY_NULL(402, "编辑对象不存在"),
     ;
 
     private final int code;

@@ -11,21 +11,21 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "登录返回对象")
 public class LoginRes {
 
-    @ApiModelProperty("tocken")
-    private String tocken;
+    @ApiModelProperty("token令牌")
+    private String token;
 
-    public String getTocken() {
-        return tocken;
+    public String getToken() {
+        return token;
     }
 
-    public void setTocken(String tocken) {
-        this.tocken = tocken;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
     public String toString() {
         return "LoginRes{" +
-                "tocken='" + tocken + '\'' +
+                "token='" + token + '\'' +
                 '}';
     }
 }

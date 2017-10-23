@@ -3,6 +3,11 @@
 server:
   port: 7075
 
+################### sso项目内配
+sso:
+  task:
+    over_time: 3
+
 ################### mybatis
 #mybatis plus
 mybatis-plus:

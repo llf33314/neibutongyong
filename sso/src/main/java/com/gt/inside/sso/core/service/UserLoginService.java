@@ -18,4 +18,9 @@ public interface UserLoginService {
      */
     LoginRes login(LoginReq loginReq) throws UserException;
 
+    /**
+     * 用户注销
+     * @param token
+     */
+    void loginOut(String token) throws UserException;
 }

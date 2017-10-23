@@ -4,8 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gt.inside.api.dto.MenuDTO;
 import com.gt.inside.api.dto.UserDTO;
+import com.gt.inside.api.enums.Content;
 import com.gt.inside.api.enums.ResponseEnums;
-import com.gt.inside.api.util.ObjectUtil;
+import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.sso.core.bean.req.LoginReq;
 import com.gt.inside.sso.core.bean.res.LoginRes;
 import com.gt.inside.sso.core.entity.User;
@@ -38,7 +39,7 @@ public class UserLoginServiceImpl implements UserLoginService{
     UserCacheService userCacheService;
 
     /**
-     * 用户登录，返回tocken
+     * 用户登录，返回token
      *
      * @param loginReq
      * @return
@@ -52,8 +53,8 @@ public class UserLoginServiceImpl implements UserLoginService{
         userEntityWrapper.eq("user_status", 0);
         userEntityWrapper.eq("delete_flag", 0);
         User user = userService.selectOne(userEntityWrapper);
-        if (ObjectUtil.isEmpty(user)){
-            throw new UserException(ResponseEnums.LOGINNULL);
+        if (CommonUtil.isEmpty(user)){
+            throw new UserException(ResponseEnums.LOGIN_NULL);
         }
         int userId = user.getId();
         Integer roleStatus = roleService.selectUserRoleStatus(userId);
@@ -73,9 +74,20 @@ public class UserLoginServiceImpl implements UserLoginService{
         userCache.setUserId(userId);
         userCache.setUserInfo(JSONObject.toJSONString(userDTO));
         userCacheService.insertAllColumn(userCache);
-        String tocken = userCache.getId() + "";
+        String token = Content.tokenKey + userCache.getId();
         LoginRes loginRes = new LoginRes();
-        loginRes.setTocken(tocken);
+        loginRes.setToken(token);
         return loginRes;
+    }
+
+    /**
+     * 用户注销
+     *
+     * @param token
+     */
+    @Override
+    public void loginOut(String token) throws UserException {
+        int tockenID = CommonUtil.getTokenID(token);
+        userCacheService.deleteById(tockenID);
     }
 }
