@@ -20,6 +20,9 @@ npm run dev
 ## 简介
 iView admin是基于Vue.js，搭配使用[iView](https://www.iviewui.com) UI组件库形成的一套后台集成解决方案，由TalkingData前端可视化团队部分成员开发维护。iView admin遵守iView设计和开发约定，风格统一，设计考究，并且更多功能在不停开发中。
 
+#### 特别说明
+  iview-admin在不停开发，更新较快，所以建议您clone项目后，不要在原项目上做修改，以便获取最新的iview-admin代码且不影响您的项目。
+
 ## 功能
 
 - 登录/登出
@@ -29,6 +32,7 @@ iView admin是基于Vue.js，搭配使用[iView](https://www.iviewui.com) UI组�
 - 组件
     - 富文本编辑器
     - Markdown编辑器
+    - 图片预览编辑
     - 可拖拽列表
     - 文件上传
     - 数字渐变
@@ -84,6 +88,7 @@ iView admin是基于Vue.js，搭配使用[iView](https://www.iviewui.com) UI组�
         │   ├── count-to    数字渐变
         │   ├── draggable-list    可拖拽列表
         │   ├── file-upload    文件上传
+        |   ├── image-editor    图片预览编辑
         │   ├── markdown-editor    markdown编辑器
         │   └── text-editer    富文本编辑器
         ├── own-space    个人中心
@@ -111,6 +116,9 @@ iView admin是基于Vue.js，搭配使用[iView](https://www.iviewui.com) UI组�
 
 - 可拖拽列表
 ![image](https://github.com/iview/iview-admin/raw/dev/github-gif/dragable-list.gif)
+
+- 图片预览编辑
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/image-editor.gif)
 
 - 文件上传
 ![image](https://github.com/iview/iview-admin/raw/dev/github-gif/upload.gif)
