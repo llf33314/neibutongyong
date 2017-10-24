@@ -6,7 +6,9 @@ import io.swagger.annotations.Api;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,9 @@ public class RouteController {
         if (CommonUtil.isEmpty(redirectUrl) || "".equals(redirectUrl)){
             redirectUrl = defaultRedirectUrl;
         }
+        if (redirectUrl.contains("<>")){
+            redirectUrl = redirectUrl.replace("<>", "#");
+        }
         request.getSession().setAttribute("redirectUrl", redirectUrl);
         return "redirect:/m/route/tologin";
     }
@@ -45,16 +50,6 @@ public class RouteController {
         mav.addObject("redirectUrl", redirectUrl);
         mav.setViewName("login");
         return mav;
-    }
-
-    @RequestMapping("test")
-    public void test(){
-        String url = "http://192.168.3.98:7078/api/token/getUser";
-        String token = "GTINSIDESSO9";
-        String signKey = "sso";
-        UserDTO userDTO = CommonUtil.getUser(url, token, signKey);
-        System.out.println(userDTO.toString());
-        System.out.println();
     }
 
 }

@@ -9,6 +9,7 @@ public enum ResponseEnums {
     SUCCESS(100, "请求成功"),
     // 200+针对请求失败
     ERROR(200, "请求失败"),
+    LOGIN(201, "请先登录"),
     // 300+针对统一业务
     TOKEN_ERROR(301, "无效的Token"),
     SIGN_TIME_OUT(302,"签名请求超时"),

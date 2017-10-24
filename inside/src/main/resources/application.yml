@@ -3,6 +3,17 @@
 server:
   port: 7075
 
+################### 自定义
+inside:
+  login:
+    url: http://www.ryan.com:7075/m/login/success/
+  web:
+    url: http://www.ryan.com:8087/#/token/
+  sso:
+    url: http://www.ryan.com:7078/
+    sign:
+      key: GTRYANSSO
+
 ################### mybatis
 #mybatis plus
 mybatis-plus:

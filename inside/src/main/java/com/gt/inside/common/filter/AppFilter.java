@@ -1,6 +1,12 @@
 package com.gt.inside.common.filter;
 
+import com.alibaba.fastjson.JSONObject;
+import com.gt.inside.api.dto.ResponseDTO;
+import com.gt.inside.api.dto.UserDTO;
+import com.gt.inside.api.enums.ResponseEnums;
+import com.gt.inside.api.util.CommonUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +20,15 @@ import java.io.IOException;
 public class AppFilter implements Filter {
 
     private static Logger logger = Logger.getLogger(AppFilter.class);
+
+    @Value("${inside.sso.sign.key}")
+    private String signKey;
+
+    @Value("${inside.sso.url}")
+    private String ssoUrl;
+
+    @Value("${inside.login.url}")
+    private String loginUrl;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -36,7 +51,20 @@ public class AppFilter implements Filter {
 
         logger.debug("app filter");
 
-        filterChain.doFilter(servletRequest, servletResponse);
+        String token = (String) httpServletRequest.getHeader("token");
+        if(token == null){
+            servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.LOGIN)));
+            return;
+        }else{
+            //不为空
+            UserDTO userDTO = CommonUtil.getUser(ssoUrl + "api/token/getUser", token, signKey);
+            if (CommonUtil.isEmpty(userDTO)){
+                servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.LOGIN)));
+                return;
+            }else{
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
+        }
     }
 
     @Override

@@ -2,7 +2,7 @@
   <section class="container">
     <div class="top-bar" v-cloak>
       <div class="logo-box">
-        <img class="logo" src="../assets/logo.png" alt="">
+        <img class="logo" src="../../../assets/logo.png" alt="">
       </div>
       <p class="left-name">多粉管理控制台</p>
       <div class="right">
@@ -65,6 +65,9 @@
       handleClose() {
 
       }
+    },
+    created() {
+      
     }
   }
 
@@ -138,7 +141,7 @@
     height: 46px;
     border-radius: 50%;
     margin-top: 7px;
-    background-image: url("../assets/head.jpg");
+    background-image: url("../../../assets/head.jpg");
     background-origin: content-box;
     background-position: center;
     background-size: cover;

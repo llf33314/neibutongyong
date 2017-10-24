@@ -5,10 +5,10 @@ import qs from 'qs'
 import { Message } from "element-ui";
 
 const Axios = axios.create({
- baseURL: "http://192.168.3.98:7072",
+  //  baseURL: "http://192.168.3.98:7072",
   // timeout: 10000,
   // responseType: "json",
-   // withCredentials: true, // 是否允许带cookie这些
+  // withCredentials: true, // 是否允许带cookie这些
 });
 
 // 添加请求拦截器
@@ -40,6 +40,14 @@ Axios.interceptors.request.use(
 // http response 拦截器 返回状态判断
 Axios.interceptors.response.use(
   response => {
+    if (response.data.code == 201) {
+      console.log("in");
+      localStorage.clear()
+      router.replace({
+        path: '/index',
+        query: { redirect: router.currentRoute.fullPath }
+      })
+    }
     // if(response.data.code == 301 || response.data.code == 300){
     //   Message({
     //     showClose: true,
@@ -53,7 +61,7 @@ Axios.interceptors.response.use(
     //     }
     //   });
     // }
-    return  response
+    return response
   },
   error => {
     if (error.response) {
