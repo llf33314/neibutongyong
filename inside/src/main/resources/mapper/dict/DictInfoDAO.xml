@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.core.dao.dict.DictInfoDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.dict.DictInfo">
+		<id column="id" property="id" />
+		<result column="dict_id" property="dictId" />
+		<result column="info_code" property="infoCode" />
+		<result column="info_content" property="infoContent" />
+		<result column="info_remark" property="infoRemark" />
+		<result column="create_time" property="createTime" />
+		<result column="delete_flag" property="deleteFlag" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, dict_id, info_code, info_content, info_remark, create_time, delete_flag
+    </sql>
+
+</mapper>

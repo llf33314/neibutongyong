@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import axios from './../http'
-// 加载小公园app
-import { homeAdminRouter } from '@/components/home/router.js'
 
 const menu = () => import('@/components/home/vue/menu')
 const home = () => import('@/components/home/vue/home')
+const dict = () => import('@/components/dict/vue/dictList')
 
 Vue.use(Router)
 var routes = [{
@@ -13,16 +12,22 @@ var routes = [{
   name: 'index',
   component: menu,
   redirect: '/home',
-  children: [{
-    path: '/home',
-    name: 'home',
-    component: home,
-  }]
+  children: [
+    {
+      path: '/home',
+      name: 'home',
+      component: home,
+    },
+    {
+      path: '/app/dict',
+      name: 'dict',
+      component: dict,
+    }
+  ]
 }]
 
 // 合并多个路由的数组
-var routeChildrens = routes[0].children.concat(homeAdminRouter);
-routes.children = routeChildrens;
+// routes.children = routes[0].children.concat(dictAppRouter);
 
 const router = new Router({
   // mode: 'history',
@@ -42,7 +47,7 @@ router.beforeEach((to, from, next) => {
   //   }
   //   next();
   // } else {
-  //   axios.post(window.BASE_URL + 'm/login').then((res) => {
+  //   axios.post(window.INSIDE_BASE_URL + 'm/login').then((res) => {
   //     console.log(res.data);
   //     if (res.data.code == 100) {
   //       window.localStorage.token = res.data.data;
@@ -55,15 +60,17 @@ router.beforeEach((to, from, next) => {
   /** login function one end */
 
   /** login function second */
+  // 统一登录页面返回token信息
   if (to.fullPath.startsWith("/token/")) {
     var _token = to.fullPath.substring(to.fullPath.lastIndexOf("/") + 1, to.fullPath.length);
     if (_token != null && _token != 'undefind') {
       axios.defaults.headers.common['token'] = _token;
       window.localStorage.token = _token;
-      next({ path: '/index'});
+      next({ path: '/index' });
     }
 
   }
+  // 获取缓存的token
   var token = window.localStorage.getItem('token') || '';
   if (token) {
     if (!axios.defaults.headers.common['token']) {
@@ -71,7 +78,7 @@ router.beforeEach((to, from, next) => {
     }
     next();
   } else {
-    console.log(window.SSO_LOGIN_URL);
+    // 跳转到统一登录页面
     window.location.href = window.SSO_LOGIN_URL;
   }
   /** login function second end */

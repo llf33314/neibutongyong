@@ -2,8 +2,6 @@
   <section>
     首页
     <el-button size="small" @click="test()">测试</el-button>
-    <el-button size="small" @click="myGetCookie()">获取cookie</el-button>
-    <el-button size="small" @click="mySetCookie()">设置cookie</el-button>
   </section>
   
 </template>

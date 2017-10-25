@@ -54,6 +54,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/loginOut", method = RequestMethod.POST)
     public ResponseDTO loginOut(@RequestHeader String token){
         try {
+            logger.debug("token --> " + token);
             userLoginService.loginOut(token);
             return ResponseDTO.createBySuccessMessage("用户注销成功");
         } catch (UserException e){

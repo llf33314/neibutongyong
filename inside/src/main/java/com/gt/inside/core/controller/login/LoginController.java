@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by psr on 2017/10/17 0017.
  */
-@Api(value = "/m/login", description = "登录管理")
+@Api(value = "/m/login", description = "登录管理（暂未使用）")
 @Controller
-@RequestMapping(value = "/m/login")
+//@RequestMapping(value = "/m/login")
 public class LoginController extends BaseController {
 
     private static Logger logger = Logger.getLogger(LoginController.class);
@@ -47,7 +47,7 @@ public class LoginController extends BaseController {
             @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
     })
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    @RequestMapping(value = "", method = RequestMethod.POST)
+//    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public ResponseDTO login(HttpServletRequest httpServletRequest){
         try {
@@ -76,7 +76,7 @@ public class LoginController extends BaseController {
             @ApiResponse(code = 0, message = "重定向页面", response = String.class),
     })
     @ApiOperation(value = "登录重定向", notes = "登录重定向")
-    @RequestMapping(value = "success/{token}", method = RequestMethod.GET)
+//    @RequestMapping(value = "success/{token}", method = RequestMethod.GET)
     public String login(HttpServletRequest request, @PathVariable String token, HttpServletResponse response){
         logger.debug("login token -->" + token);
         try {

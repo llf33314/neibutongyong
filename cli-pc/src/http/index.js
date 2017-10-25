@@ -41,8 +41,7 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
   response => {
     if (response.data.code == 201) {
-      console.log("in");
-      localStorage.clear()
+      localStorage.removeItem('token');
       router.replace({
         path: '/index',
         query: { redirect: router.currentRoute.fullPath }
