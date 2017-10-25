@@ -28,10 +28,15 @@ var routes = [{
 
 // 合并多个路由的数组
 // routes.children = routes[0].children.concat(dictAppRouter);
+var nullRouters = [];
+
+nullRouters = nullRouters.concat(dictAppRouter);
 
 const router = new Router({
   // mode: 'history',
-  routes
+  routes:()=>{
+    return routes.children = routes[0].children.concat(nullRouters);
+  }
 });
 
 router.beforeEach((to, from, next) => {
