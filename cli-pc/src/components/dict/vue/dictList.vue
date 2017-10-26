@@ -1,28 +1,30 @@
 <template>
   <div>
     <div>
-      <div>
-        <el-button type="primary" @click="openAddDict">新增</el-button>
-        <el-input placeholder="字典编号/字典名" icon="search" v-model="dictListReq.dictSearch" :on-icon-click="searchClick"></el-input>
+      <div class="a-admin-head">
+        <el-button type="primary" @click="openAddDict" style="margin-right: 20px;">新增</el-button>
+        <el-input placeholder="字典编号/字典名" icon="search" v-model="dictListReq.dictSearch" :on-icon-click="searchClick" style="width:250px!important;"></el-input>
       </div>
-      <el-table :data="dictListData" border highlight-current-row style="width: 100%">
-        <el-table-column type="index" width="50"></el-table-column>
-        <el-table-column prop="dictName" label="名称"></el-table-column>
-        <el-table-column prop="dictRemark" label="描述"></el-table-column>
-        <el-table-column label="创建时间">
-            <template slot-scope="scope">
-                <el-icon name="time"></el-icon>
-                <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
-            </template>
-        </el-table-column>
-        <el-table-column label="操作">
-            <template slot-scope="scope">
-                <el-button size="small" @click="openModifyDict(scope.row)">编辑</el-button>
-                <el-button size="small" type="primary" @click="openDictInfo(scope.row)">字典详情</el-button>
-                <el-button size="small" type="danger" @click="delDict(scope.row.id)">删除</el-button>
-            </template>
-        </el-table-column>
-      </el-table>
+      <div class="a-admin-table">
+          <el-table :data="dictListData" border highlight-current-row style="width: 100%">
+            <el-table-column type="index" width="50"></el-table-column>
+            <el-table-column prop="dictName" label="名称"></el-table-column>
+            <el-table-column prop="dictRemark" label="描述"></el-table-column>
+            <el-table-column label="创建时间">
+                <template slot-scope="scope">
+                    <el-icon name="time"></el-icon>
+                    <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button size="small" @click="openModifyDict(scope.row)">编辑</el-button>
+                    <el-button size="small" type="primary" @click="openDictInfo(scope.row)">字典详情</el-button>
+                    <el-button size="small" type="danger" @click="delDict(scope.row.id)">删除</el-button>
+                </template>
+            </el-table-column>
+          </el-table>
+      </div>
       <el-pagination @current-change="handleCurrentChange"
         :current-page.sync="dictListReq.current" :page-size="dictListReq.size" layout="total, prev, pager, next" :total="page.totalNums">
       </el-pagination>
@@ -193,3 +195,28 @@ export default {
   }
 };
 </script>
+<style>
+.a-admin-head{
+    padding: 35px 0 35px 25px;
+}
+.a-admin-table{
+  margin:0 25px 25px;;
+}
+.el-pagination {
+    float: right;
+    margin-right: 20px;
+}
+.el-dialog {
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    margin-bottom: 50px;
+    margin-left: 80px;
+    margin-top: 165px;
+}
+</style>
