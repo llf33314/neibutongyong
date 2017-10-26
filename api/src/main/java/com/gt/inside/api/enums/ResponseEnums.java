@@ -16,10 +16,12 @@ public enum ResponseEnums {
     SIGN_ERROR(303,"签名错误"),
     SIGN_SUCCESS(304,"签名验证成功"),
     LOGIN_NEED(305, "Token已过期，请重新登录"),
-    TOKEN_NULL(301, "Token不能为空"),
+    TOKEN_NULL(306, "Token不能为空"),
+    MODIFY_NULL(307, "编辑对象不存在"),
     // 400+针对自己业务
     LOGIN_NULL(401, "登录用户名或密码错误"),
-    MODIFY_NULL(402, "编辑对象不存在"),
+    DICT_CODE_HAS(402, "字典编号不能重复"),
+    DICT_NULL(402, "字典不能存在"),
     ;
 
     private final int code;

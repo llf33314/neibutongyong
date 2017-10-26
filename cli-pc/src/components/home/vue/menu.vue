@@ -70,7 +70,7 @@ export default {
     handleClose() {},
     loginOut() {
       requestSSOLoginOut().then(data => {
-        console.log(data);
+        // console.log(data);
         var _code = data.code;
         if (_code == 100) {
           localStorage.removeItem("token");
@@ -89,7 +89,6 @@ export default {
         var _code = data.code;
         if (_code == 100) {
           this.menusList = data.data;
-          console.log(this.menusList);
         } else {
           this.$message.error(data.msg + "[错误码：" + _code + "]");
         }

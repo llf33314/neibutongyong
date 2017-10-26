@@ -1,9 +1,9 @@
 // 异步加载
-const home2 = () => import('@/components/home/vue/home')
+const home = () => import('@/components/home/vue/home')
 export const homeAdminRouter = [
     {
-        path: '/home2',
-        name: 'home2',
-        component: home2,
+        path: '/home',
+        name: 'home',
+        component: home,
     }
 ]

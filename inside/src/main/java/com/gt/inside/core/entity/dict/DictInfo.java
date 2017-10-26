@@ -62,4 +62,59 @@ public class DictInfo extends Model<DictInfo> {
 		return this.id;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getDictId() {
+		return dictId;
+	}
+
+	public void setDictId(Integer dictId) {
+		this.dictId = dictId;
+	}
+
+	public Integer getInfoCode() {
+		return infoCode;
+	}
+
+	public void setInfoCode(Integer infoCode) {
+		this.infoCode = infoCode;
+	}
+
+	public String getInfoContent() {
+		return infoContent;
+	}
+
+	public void setInfoContent(String infoContent) {
+		this.infoContent = infoContent;
+	}
+
+	public String getInfoRemark() {
+		return infoRemark;
+	}
+
+	public void setInfoRemark(String infoRemark) {
+		this.infoRemark = infoRemark;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
 }

@@ -4,6 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import axios from './http/index'
 import router from './router'
+/*
+ * 加载全局方法
+ * */
+import util  from './assets/js/util'
+/*
+* 挂载全局方法
+* */
+Vue.prototype.$util = util  
+
 import ElementUI from 'gt-pc-ui'
 import 'gt-pc-ui/lib/theme-default/index.css'
 import { timeTransForm } from './assets/js/Lib'

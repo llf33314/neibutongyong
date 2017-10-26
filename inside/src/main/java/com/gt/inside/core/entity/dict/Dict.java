@@ -58,4 +58,51 @@ public class Dict extends Model<Dict> {
 		return this.id;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getDictCode() {
+		return dictCode;
+	}
+
+	public void setDictCode(Integer dictCode) {
+		this.dictCode = dictCode;
+	}
+
+	public String getDictName() {
+		return dictName;
+	}
+
+	public void setDictName(String dictName) {
+		this.dictName = dictName;
+	}
+
+	public String getDictRemark() {
+		return dictRemark;
+	}
+
+	public void setDictRemark(String dictRemark) {
+		this.dictRemark = dictRemark;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
 }
