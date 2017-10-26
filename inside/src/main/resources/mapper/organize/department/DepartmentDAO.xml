@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.core.dao.organize.department.DepartmentDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.organize.department.Department">
+		<id column="id" property="id" />
+		<result column="dep_name" property="depName" />
+		<result column="dep_add" property="depAdd" />
+		<result column="dep_remark" property="depRemark" />
+		<result column="create_time" property="createTime" />
+		<result column="delete_flag" property="deleteFlag" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, dep_name, dep_add, dep_remark, create_time, delete_flag
+    </sql>
+
+</mapper>
