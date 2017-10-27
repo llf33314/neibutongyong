@@ -2,8 +2,8 @@
   <div>
     <div>
       <div class="a-admin-head">
-        <el-button type="primary" @click="openAddDict" style="margin-right: 20px;">新增</el-button>
-        <el-input placeholder="字典编号/字典名" icon="search" v-model="dictListReq.dictSearch" :on-icon-click="searchClick" style="width:250px!important;"></el-input>
+        <el-button type="primary" @click="openAddDict" style="margin-right:15px;">新增</el-button>
+        <el-input placeholder="字典编号/字典名" icon="search" v-model="dictListReq.dictSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
       </div>
       <div class="a-admin-table">
           <el-table :data="dictListData" border highlight-current-row style="width: 100%">
