@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author psr
- * @since 2017-10-17
+ * @since 2017-10-27
  */
 @Data
 @Accessors(chain = true)
@@ -32,6 +32,10 @@ public class Menu extends Model<Menu> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
+     * 父id（本表）
+     */
+	private Integer pId;
+    /**
      * 菜单名
      */
 	private String menuName;
@@ -44,9 +48,17 @@ public class Menu extends Model<Menu> {
      */
 	private String menuIcon;
     /**
+     * 子菜单（0：无，1：有）
+     */
+	private Integer menuSub;
+    /**
      * 创建时间
      */
 	private Date creatTime;
+    /**
+     * 删除标识（0：正常，1：删除）
+     */
+	private Integer deleteFlag;
 
 
 	@Override
@@ -60,6 +72,14 @@ public class Menu extends Model<Menu> {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getpId() {
+		return pId;
+	}
+
+	public void setpId(Integer pId) {
+		this.pId = pId;
 	}
 
 	public String getMenuName() {
@@ -86,11 +106,27 @@ public class Menu extends Model<Menu> {
 		this.menuIcon = menuIcon;
 	}
 
+	public Integer getMenuSub() {
+		return menuSub;
+	}
+
+	public void setMenuSub(Integer menuSub) {
+		this.menuSub = menuSub;
+	}
+
 	public Date getCreatTime() {
 		return creatTime;
 	}
 
 	public void setCreatTime(Date creatTime) {
 		this.creatTime = creatTime;
+	}
+
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 }

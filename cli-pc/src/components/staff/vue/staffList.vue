@@ -12,6 +12,7 @@
         <el-table :data="staffListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" width="50"></el-table-column>
           <el-table-column prop="staffName" label="姓名"></el-table-column>
+          <el-table-column prop="staffEnName" label="英文名"></el-table-column>
           <el-table-column prop="staffCode" label="编号"></el-table-column>
           <el-table-column prop="staffPhone" label="电话"></el-table-column>
           <el-table-column label="入职时间">
@@ -45,11 +46,14 @@
           <el-form-item label="名称" :label-width="formLabelWidth">
             <el-input v-model="staff.staffName" auto-complete="off" placeholder="10字以内"></el-input>
           </el-form-item>
+          <el-form-item label="名称" :label-width="formLabelWidth">
+            <el-input v-model="staff.staffEnName" auto-complete="off" placeholder="10字以内"></el-input>
+          </el-form-item>
           <el-form-item label="员工编号" :label-width="formLabelWidth">
             <el-input v-model="staff.staffCode" auto-complete="off" placeholder="7字以内"></el-input>
           </el-form-item>
           <el-form-item label="部门" :label-width="formLabelWidth">
-            <el-select v-model="staff.departmentId" placeholder="请选择部门">
+            <el-select v-model="staff.depId" placeholder="请选择部门">
               <el-option v-for="item in departmentListData" :key="item.id" :label="item.depName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
@@ -114,7 +118,7 @@ export default {
     getStaffList() {
       // console.log(this.staffListReq);
       requestListStaff(this.staffListReq).then(data => {
-        // console.log(data);
+        console.log(data);
         var _code = data.code;
         if (_code == 100) {
           this.staffListData = data.data;
@@ -219,9 +223,9 @@ export default {
       this.staff = staff;
       this.dialogOpe.name = "编辑员工";
       this.dialogOpe.status = 2;
-      this.dialogStaffVisible = true;
       this.departmentListData = [];
       this.getDepartmentList();
+      this.dialogStaffVisible = true;
     },
     searchClick() {
       // 搜索

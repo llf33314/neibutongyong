@@ -27,9 +27,9 @@ import java.util.List;
 @Api(value = "/app/user", description = "用户管理")
 @RestController
 @RequestMapping(value = "/app/user")
-public class UserController extends BaseController {
+public class UserStageController extends BaseController {
 
-    private static Logger logger = Logger.getLogger(UserController.class);
+    private static Logger logger = Logger.getLogger(UserStageController.class);
 
     @Value("${inside.sso.url}")
     private String ssoUrl;
@@ -40,6 +40,7 @@ public class UserController extends BaseController {
     @Autowired
     UserService userService;
 
+    // 获取用户菜单
     @ApiResponses({
             @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
             @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
@@ -61,4 +62,17 @@ public class UserController extends BaseController {
         }
     }
 
+    // 分页获取用户列表
+
+    // 新增用户
+
+    // 重置密码
+
+    // 停用用户
+
+    // 删除用户
+
+    // 关联员工
+
+    // 关联角色
 }

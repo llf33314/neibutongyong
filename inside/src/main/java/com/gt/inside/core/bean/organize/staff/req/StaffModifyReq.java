@@ -24,6 +24,9 @@ public class StaffModifyReq {
     @NotNull(message = "员工姓名不能为空")
     private String staffName; // 员工姓名
 
+    @ApiModelProperty(value = "员工英文名")
+    private String staffEnName; // 英文名
+
     @ApiModelProperty(value = "入职时间")
     @NotNull(message = "入职时间不能为空")
     private Date staffJoinTime; // 入职时间
@@ -34,7 +37,7 @@ public class StaffModifyReq {
 
     @ApiModelProperty(value = "部门id")
     @NotNull(message = "部门id不能为空")
-    private Integer departmentId; // 部门id
+    private Integer depId; // 部门id
 
     public Integer getId() {
         return id;
@@ -76,12 +79,20 @@ public class StaffModifyReq {
         this.staffPhone = staffPhone;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public String getStaffEnName() {
+        return staffEnName;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setStaffEnName(String staffEnName) {
+        this.staffEnName = staffEnName;
+    }
+
+    public Integer getDepId() {
+        return depId;
+    }
+
+    public void setDepId(Integer depId) {
+        this.depId = depId;
     }
 
     @Override
@@ -90,9 +101,10 @@ public class StaffModifyReq {
                 "id=" + id +
                 ", staffCode='" + staffCode + '\'' +
                 ", staffName='" + staffName + '\'' +
+                ", staffEnName='" + staffEnName + '\'' +
                 ", staffJoinTime=" + staffJoinTime +
                 ", staffPhone='" + staffPhone + '\'' +
-                ", departmentId=" + departmentId +
+                ", depId=" + depId +
                 '}';
     }
 }

@@ -7,7 +7,7 @@ export const requestListStaff = params => { return axios.post(`${inside_base}/ap
 /* 新增员工 */
 export const requestAddStaff = params => { return axios.post(`${inside_base}/app/staff/add`, params).then(res => res.data) }
 /* 修改员工 */
-export const requestModifyStaff = params => { return axios.post(`${inside_base}/app/Staff/modify`, params).then(res => res.data) }
+export const requestModifyStaff = params => { return axios.post(`${inside_base}/app/staff/modify`, params).then(res => res.data) }
 /* 删除员工 */
 export const requestDelStaff = params => { return axios.post(`${inside_base}/app/staff/del`, params).then(res => res.data) }
 /* 离职员工 */

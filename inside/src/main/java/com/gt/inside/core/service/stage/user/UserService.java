@@ -18,16 +18,4 @@ import java.util.List;
  */
 public interface UserService extends IService<User> {
 
-    /**
-     * 用户登录
-     * @param loginReq
-     * @throws UserException
-     */
-    void login(LoginReq loginReq) throws UserException;
-
-    /**
-     * 获取所有菜单
-     * @return
-     */
-    List<MenuRes> getAllMenu() throws UserException;
 }

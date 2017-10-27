@@ -80,7 +80,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuDAO, Menu> implements MenuS
                 menuDTOList.get(i).setSubMenuList(menuDTOMap.get(id));
             }
         }
-        logger.debug(menuDTOArrangeList.size());
         return menuDTOList;
     }
 }

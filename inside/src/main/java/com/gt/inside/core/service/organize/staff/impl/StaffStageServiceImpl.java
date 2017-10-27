@@ -66,10 +66,11 @@ public class StaffStageServiceImpl implements StaffStageService {
         Staff staff = new Staff();
         staff.setCreateTime(new Date());
         staff.setDeleteFlag(0);
-        staff.setDepId(staffAddReq.getDepartmentId());
+        staff.setDepId(staffAddReq.getDepId());
         staff.setStaffCode(staffAddReq.getStaffCode());
         staff.setStaffJoinTime(staffAddReq.getStaffJoinTime());
         staff.setStaffName(staffAddReq.getStaffName());
+        staff.setStaffEnName(staffAddReq.getStaffEnName());
         staff.setStaffPhone(staffAddReq.getStaffPhone());
         staff.setStaffStatus(0);
         staffService.insertAllColumn(staff);
@@ -86,8 +87,8 @@ public class StaffStageServiceImpl implements StaffStageService {
         entityWrapperCheck.eq("delete_flag", 0);
         entityWrapperCheck.eq("staff_code", staffModifyReq.getStaffCode());
         Staff staffSelect = staffService.selectOne(entityWrapperCheck);
-        if (CommonUtil.isNotEmpty(staffSelect)){
-            throw new StaffException(ResponseEnums.DEPARTMENT_HAS);
+        if (CommonUtil.isNotEmpty(staffSelect) && !staffSelect.getId().equals(staffModifyReq.getId())){
+            throw new StaffException(ResponseEnums.STAFF_HAS);
         }
         EntityWrapper<Staff> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("delete_flag", 0);
@@ -96,10 +97,11 @@ public class StaffStageServiceImpl implements StaffStageService {
         if (CommonUtil.isEmpty(staff)){
             throw new StaffException(ResponseEnums.MODIFY_NULL);
         }
-        staff.setDepId(staffModifyReq.getDepartmentId());
+        staff.setDepId(staffModifyReq.getDepId());
         staff.setStaffCode(staffModifyReq.getStaffCode());
         staff.setStaffJoinTime(staffModifyReq.getStaffJoinTime());
         staff.setStaffName(staffModifyReq.getStaffName());
+        staff.setStaffEnName(staffModifyReq.getStaffEnName());
         staff.setStaffPhone(staffModifyReq.getStaffPhone());
         staffService.updateAllColumnById(staff);
     }

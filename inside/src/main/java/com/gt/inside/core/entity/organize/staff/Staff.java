@@ -47,6 +47,10 @@ public class Staff extends Model<Staff> {
      * 员工姓名
      */
 	private String staffName;
+	/**
+	 * 英文名
+	 */
+	private String staffEnName;
     /**
      * 入职时间
      */
@@ -164,5 +168,13 @@ public class Staff extends Model<Staff> {
 
 	public void setDeleteFlag(Integer deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	public String getStaffEnName() {
+		return staffEnName;
+	}
+
+	public void setStaffEnName(String staffEnName) {
+		this.staffEnName = staffEnName;
 	}
 }

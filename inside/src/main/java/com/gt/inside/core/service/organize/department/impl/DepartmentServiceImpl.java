@@ -84,8 +84,8 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentDAO, Department
         EntityWrapper<Department> entityWrapperCheck = new EntityWrapper<>();
         entityWrapperCheck.eq("delete_flag", 0);
         entityWrapperCheck.eq("dep_name", departmentModifyReq.getDepName());
-        Department dictSelect = selectOne(entityWrapperCheck);
-        if (CommonUtil.isNotEmpty(dictSelect)){
+        Department departmentSelect = selectOne(entityWrapperCheck);
+        if (CommonUtil.isNotEmpty(departmentSelect)  && !departmentSelect.getId().equals(departmentModifyReq.getId())){
             throw new DepartmentException(ResponseEnums.DEPARTMENT_HAS);
         }
         EntityWrapper<Department> entityWrapper = new EntityWrapper<>();
