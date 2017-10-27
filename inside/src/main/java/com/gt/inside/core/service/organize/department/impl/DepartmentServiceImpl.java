@@ -14,6 +14,7 @@ import com.gt.inside.core.bean.organize.department.req.DepartmentModifyReq;
 import com.gt.inside.core.dao.organize.department.DepartmentDAO;
 import com.gt.inside.core.entity.organize.department.Department;
 import com.gt.inside.core.exception.dict.DictException;
+import com.gt.inside.core.exception.organize.department.DepartmentException;
 import com.gt.inside.core.service.organize.department.DepartmentService;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +46,9 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentDAO, Department
         if (CommonUtil.isNotEmpty(departmentListReq.getDepartmentSearch())){
             entityWrapper.like("dep_name", departmentListReq.getDepartmentSearch());
         }
-        List<Department> dictList = selectPage(page, entityWrapper).getRecords();
+        List<Department> departmentList = selectPage(page, entityWrapper).getRecords();
         PageDTO pageDTO = new PageDTO(page.getPages(), page.getTotal());
-        return ResponseDTO.createBySuccessPage("分页获取部门成功", dictList, pageDTO);
+        return ResponseDTO.createBySuccessPage("分页获取部门成功", departmentList, pageDTO);
     }
 
     /**
@@ -60,9 +61,9 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentDAO, Department
         EntityWrapper<Department> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("delete_flag", 0);
         entityWrapper.eq("dep_name", departmentAddReq.getDepName());
-        Department dictSelect = selectOne(entityWrapper);
-        if (CommonUtil.isNotEmpty(dictSelect)){
-            throw new DictException(ResponseEnums.DEPARTMENT_HAS);
+        Department departmentSelect = selectOne(entityWrapper);
+        if (CommonUtil.isNotEmpty(departmentSelect)){
+            throw new DepartmentException(ResponseEnums.DEPARTMENT_HAS);
         }
         Department department = new Department();
         department.setCreateTime(new Date());
@@ -85,14 +86,14 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentDAO, Department
         entityWrapperCheck.eq("dep_name", departmentModifyReq.getDepName());
         Department dictSelect = selectOne(entityWrapperCheck);
         if (CommonUtil.isNotEmpty(dictSelect)){
-            throw new DictException(ResponseEnums.DEPARTMENT_HAS);
+            throw new DepartmentException(ResponseEnums.DEPARTMENT_HAS);
         }
         EntityWrapper<Department> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("delete_flag", 0);
         entityWrapper.eq("id", departmentModifyReq.getId());
         Department department = selectOne(entityWrapper);
         if (CommonUtil.isEmpty(department)){
-            throw new DictException(ResponseEnums.MODIFY_NULL);
+            throw new DepartmentException(ResponseEnums.MODIFY_NULL);
         }
         department.setDepName(departmentModifyReq.getDepName());
         department.setDepAdd(departmentModifyReq.getDepAdd());
@@ -112,7 +113,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentDAO, Department
         entityWrapper.eq("id", departmentDelReq.getId());
         Department department = selectOne(entityWrapper);
         if (CommonUtil.isEmpty(department)){
-            throw new DictException(ResponseEnums.DEL_NULL);
+            throw new DepartmentException(ResponseEnums.DEL_NULL);
         }
         department.setDeleteFlag(1);
         updateById(department);

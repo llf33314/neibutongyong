@@ -31,6 +31,12 @@ public class Menu extends Model<Menu> {
      */
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
+
+	/**
+	 * 父id（本表）
+	 */
+	private Integer pId;
+
     /**
      * 菜单名
      */
@@ -43,6 +49,12 @@ public class Menu extends Model<Menu> {
      * 菜单图标
      */
 	private String menuIcon;
+
+	/**
+	 * 子菜单（0：无，1：有）
+	 */
+	private Integer menuSub;
+
     /**
      * 创建时间
      */
