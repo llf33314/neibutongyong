@@ -18,10 +18,12 @@ public enum ResponseEnums {
     LOGIN_NEED(305, "Token已过期，请重新登录"),
     TOKEN_NULL(306, "Token不能为空"),
     MODIFY_NULL(307, "编辑对象不存在"),
+    DEL_NULL(308, "删除对象不存在"),
     // 400+针对自己业务
     LOGIN_NULL(401, "登录用户名或密码错误"),
     DICT_CODE_HAS(402, "字典编号不能重复"),
     DICT_NULL(402, "字典不能存在"),
+    DEPARTMENT_HAS(402, "部门已存在"),
     ;
 
     private final int code;

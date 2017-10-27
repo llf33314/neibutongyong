@@ -23,7 +23,6 @@
           <i class="iconfont gt-shezhi"></i>
           <span slot="title">设置</span>
         </el-menu-item>
-
         <el-menu-item v-for="(menus, index) in menusList":key="menus.menuUrl" :index="index+'m'" @click="gtToRouter(menus.menuUrl)">
           <i :class="'iconfont' + menus.menuIcon"></i>
           <span slot="title">{{menus.menuName}}</span>
