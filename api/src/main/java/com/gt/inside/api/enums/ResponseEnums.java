@@ -22,8 +22,10 @@ public enum ResponseEnums {
     // 400+针对自己业务
     LOGIN_NULL(401, "登录用户名或密码错误"),
     DICT_CODE_HAS(402, "字典编号不能重复"),
-    DICT_NULL(402, "字典不能存在"),
-    DEPARTMENT_HAS(402, "部门已存在"),
+    DICT_NULL(403, "字典不能存在"),
+    DEPARTMENT_HAS(404, "部门已存在"),
+    STAFF_HAS(405, "员工已存在"),
+    STAFF_NULL(406, "员工不存在"),
     ;
 
     private final int code;

@@ -40,9 +40,17 @@ public class Staff extends Model<Staff> {
      */
 	private Integer depId;
     /**
+     * 员工编号
+     */
+	private String staffCode;
+    /**
      * 员工姓名
      */
 	private String staffName;
+	/**
+	 * 英文名
+	 */
+	private String staffEnName;
     /**
      * 入职时间
      */
@@ -74,4 +82,99 @@ public class Staff extends Model<Staff> {
 		return this.id;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getDepId() {
+		return depId;
+	}
+
+	public void setDepId(Integer depId) {
+		this.depId = depId;
+	}
+
+	public String getStaffCode() {
+		return staffCode;
+	}
+
+	public void setStaffCode(String staffCode) {
+		this.staffCode = staffCode;
+	}
+
+	public String getStaffName() {
+		return staffName;
+	}
+
+	public void setStaffName(String staffName) {
+		this.staffName = staffName;
+	}
+
+	public Date getStaffJoinTime() {
+		return staffJoinTime;
+	}
+
+	public void setStaffJoinTime(Date staffJoinTime) {
+		this.staffJoinTime = staffJoinTime;
+	}
+
+	public Integer getStaffStatus() {
+		return staffStatus;
+	}
+
+	public void setStaffStatus(Integer staffStatus) {
+		this.staffStatus = staffStatus;
+	}
+
+	public String getStaffPhone() {
+		return staffPhone;
+	}
+
+	public void setStaffPhone(String staffPhone) {
+		this.staffPhone = staffPhone;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	public String getStaffEnName() {
+		return staffEnName;
+	}
+
+	public void setStaffEnName(String staffEnName) {
+		this.staffEnName = staffEnName;
+	}
 }

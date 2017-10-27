@@ -7,7 +7,7 @@
       </div>
       <div class="a-admin-table">
           <el-table :data="dictListData" border highlight-current-row style="width: 100%">
-            <el-table-column type="index" width="50"></el-table-column>
+            <el-table-column type="index" width="100"></el-table-column>
             <el-table-column prop="dictName" label="名称"></el-table-column>
             <el-table-column prop="dictRemark" label="描述"></el-table-column>
             <el-table-column label="创建时间">
@@ -25,8 +25,8 @@
             </el-table-column>
           </el-table>
       </div>
-      <el-pagination @current-change="handleCurrentChange"
-        :current-page.sync="dictListReq.current" :page-size="dictListReq.size" layout="total, prev, pager, next" :total="page.totalNums">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="dictListReq.current" 
+        :page-sizes="[10, 20, 50, 100]" :page-size="dictListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
       </el-pagination>
     </div>
     <div>
@@ -187,6 +187,10 @@ export default {
       }
     },
     handleCurrentChange(val) {
+      this.getDictList();
+    },
+    handleSizeChange(val) {
+      this.dictListReq.size = val;
       this.getDictList();
     }
   },

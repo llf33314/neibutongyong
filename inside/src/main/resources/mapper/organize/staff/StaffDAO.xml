@@ -7,7 +7,9 @@
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
 		<result column="dep_id" property="depId" />
+		<result column="staff_code" property="staffCode" />
 		<result column="staff_name" property="staffName" />
+		<result column="staff_en_name" property="staffEnName" />
 		<result column="staff_join_time" property="staffJoinTime" />
 		<result column="staff_status" property="staffStatus" />
 		<result column="staff_phone" property="staffPhone" />
@@ -18,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, dep_id, staff_name, staff_join_time, staff_status, staff_phone, create_time, create_user, delete_flag
+        id, user_id, dep_id, staff_code, staff_name, staff_en_name, staff_join_time, staff_status, staff_phone, create_time, create_user, delete_flag
     </sql>
 
 </mapper>
