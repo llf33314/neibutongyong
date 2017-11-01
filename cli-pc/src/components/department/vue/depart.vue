@@ -82,16 +82,16 @@ export default {
   },
   methods: {
     ListDepartpartment(){    //分页获取部门列表
-      requestListDepartInfo(this.departmentListReq).then(data => {  
-        console.log(data);
-        var _code = data.code;
+      requestListDepartInfo(this.departmentListReq).then(result => {
+        console.log(result);
+        var _code = result.code;
         if (_code == 100) {
-          this.departmentListData = data.data;
-          this.page.totalNums = data.page.totalNums;
-          this.page.totalPages = data.page.totalPages;
+          this.departmentListData = result.data;
+          this.page.totalNums = result.page.totalNums;
+          this.page.totalPages = result.page.totalPages;
           console.log(this.departmentListData);
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(result.msg + "[错误码：" + _code + "]");
         }
       });
     },
@@ -120,11 +120,10 @@ export default {
         }
       });
     },
-    
     openAddDepart(){  //新增事件
       this.dialogOpe.name = "新增部门";
       this.departmentAddReq = {};
-      this.dialogOpe.status = 1;  
+      this.dialogOpe.status = 1;
       this.dialogFormVisible = true;
     },
     searchClick(){ //搜索事件
@@ -132,7 +131,6 @@ export default {
     },
     handleCurrentChange(){  //分页
       this.ListDepartpartment();
-
     },
     dialogConfirm(status){
       console.log(status)

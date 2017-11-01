@@ -4,14 +4,6 @@
       <div class="a-admin-head">
         <el-button type="primary" @click="openAddUser" style="margin-right:15px;">新增</el-button>
         <el-input placeholder="登录名/真实姓名" icon="search" v-model="userListReq.useSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
-        <!--<el-select v-model="value" placeholder="请选择">-->
-          <!--<el-option-->
-            <!--v-for="item in options"-->
-            <!--:key="item.value"-->
-            <!--:label="item.label"-->
-            <!--:value="item.value">-->
-          <!--</el-option>-->
-        <!--</el-select>-->
         <el-select v-model="userListReq.state" placeholder="用户状态" @change="changeStatus">
               <el-option label="正常" value="正常"></el-option>
               <el-option label="停用" value="停用"></el-option>
