@@ -36,9 +36,9 @@
           </el-table-column>
         </el-table>
       </div>
-      <!--<el-pagination @current-change="handleCurrentChange"
-                     :current-page.sync="userListReq.current" :page-size="userListReq.size" layout="total, prev, pager, next" :total="page.totalNums">
-      </el-pagination>-->
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="userListReq.current"
+                     :page-sizes="[10, 20, 50, 100]" :page-size="userListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
+      </el-pagination>
     </div>
     <div>
         <el-dialog :title="dialogOpe.name" :visible.sync="dialogFormVisible">
@@ -82,10 +82,14 @@ export default {
         userSearch :"",
         current: '1',
         state:"正常",
-        size: 8,
+        size: 8
+      },
+      page:{
+        totalNums: 1,
+        totalPages: 1
       },
       userPage: {
-          page:{totalNums: 1, totalPages: 1},
+
           data:[]
 
       },
@@ -196,6 +200,9 @@ export default {
       });
     },
     handleCurrentChange(){ //分页
+
+    },
+    handleSizeChange(){
 
     },
     //调用列表的数据
