@@ -25,7 +25,7 @@
             </el-table-column>
           </el-table>
       </div>
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="dictListReq.current" 
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="dictListReq.current"
         :page-sizes="[10, 20, 50, 100]" :page-size="dictListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
       </el-pagination>
     </div>
