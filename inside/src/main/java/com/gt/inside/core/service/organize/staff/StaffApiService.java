@@ -1,5 +1,6 @@
 package com.gt.inside.core.service.organize.staff;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gt.inside.core.entity.organize.staff.Staff;
 
 /**
@@ -14,4 +15,11 @@ public interface StaffApiService {
      */
     Staff getStaffByUserId(Integer userId);
 
+    /**
+     * 分页根据部门查询员工
+     * @param current
+     * @param size
+     * @param departmentId
+     */
+    Page<Staff> listStaffByPageWithDepart(Integer current, Integer size, Integer departmentId);
 }

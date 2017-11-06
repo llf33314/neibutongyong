@@ -4,8 +4,9 @@ import com.gt.inside.api.base.BaseController;
 import com.gt.inside.api.dto.MenuDTO;
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.api.dto.UserDTO;
-import com.gt.inside.api.util.CommonUtil;
+import com.gt.inside.api.exception.SystemException;
 import com.gt.inside.core.exception.stage.user.UserException;
+import com.gt.inside.core.service.common.SSOService;
 import com.gt.inside.core.service.stage.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +14,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,14 +31,30 @@ public class UserStageController extends BaseController {
 
     private static Logger logger = Logger.getLogger(UserStageController.class);
 
-    @Value("${inside.sso.url}")
-    private String ssoUrl;
-
-    @Value("${inside.sso.sign.key}")
-    private String signKey;
-
     @Autowired
     UserService userService;
+
+    @Autowired
+    SSOService ssoService;
+
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+            @ApiResponse(code = 1, message = "data对象（用户对象）", response = UserDTO.class),
+    })
+    @ApiOperation(value = "获取用户", notes = "获取用户")
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
+    public ResponseDTO getUser(@RequestHeader String token){
+        try {
+            UserDTO userDTO = ssoService.getSSOUerDTO(token);
+            return ResponseDTO.createBySuccess("获取用户成功", userDTO);
+        } catch (SystemException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
 
     // 获取用户菜单
     @ApiResponses({
@@ -50,7 +66,7 @@ public class UserStageController extends BaseController {
     @RequestMapping(value = "/getUserMenus", method = RequestMethod.POST)
     public ResponseDTO getUserMenus(@RequestHeader String token){
         try {
-            UserDTO userDTO = CommonUtil.getUser(ssoUrl + "api/token/getUser", token, signKey);
+            UserDTO userDTO = ssoService.getSSOUerDTO(token);
             List<MenuDTO> menuDTOList = userDTO.getMenuDTOList();
             return ResponseDTO.createBySuccess("获取用户菜单成功", menuDTOList);
         } catch (UserException e){

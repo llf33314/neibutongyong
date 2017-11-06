@@ -46,7 +46,7 @@
           <el-form-item label="名称" :label-width="formLabelWidth">
             <el-input v-model="staff.staffName" auto-complete="off" placeholder="10字以内"></el-input>
           </el-form-item>
-          <el-form-item label="名称" :label-width="formLabelWidth">
+          <el-form-item label="英文名" :label-width="formLabelWidth">
             <el-input v-model="staff.staffEnName" auto-complete="off" placeholder="10字以内"></el-input>
           </el-form-item>
           <el-form-item label="员工编号" :label-width="formLabelWidth">

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.core.dao.function.performance.StaffPerformanceOrganizeDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.function.performance.StaffPerformanceOrganize">
+		<id column="id" property="id" />
+		<result column="staff_id" property="staffId" />
+		<result column="staff_org_id" property="staffOrgId" />
+		<result column="staff_org_code" property="staffOrgCode" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<!-- 对应组织关系查询映射结果 -->
+	<resultMap id="OrganizeResultMap" type="com.gt.inside.core.bean.function.performance.dto.ListOrganizeDTO">
+		<result column="staff_id" property="staffId" />
+		<result column="staff_org_id" property="staffOrgId" />
+		<result column="staff_name" property="staffName" />
+		<result column="staff_code" property="staffCode" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id, staff_org_id, staff_org_code, create_time
+    </sql>
+
+	<!-- 对应组织关系查询结果列 -->
+	<sql id="Organize_Column_List">
+		spo.staff_id, spo.staff_org_id, s.staff_name, s.staff_code
+	</sql>
+
+	<select id="selectListByOrgCode" resultMap="OrganizeResultMap">
+		SELECT <include refid="Organize_Column_List"/>
+		FROM t_staff s, t_staff_performance_organize spo
+		WHERE s.id = spo.staff_org_id AND spo.staff_org_code = #{code}
+		AND spo.staff_id IN
+		<foreach collection="staffIdList" index="index" item="staffId" open="(" separator="," close=")">
+			#{staffId}
+		</foreach>
+	</select>
+
+	<select id="selectPageByOrgIdAndCode" resultMap="OrganizeResultMap">
+		SELECT <include refid="Organize_Column_List"/>
+		FROM t_staff s, t_staff_performance_organize spo
+		WHERE s.id = spo.staff_id AND spo.staff_org_code = #{code}
+		AND spo.staff_org_id = #{staffOrgId}
+	</select>
+
+</mapper>

@@ -9,6 +9,8 @@ import { dictAppRouter } from '@/components/dict/router.js'
 import { staffAppRouter } from '@/components/staff/router.js'
 // 部门
 import { departRouter } from '@/components/department/router.js'
+// 绩效
+import { performanceAppRouter } from '@/components/function/performance/router.js'
 // 后台管理
 import { manageAppRouter } from '@/components/manage/router.js'
 
@@ -24,6 +26,7 @@ childrenRouter = childrenRouter.concat(homeAdminRouter);
 childrenRouter = childrenRouter.concat(dictAppRouter);
 childrenRouter = childrenRouter.concat(staffAppRouter);
 childrenRouter = childrenRouter.concat(departRouter);
+childrenRouter = childrenRouter.concat(performanceAppRouter);
 childrenRouter = childrenRouter.concat(manageAppRouter);
 
 // 主路由

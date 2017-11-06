@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.core.dao.function.performance.StaffPerformanceInfoOrgDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.function.performance.StaffPerformanceInfoOrg">
+		<id column="id" property="id" />
+		<result column="pfm_info_id" property="pfmInfoId" />
+		<result column="staff_org_code" property="staffOrgCode" />
+		<result column="staff_org_id" property="staffOrgId" />
+		<result column="staff_org_score" property="staffOrgScore" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, pfm_info_id, staff_org_code, staff_org_id, staff_org_score, create_time
+    </sql>
+
+</mapper>

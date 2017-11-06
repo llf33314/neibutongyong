@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.core.dao.function.performance.StaffPerformanceInfoDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.function.performance.StaffPerformanceInfo">
+		<id column="id" property="id" />
+		<result column="staff_id" property="staffId" />
+		<result column="pfm_name" property="pfmName" />
+		<result column="pfm_content" property="pfmContent" />
+		<result column="pfm_standard_score" property="pfmStandardScore" />
+		<result column="pfm_own_score" property="pfmOwnScore" />
+		<result column="month_id" property="monthId" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<!-- 对应组织绩效详情查询映射结果 -->
+	<resultMap id="OrganizeResultMap" type="com.gt.inside.core.bean.function.performance.dto.ListOrganizeInfoDTO">
+		<result column="id" property="id" />
+		<result column="pfm_name" property="performanceName" />
+		<result column="pfm_content" property="performanceContent" />
+		<result column="pfm_standard_score" property="performanceScore" />
+		<result column="pfm_own_score" property="ownScore" />
+		<result column="staff_org_score" property="orgScore" />
+		<result column="org_score_status" property="orgScoreStatus" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id, pfm_name, pfm_content, pfm_standard_score, pfm_own_score, month_id, create_time
+    </sql>
+
+	<!-- 对应组织绩效详情查询结果列 -->
+	<sql id="Organize_Column_List">
+		spi.id, spi.pfm_name, spi.pfm_content, spi.pfm_standard_score, spi.pfm_own_score, spio.staff_org_score, ISNULL(spio.staff_org_score) AS org_score_status
+	</sql>
+
+	<select id="selectOrganizeListByStaffIdAndMonthIdAndOrgId" resultMap="OrganizeResultMap">
+		SELECT <include refid="Organize_Column_List"/>
+		FROM t_staff_performance_info spi
+		LEFT JOIN t_staff_performance_info_org spio ON spi.id = spio.pfm_info_id AND staff_org_code = #{orgCode} AND staff_org_id = #{orgId}
+		WHERE staff_id = #{staffId} AND month_id = #{monthId}
+	</select>
+
+</mapper>

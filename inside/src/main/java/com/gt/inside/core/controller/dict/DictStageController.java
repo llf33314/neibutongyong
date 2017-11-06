@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -58,10 +59,10 @@ public class DictStageController extends BaseController {
     })
     @ApiOperation(value = "新增字典列表", notes = "新增字典列表")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseDTO add(@RequestBody @ApiParam("新增对象") DictAddReq dictAddReq, BindingResult bindingResult) {
+    public ResponseDTO add(@RequestBody @ApiParam("新增对象") @Valid DictAddReq dictAddReq, BindingResult bindingResult) {
+        logger.debug(dictAddReq.toString());
         InvalidParameter(bindingResult);
         try {
-            logger.debug(dictAddReq.toString());
             dictService.addDict(dictAddReq);
             return ResponseDTO.createBySuccessMessage("新增字典成功");
         } catch (DictException e){
@@ -78,7 +79,7 @@ public class DictStageController extends BaseController {
     })
     @ApiOperation(value = "修改字典列表", notes = "修改字典列表")
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public ResponseDTO modify(@RequestBody @ApiParam("修改对象") DictModifyReq dictModifyReq, BindingResult bindingResult) {
+    public ResponseDTO modify(@RequestBody @ApiParam("修改对象") @Valid DictModifyReq dictModifyReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(dictModifyReq.toString());
@@ -98,7 +99,7 @@ public class DictStageController extends BaseController {
     })
     @ApiOperation(value = "删除字典", notes = "删除字典")
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public ResponseDTO del(@RequestBody @ApiParam("删除对象") DictDelReq dictDelReq, BindingResult bindingResult) {
+    public ResponseDTO del(@RequestBody @ApiParam("删除对象") @Valid DictDelReq dictDelReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(dictDelReq.toString());
@@ -139,7 +140,7 @@ public class DictStageController extends BaseController {
     })
     @ApiOperation(value = "新增字典详情", notes = "新增字典详情")
     @RequestMapping(value = "/addInfo", method = RequestMethod.POST)
-    public ResponseDTO addInfo(@RequestBody @ApiParam("新增对象") DictInfoAddReq dictInfoAddReq, BindingResult bindingResult) {
+    public ResponseDTO addInfo(@RequestBody @ApiParam("新增对象") @Valid DictInfoAddReq dictInfoAddReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(dictInfoAddReq.toString());
@@ -159,7 +160,7 @@ public class DictStageController extends BaseController {
     })
     @ApiOperation(value = "修改字典详情", notes = "修改字典详情")
     @RequestMapping(value = "/modifyInfo", method = RequestMethod.POST)
-    public ResponseDTO modifyInfo(@RequestBody @ApiParam("修改对象") DictInfoModifyReq dictInfoModifyReq, BindingResult bindingResult) {
+    public ResponseDTO modifyInfo(@RequestBody @ApiParam("修改对象") @Valid DictInfoModifyReq dictInfoModifyReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(dictInfoModifyReq.toString());
@@ -179,7 +180,7 @@ public class DictStageController extends BaseController {
     })
     @ApiOperation(value = "修改字典详情", notes = "修改字典详情")
     @RequestMapping(value = "/delInfo", method = RequestMethod.POST)
-    public ResponseDTO delInfo(@RequestBody @ApiParam("修改对象") DictInfoDelReq dictInfoDelReq, BindingResult bindingResult) {
+    public ResponseDTO delInfo(@RequestBody @ApiParam("修改对象") @Valid DictInfoDelReq dictInfoDelReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(dictInfoDelReq.toString());

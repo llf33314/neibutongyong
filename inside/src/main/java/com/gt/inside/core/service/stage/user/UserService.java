@@ -1,12 +1,8 @@
 package com.gt.inside.core.service.stage.user;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.gt.inside.core.bean.stage.user.req.LoginReq;
-import com.gt.inside.core.bean.stage.user.res.MenuRes;
+import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.core.entity.stage.user.User;
-import com.gt.inside.core.exception.stage.user.UserException;
-
-import java.util.List;
 
 /**
  * <p>

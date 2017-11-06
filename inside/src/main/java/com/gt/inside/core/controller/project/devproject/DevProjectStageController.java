@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -58,7 +59,7 @@ public class DevProjectStageController extends BaseController {
     })
     @ApiOperation(value = "新增开发项目", notes = "新增开发项目")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseDTO add(@RequestBody @ApiParam("新增对象")DevProjectAddReq devProjectAddReq, BindingResult bindingResult){
+    public ResponseDTO add(@RequestBody @ApiParam("新增对象") @Valid DevProjectAddReq devProjectAddReq, BindingResult bindingResult){
         InvalidParameter(bindingResult);
         try {
             devProjectService.addDevProject(devProjectAddReq);
@@ -77,7 +78,7 @@ public class DevProjectStageController extends BaseController {
     })
     @ApiOperation(value = "编辑开发项目", notes = "编辑开发项目")
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public ResponseDTO modify(@RequestBody @ApiParam("新增对象")DevProjectModifyReq devProjectModifyReq, BindingResult bindingResult){
+    public ResponseDTO modify(@RequestBody @ApiParam("新增对象") @Valid DevProjectModifyReq devProjectModifyReq, BindingResult bindingResult){
         InvalidParameter(bindingResult);
         try {
             devProjectService.modifyDevProject(devProjectModifyReq);
