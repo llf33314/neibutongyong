@@ -9,6 +9,7 @@
           <el-table :data="dictListData" border highlight-current-row style="width: 100%">
             <el-table-column type="index" width="100"></el-table-column>
             <el-table-column prop="dictName" label="名称"></el-table-column>
+            <el-table-column prop="dictCode" label="编号"></el-table-column>
             <el-table-column prop="dictRemark" label="描述"></el-table-column>
             <el-table-column label="创建时间">
                 <template slot-scope="scope">
@@ -94,7 +95,7 @@ export default {
       });
     },
     addDict() {
-      // console.log(this.dict);
+      console.log(this.dict);
       requestAddDict(this.dict).then(data => {
         console.log(data);
         var _code = data.code;

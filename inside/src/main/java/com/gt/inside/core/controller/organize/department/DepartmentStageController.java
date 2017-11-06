@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -81,7 +82,7 @@ public class DepartmentStageController extends BaseController {
     })
     @ApiOperation(value = "新增部门列表", notes = "新增部门列表")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseDTO add(@RequestBody @ApiParam("新增对象") DepartmentAddReq departmentAddReq, BindingResult bindingResult) {
+    public ResponseDTO add(@RequestBody @ApiParam("新增对象") @Valid DepartmentAddReq departmentAddReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(departmentAddReq.toString());
@@ -101,7 +102,7 @@ public class DepartmentStageController extends BaseController {
     })
     @ApiOperation(value = "修改部门列表", notes = "修改部门列表")
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public ResponseDTO modify(@RequestBody @ApiParam("修改对象") DepartmentModifyReq departmentModifyReq, BindingResult bindingResult) {
+    public ResponseDTO modify(@RequestBody @ApiParam("修改对象") @Valid DepartmentModifyReq departmentModifyReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(departmentModifyReq.toString());
@@ -121,7 +122,7 @@ public class DepartmentStageController extends BaseController {
     })
     @ApiOperation(value = "删除部门", notes = "删除部门")
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public ResponseDTO del(@RequestBody @ApiParam("删除对象") DepartmentDelReq departmentDelReq, BindingResult bindingResult) {
+    public ResponseDTO del(@RequestBody @ApiParam("删除对象") @Valid DepartmentDelReq departmentDelReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(departmentDelReq.toString());

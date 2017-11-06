@@ -41,4 +41,82 @@ public class DateTimeKit {
 		return Integer.parseInt(String.valueOf(between_days));
 	}
 
+	/**
+	 * 格式化时间
+	 * @param formatString 时间格式 例：（yyyy-MM-dd HH:mm:ss）
+	 * @param date
+	 * @return
+	 */
+	public static String formatTime(String formatString, Date date){
+		SimpleDateFormat format = new SimpleDateFormat(formatString);
+		return format.format(date);
+	}
+
+	/**
+	 * 格式化时间，到月（yyyy-MM）
+	 * @param date
+	 * @return
+	 */
+	public static String formatTimeUntilMonth(Date date){
+		return formatTime("yyyy-MM", date);
+	}
+
+	/**
+	 * 格式化时间，到日（yyyy-MM-dd）
+	 * @param date
+	 * @return
+	 */
+	public static String formatTimeUntilDay(Date date){
+		return formatTime("yyyy-MM-dd", date);
+	}
+
+	/**
+	 * 格式化时间，到小时（yyyy-MM-dd HH）
+	 * @param date
+	 * @return
+	 */
+	public static String formatTimeUntilHour(Date date){
+		return formatTime("yyyy-MM-dd HH", date);
+	}
+
+	/**
+	 * 格式化时间，到分钟（yyyy-MM-dd HH:mm）
+	 * @param date
+	 * @return
+	 */
+	public static String formatTimeUntilMinute(Date date){
+		return formatTime("yyyy-MM-dd HH:mm", date);
+	}
+
+	/**
+	 * 格式化时间，到秒（yyyy-MM-dd HH:mm:ss）
+	 * @param date
+	 * @return
+	 */
+	public static String formatTimeUntilSecond(Date date){
+		return formatTime("yyyy-MM-dd HH:mm:ss", date);
+	}
+
+	/**
+	 * 获取本月第一天
+	 * @return
+	 */
+	public static Date getThisMonthFirstDay(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 0);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		return calendar.getTime();
+	}
+
+	/**
+	 * 获取本月第一天
+	 * @return
+	 */
+	public static Date getThisMonthLastDay(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 0);
+		return calendar.getTime();
+	}
+
 }

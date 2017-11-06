@@ -32,6 +32,8 @@
 		<dev.lib.mybatisplus-spring-boot-starter>1.0.4</dev.lib.mybatisplus-spring-boot-starter>
 		<dev.lib.lombok>1.16.18</dev.lib.lombok>
 		<dev.lib.velocity>1.7</dev.lib.velocity>
+		<dev.lib.poi>3.15</dev.lib.poi>
+		<dev.lib.beanUtils>1.9.3</dev.lib.beanUtils>
 	</properties>
 
 	<dependencies>
@@ -126,6 +128,24 @@
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>${dev.lib.common-net}</version>
+		</dependency>
+
+		<!-- poi Excel数据导出插件 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${dev.lib.poi}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>${dev.lib.poi}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${dev.lib.beanUtils}</version>
 		</dependency>
 
 		<dependency>

@@ -9,6 +9,8 @@ import { dictAppRouter } from '@/components/dict/router.js'
 import { staffAppRouter } from '@/components/staff/router.js'
 // 部门
 import { departRouter } from '@/components/department/router.js'
+// 绩效
+import { performanceAppRouter } from '@/components/function/performance/router.js'
 
 const menu = () => import('@/components/home/vue/menu')
 const home = () => import('@/components/home/vue/home')
@@ -22,6 +24,7 @@ childrenRouter = childrenRouter.concat(homeAdminRouter);
 childrenRouter = childrenRouter.concat(dictAppRouter);
 childrenRouter = childrenRouter.concat(staffAppRouter);
 childrenRouter = childrenRouter.concat(departRouter);
+childrenRouter = childrenRouter.concat(performanceAppRouter);
 
 // 主路由
 var routes = [{

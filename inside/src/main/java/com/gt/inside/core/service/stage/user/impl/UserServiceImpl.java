@@ -1,6 +1,7 @@
 package com.gt.inside.core.service.stage.user.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.core.dao.stage.user.UserDAO;
 import com.gt.inside.core.entity.stage.user.User;
 import com.gt.inside.core.service.stage.user.UserService;

@@ -31,8 +31,8 @@
         </el-table-column>
       </el-table>
     </div>
-      <el-pagination @current-change="handleCurrentChange"
-        :current-page.sync="dictInfoListReq.current" :page-size="dictInfoListReq.size" layout="total, prev, pager, next" :total="page.totalNums">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="dictInfoListReq.current" 
+        :page-sizes="[10, 20, 50, 100]" :page-size="dictInfoListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
       </el-pagination>
     </div>
     <div>
@@ -65,7 +65,7 @@ export default {
         dictId: 0,
         dictSearch: "",
         current: 1,
-        size: 10
+        size: 2
       },
       page: {
         totalNums: 1,

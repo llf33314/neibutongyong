@@ -12,7 +12,9 @@ import com.gt.inside.core.service.dict.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by psr on 2017/10/26 0026.
@@ -32,7 +34,7 @@ public class DictApiServiceImpl implements DictApiService{
      * @return
      */
     @Override
-    public List<DictInfo> getDictInfoByDictCode(Integer dictCode) {
+    public List<DictInfo> listDictInfoByDictCode(Integer dictCode) {
         EntityWrapper<Dict> entityWrapperDict = new EntityWrapper<>();
         entityWrapperDict.eq("dict_code", dictCode);
         entityWrapperDict.eq("delete_flag", 0);
@@ -45,5 +47,31 @@ public class DictApiServiceImpl implements DictApiService{
         entityWrapper.eq("delete_flag", 0);
         List<DictInfo> dictInfoList = dictInfoService.selectList(entityWrapper);
         return dictInfoList;
+    }
+
+    /**
+     * 根据字典code，查询字典详情信息
+     *
+     * @param dictCode
+     * @return map
+     */
+    @Override
+    public Map<Integer, String> getDictInfoByDictCode(Integer dictCode) {
+        EntityWrapper<Dict> entityWrapperDict = new EntityWrapper<>();
+        entityWrapperDict.eq("dict_code", dictCode);
+        entityWrapperDict.eq("delete_flag", 0);
+        Dict dict = dictService.selectOne(entityWrapperDict);
+        if (CommonUtil.isEmpty(dict)){
+            throw new DictException(ResponseEnums.DICT_NULL);
+        }
+        EntityWrapper<DictInfo> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("dict_id", dict.getId());
+        entityWrapper.eq("delete_flag", 0);
+        List<DictInfo> dictInfoList = dictInfoService.selectList(entityWrapper);
+        Map<Integer, String> map = new HashMap<>();
+        for (DictInfo dictInfo : dictInfoList){
+            map.put(dictInfo.getInfoCode(), dictInfo.getInfoContent());
+        }
+        return map;
     }
 }

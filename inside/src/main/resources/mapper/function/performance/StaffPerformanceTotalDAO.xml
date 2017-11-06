@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.inside.core.dao.function.performance.StaffPerformanceTotalDAO">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.function.performance.StaffPerformanceTotal">
+		<id column="id" property="id" />
+		<result column="staff_id" property="staffId" />
+		<result column="month_id" property="monthId" />
+		<result column="own_total" property="ownTotal" />
+		<result column="level_code" property="levelCode" />
+		<result column="level_release" property="levelRelease" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<!-- 对应组织绩效查询映射结果 -->
+	<resultMap id="OrganizeResultMap" type="com.gt.inside.core.bean.function.performance.dto.ListOrganizeTotalDTO">
+		<result column="staff_id" property="staffId" />
+		<result column="staff_org_id" property="staffOrgId" />
+		<result column="own_total" property="ownTotal" />
+		<result column="level_code" property="levelCode" />
+		<result column="level_release" property="levelRelease" />
+		<result column="staff_org_total" property="orgTotal" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, staff_id, month_id, own_total, level_code, level_release, create_time
+    </sql>
+
+	<!-- 对应组织绩效查询结果列 -->
+	<sql id="Organize_Column_List">
+		spt.staff_id, spt.own_total, spto.staff_org_id, spto.staff_org_total, spt.level_code, spt.level_release
+	</sql>
+
+	<!-- 因未带月份，暂时弃用 -->
+	<select id="selectListWithOrgCode" resultMap="OrganizeResultMap">
+		SELECT <include refid="Organize_Column_List"/>
+		FROM t_staff_performance_total spt
+		LEFT JOIN t_staff_performance_total_org spto
+		ON spt.id = spto.pfm_total_id AND spto.staff_org_code = #{code} AND spto.staff_org_id = #{staffOrgId}
+		WHERE spt.staff_id IN
+		<foreach collection="staffIds" index="index" item="staffId" open="(" separator="," close=")">
+			#{staffId}
+		</foreach>
+	</select>
+
+	<select id="selectListByMonIdWithOrgCode" resultMap="OrganizeResultMap">
+		SELECT <include refid="Organize_Column_List"/>
+		FROM t_staff_performance_total spt
+		LEFT JOIN t_staff_performance_total_org spto
+		ON spt.id = spto.pfm_total_id AND spto.staff_org_code = #{code} AND spto.staff_org_id = #{staffOrgId}
+		WHERE spt.month_id = #{monthId} AND spt.staff_id IN
+		<foreach collection="staffIds" index="index" item="staffId" open="(" separator="," close=")">
+			#{staffId}
+		</foreach>
+	</select>
+
+</mapper>

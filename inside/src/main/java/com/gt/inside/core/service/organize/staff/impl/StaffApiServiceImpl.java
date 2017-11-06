@@ -1,6 +1,7 @@
 package com.gt.inside.core.service.organize.staff.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gt.inside.core.entity.organize.staff.Staff;
 import com.gt.inside.core.service.organize.staff.StaffApiService;
 import com.gt.inside.core.service.organize.staff.StaffService;
@@ -33,5 +34,24 @@ public class StaffApiServiceImpl implements StaffApiService {
         entityWrapper.eq("user_id", userId);
         Staff staff = staffService.selectOne(entityWrapper);
         return staff;
+    }
+
+    /**
+     * 分页根据部门查询员工
+     *
+     * @param current
+     * @param size
+     * @param departmentId
+     */
+    @Override
+    public Page<Staff> listStaffByPageWithDepart(Integer current, Integer size, Integer departmentId) {
+        Page<Staff> page = new Page<>(current, size);
+        EntityWrapper<Staff> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("delete_flag", 0);
+        entityWrapper.eq("staff_status", 0);
+        if (departmentId != null){
+            entityWrapper.eq("dep_id", departmentId);
+        }
+        return staffService.selectPage(page, entityWrapper);
     }
 }
