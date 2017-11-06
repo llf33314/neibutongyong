@@ -159,6 +159,9 @@ export default {
     },
     exportExcel() {
       // 导出excel
+      this.$message({
+        message: '功能暂未开放，敬请期待'
+      });
     },
     handleCurrentChange(val) {
       this.listBranchStaff();

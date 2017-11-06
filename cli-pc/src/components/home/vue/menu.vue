@@ -37,27 +37,7 @@
               </el-menu-item>
             </el-menu-item-group>
         </el-submenu>
-
-        <!-- <div v-for="(menus, index) in menusList" :key="menus.menuUrl">
-
-          <el-submenu :index="index+'m'" v-show="menus.menuSub == 1">
-              <template slot="title">
-                <i :class="'el-icon-message'"></i>
-                <span slot="title">{{menus.menuName}}</span>
-              </template>
-              <el-menu-item-group v-for="(subMenu, subIndex) in menus.subMenuList" :key="subMenu.menuUrl">
-                <span slot="title">分组一</span>
-                <el-menu-item :index="index + '-' + subIndex" @click="gtToRouter(subMenu.menuUrl)">{{subMenu.menuName}}</el-menu-item>
-              </el-menu-item-group>
-          </el-submenu>
-
-          <el-menu-item v-show="menus.menuSub == 0" :index="index+'m'" @click="gtToRouter(menus.menuUrl)">
-            <i :class="'iconfont' + menus.menuIcon"></i>
-            <span slot="title">{{menus.menuName}}</span>
-          </el-menu-item>
-          
-        </div> -->
-        
+                
       </el-menu>
     </div>
     <div class="content">

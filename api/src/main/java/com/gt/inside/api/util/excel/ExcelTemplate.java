@@ -343,7 +343,10 @@ public class ExcelTemplate {
         styles = new HashMap<Integer, CellStyle>();
         for(Row row:sheet) {
             for(Cell c:row) {
-//                if(c.getCellType()!=Cell.CELL_TYPE_STRING) continue;
+//                if(c.getCellType()!=Cell.CELL_TYPE_STRING){
+//                    continue;
+//                }
+//                c.setCellType(Cell.CELL_TYPE_STRING);
                 String str = c.getStringCellValue().trim();
                 if(str.equals(DEFAULT_STYLE)) {
                     defaultStyle = c.getCellStyle();
