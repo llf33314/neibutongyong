@@ -10,13 +10,13 @@
 		<result column="menu_url" property="menuUrl" />
 		<result column="menu_icon" property="menuIcon" />
 		<result column="menu_sub" property="menuSub" />
-		<result column="creat_time" property="creatTime" />
+		<result column="create_time" property="createTime" />
 		<result column="delete_flag" property="deleteFlag" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, p_id, menu_name, menu_url, menu_icon, menu_sub, creat_time, delete_flag
+        id, p_id, menu_name, menu_url, menu_icon, menu_sub, create_time, delete_flag
     </sql>
 
 </mapper>

@@ -54,7 +54,7 @@ public class Menu extends Model<Menu> {
     /**
      * 创建时间
      */
-	private Date creatTime;
+	private Date createTime;
     /**
      * 删除标识（0：正常，1：删除）
      */
@@ -114,12 +114,12 @@ public class Menu extends Model<Menu> {
 		this.menuSub = menuSub;
 	}
 
-	public Date getCreatTime() {
-		return creatTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setCreatTime(Date creatTime) {
-		this.creatTime = creatTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public Integer getDeleteFlag() {

@@ -22,3 +22,20 @@ export const requestListRoleByPage = params => { return axios.post(`${inside_bas
 export const requestRelationRole = params => { return axios.post(`${inside_base}/app/user/relationRole`, params).then(res => res.data) }
 /* 取消关联角色 */
 export const requestCancelRelationRole = params => { return axios.post(`${inside_base}/app/user/cancelRelationRole`, params).then(res => res.data) }
+
+/* 分页获取菜单列表 */
+export const requestListMenu = params => { return axios.post(`${inside_base}/app/menu/listByPage`, params).then(res => res.data) }
+/* 新增菜单 */
+export const requestAddMenu = params => { return axios.post(`${inside_base}/app/menu/add`, params).then(res => res.data) }
+/* 修改菜单 */
+export const requestModifyMenu = params => { return axios.post(`${inside_base}/app/menu/modify`, params).then(res => res.data) }
+/* 删除菜单 */
+export const requestDelMenu = params => { return axios.post(`${inside_base}/app/menu/del`, params).then(res => res.data) }
+/* 分页获取子菜单列表 */
+export const requestListMenuSub = params => { return axios.post(`${inside_base}/app/menu/listSubByPage`, params).then(res => res.data) }
+/* 新增子菜单 */
+export const requestAddMenuSub = params => { return axios.post(`${inside_base}/app/menu/addSub`, params).then(res => res.data) }
+/* 修改子菜单 */
+export const requestModifyMenuSub = params => { return axios.post(`${inside_base}/app/menu/modifySub`, params).then(res => res.data) }
+/* 删除子菜单 */
+export const requestDelMenuSub = params => { return axios.post(`${inside_base}/app/menu/delSub`, params).then(res => res.data) }
