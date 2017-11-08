@@ -1,13 +1,13 @@
 // 自评分
-<template>                 
+<template>
   <div>
-    <span>{{checkOwnInfoData.userName}}自评分，当前月份：{{checkOwnInfoData.monthDate}}</span>
+    <span class="a-gt-own-span">{{checkOwnInfoData.userName}}自评分，当前月份：{{checkOwnInfoData.monthDate}}</span>
     <el-table :data="listStaticInfoData" border show-summary style="width: 100%">
       <el-table-column type="index" label="评分项" width="180"></el-table-column>
       <el-table-column prop="performanceName" label="评级纬度"></el-table-column>
       <el-table-column prop="performanceContent" label="评价内容">
         <template slot-scope="scope">
-          <el-input v-if="ownModifyBoolean == true && scope.row.status == 0" v-model="scope.row.performanceContent"type="textarea" 
+          <el-input v-if="ownModifyBoolean == true && scope.row.status == 0" v-model="scope.row.performanceContent"type="textarea"
            auto-complete="off" placeholder="主要工作项目或内容/完成标准（100字以内）"></el-input>
            <span v-else>{{scope.row.performanceContent == '' ? "无" : scope.row.performanceContent}}</span>
         </template>
@@ -20,7 +20,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="checkOwnInfoData.checkOwnInfoBoolean == false">
+    <div v-if="checkOwnInfoData.checkOwnInfoBoolean == false" style="margin-top: 30px;">
       <el-button type="primary" @click="modifyOwn()" v-if="ownModifyBoolean == false">自评分</el-button>
       <el-button type="success" @click="endOwn()" v-if="ownModifyBoolean == true">评分完成</el-button>
       <el-button type="success" @click="uploadOwn()" v-if="ownModifyBoolean == false">保存并上传评分</el-button>
@@ -138,3 +138,11 @@ export default {
   }
 };
 </script>
+<style type="text/css" scoped>
+  .a-gt-own-span{
+    font-size: 14px;
+    color: #666;
+    display: block;
+    padding:0 18px 25px;
+  }
+</style>

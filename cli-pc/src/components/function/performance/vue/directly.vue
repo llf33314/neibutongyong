@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <span>本月直属员工绩效评分列表</span>
+      <span class="a-gt-own-span">本月直属员工绩效评分列表</span>
       <el-table :data="directlyStaffListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" label="序号" width="180"></el-table-column>
           <el-table-column prop="staffName" label="姓名"></el-table-column>
@@ -25,7 +25,7 @@
           </el-table-column>
       </el-table>
     </div>
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listDirectlyStaffReq.current" 
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listDirectlyStaffReq.current"
         :page-sizes="[10, 20, 50, 100]" :page-size="listDirectlyStaffReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
     </el-pagination>
   </div>
@@ -84,3 +84,15 @@ export default {
 };
 </script>
 
+<style type="text/css" scoped>
+  .a-gt-own-span{
+    font-size: 14px;
+    color: #666;
+    display: block;
+    padding: 0 18px 25px;
+  }
+  .el-pagination {
+    text-align: right;
+    margin-top: 25px;
+  }
+</style>
