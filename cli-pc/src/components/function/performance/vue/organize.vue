@@ -1,7 +1,7 @@
 // 组织关系设置
 <template>
   <div>
-    <el-select v-model="listOrganizeReq.departmentId" clearable placeholder="请选择部门">
+    <el-select v-model="listOrganizeReq.departmentId" clearable placeholder="请选择部门" style="margin: 0px 0 29px;">
       <el-option v-for="item in departmentListData" :key="item.id" :label="item.depName" :value="item.id"></el-option>
     </el-select>
     <el-table :data="organizeListData" border highlight-current-row v-loading="loading" style="width: 100%">
@@ -11,13 +11,13 @@
       <el-table-column prop="directlyName" label="直属领导"></el-table-column>
       <el-table-column prop="branchName" label="分管领导"></el-table-column>
       <el-table-column label="操作">
-          <template slot-scope="scope">                  
+          <template slot-scope="scope">
               <el-button size="small" type="primary" @click="relationDirectly(scope.row)">关联直属领导</el-button>
               <el-button size="small" type="primary" @click="relationBranch(scope.row)">关联分管领导</el-button>
           </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listOrganizeReq.current" 
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listOrganizeReq.current"
       :page-sizes="[10, 20, 50, 100]" :page-size="listOrganizeReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
     </el-pagination>
     <div>
@@ -27,11 +27,11 @@
           <el-table-column prop="staffEnName" label="英文名"></el-table-column>
           <el-table-column prop="staffCode" label="编号"></el-table-column>
         </el-table>
-        <el-pagination @size-change="handleStaffSizeChange" @current-change="handleStaffCurrentChange" :current-page.sync="staffListReq.current" 
+        <el-pagination @size-change="handleStaffSizeChange" @current-change="handleStaffCurrentChange" :current-page.sync="staffListReq.current"
           :page-sizes="[10, 20, 50, 100]" :page-size="staffListReq.size" layout="total, sizes, prev, pager, next" :total="pageStaff.totalNums">
         </el-pagination>
         <span>当前选择的{{organizeOpe.name}}：{{organize.staffOrgName}}</span>
-        <el-button type="primary" @click="saveSelect()">保存选择</el-button>
+        <el-button type="primary" @click="saveSelect()" style="margin-left: 15px;">保存选择</el-button>
       </el-dialog>
     </div>
   </div>
@@ -232,3 +232,30 @@ export default {
 };
 </script>
 
+<style type="text/css" scoped>
+  .el-pagination {
+    white-space: nowrap;
+    padding: 15px 5px;
+    color: #48576a;
+    text-align: right;
+  }
+  .el-pagination button, .el-pagination span {
+    vertical-align: 0;
+  }
+  .el-pager, .el-pager li {
+    vertical-align: 0;
+  }
+  .el-dialog {
+    position: absolute;
+    left: 56%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    margin-bottom: 50px;
+    margin-left: 0;
+    top: 32% !important;
+  }
+</style>

@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="a-gt-user">
     <div>
-      <div class="a-admin-head">
+      <div style="margin-bottom: 20px;">
         <el-button type="primary" @click="openAddUser" style="margin-right:15px;">新增</el-button>
         <el-input placeholder="登录名/真实姓名" icon="search" v-model="userListReq.userSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
         <el-select v-model="userListReq.userStatus" @change="changeStatus" style="width:80px!important;">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </div>
-      <div class="a-admin-table">
+      <div>
         <el-table :data="userListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" width="50"></el-table-column>
           <el-table-column prop="loginName" label="登录名"></el-table-column>
@@ -16,7 +16,7 @@
           <el-table-column prop="staffName" label="员工姓名"></el-table-column>
           <el-table-column prop="userStatus" label="状态">
              <template slot-scope="scope">
-               {{scope.row.userStatus == 0 ? '正常' : '停用'}} 
+               {{scope.row.userStatus == 0 ? '正常' : '停用'}}
              </template>
           </el-table-column>
           <el-table-column label="创建时间">
@@ -25,7 +25,7 @@
               <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column label="操作" width="350">
               <template  slot-scope="scope">
               <el-button size="small" type="primary" @click="relation(scope.row)">关联</el-button>
               <el-button size="small" @click="restPwd(scope.row.userId)">重置密码</el-button>
@@ -59,7 +59,7 @@
         </el-dialog>
     </div>
     <div>
-      <el-dialog title="关联信息" :visible.sync="dialogVisible">
+      <el-dialog title="关联信息" :visible.sync="dialogVisible" class="yong">
           <el-button type="primary" @click="toRelationStaff">关联员工</el-button>
           <el-button type="primary" @click="toRelationRole">关联角色</el-button>
           <span slot="footer" class="dialog-footer">
@@ -69,32 +69,32 @@
       </el-dialog>
     </div>
     <div>
-      <el-dialog title="关联员工" :visible.sync="dialogStaffVisible">
+      <el-dialog title="关联员工" :visible.sync="dialogStaffVisible" >
         <el-table :data="userStaffListData" highlight-current-row @current-change="handleStaffTableChange">
           <el-table-column prop="staffName" label="姓名"></el-table-column>
           <el-table-column prop="staffEnName" label="英文名"></el-table-column>
           <el-table-column prop="staffCode" label="编号"></el-table-column>
         </el-table>
-        <el-pagination @size-change="handleStaffSizeChange" @current-change="handleStaffCurrentChange" :current-page.sync="userStaffListReq.current" 
+        <el-pagination @size-change="handleStaffSizeChange" @current-change="handleStaffCurrentChange" :current-page.sync="userStaffListReq.current"
           :page-sizes="[10, 20, 50, 100]" :page-size="userStaffListReq.size" layout="total, sizes, prev, pager, next" :total="pageStaff.totalNums">
         </el-pagination>
         <span>当前关联的员工：{{userOpe.staffName}}</span>
-        <el-button type="primary" @click="saveStaff">保存选择</el-button>
+        <el-button type="primary" @click="saveStaff" style="margin-left: 15px;margin-top: 25px;">保存选择</el-button>
       </el-dialog>
     </div>
     <div>
-      <el-dialog title="关联角色" :visible.sync="dialogRoleVisible">
+      <el-dialog title="关联角色" :visible.sync="dialogRoleVisible" >
         <el-table :data="userRoleListData" highlight-current-row @current-change="handleStaffTableChange">
           <el-table-column prop="roleName" label="角色名"></el-table-column>
           <el-table-column label="角色权限">
             <template slot-scope="scope">
-               {{scope.row.rolePower == 0 ? '正常' : '最高权限'}} 
+               {{scope.row.rolePower == 0 ? '正常' : '最高权限'}}
              </template>
           </el-table-column>
           <el-table-column prop="roleRemark" label="角色描述"></el-table-column>
           <el-table-column label="关联角色">
             <template slot-scope="scope">
-               {{scope.row.userHas == 0 ? '已关联' : '未关联'}} 
+               {{scope.row.userHas == 0 ? '已关联' : '未关联'}}
              </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -104,7 +104,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination @size-change="handleRoleSizeChange" @current-change="handleRoleCurrentChange" :current-page.sync="userRoleListReq.current" 
+        <el-pagination @size-change="handleRoleSizeChange" @current-change="handleRoleCurrentChange" :current-page.sync="userRoleListReq.current"
           :page-sizes="[10, 20, 50, 100]" :page-size="userRoleListReq.size" layout="total, sizes, prev, pager, next" :total="pageRole.totalNums">
         </el-pagination>
       </el-dialog>
@@ -468,4 +468,37 @@ export default {
   }
 };
 </script>
-
+<style type="text/css" scoped>
+  .a-gt-user {
+    padding: 25px;
+  }
+  .el-dialog {
+    position: absolute;
+    left: 56%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 32px;
+    margin-left: 0px;
+    top: 32% !important;
+  }
+  .el-dialog--small {
+    width: 55%;
+  }
+  .el-pagination {
+    white-space: nowrap;
+    padding: 25px 5px;
+    color: #48576a;
+    text-align: right;
+  }
+  .yong{
+    width: 55%;
+    left: 30%;
+    top: 12%;
+  }
+</style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-tabs v-model="manage" type="card" @tab-click="handleClick">
+  <div style="padding: 25px;">
+    <el-tabs v-model="manage" type="card" @tab-click="handleClick" style="margin-bottom: 15px;">
       <el-tab-pane label="绩效总览" name="total"></el-tab-pane>
       <el-tab-pane label="组织关系设置" name="organize"></el-tab-pane>
       <el-tab-pane label="自评分" name="own"></el-tab-pane>
