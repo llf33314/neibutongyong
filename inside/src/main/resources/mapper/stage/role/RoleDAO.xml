@@ -12,9 +12,31 @@
 		<result column="delete_flag" property="deleteFlag" />
 	</resultMap>
 
+	<!-- 角色用户关系查询映射结果 -->
+	<resultMap id="RoleUserHasResultMap" type="com.gt.inside.core.bean.stage.role.dto.RoleUserHasDTO">
+		<id column="id" property="roleId" />
+		<result column="role_name" property="roleName" />
+		<result column="role_power" property="rolePower" />
+		<result column="role_remark" property="roleRemark" />
+		<result column="create_time" property="createTime" />
+		<result column="user_has" property="userHas" />
+	</resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, role_name, role_power, role_remark, create_time, delete_flag
     </sql>
+
+    <!-- 角色用户查询结果列 -->
+    <sql id="Role_User_Has_Column_List">
+        r.id, r.role_name, r.role_power, r.role_remark, r.create_time, ISNULL(ur.user_id) AS user_has
+    </sql>
+
+	<select id="listRoleUserHas" resultMap="RoleUserHasResultMap">
+		SELECT <include refid="Role_User_Has_Column_List"/>
+		FROM t_role r
+		LEFT JOIN t_user_role ur ON r.id = ur.role_id AND user_id = #{userId}
+		WHERE r.delete_flag = 0
+	</select>
 
 </mapper>

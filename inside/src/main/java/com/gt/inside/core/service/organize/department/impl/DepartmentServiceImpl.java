@@ -117,6 +117,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentDAO, Department
         }
         department.setDeleteFlag(1);
         updateById(department);
+        deleteById(department.getId());
     }
 
     /**

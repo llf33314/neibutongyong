@@ -5,6 +5,7 @@ import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.core.bean.organize.staff.req.*;
 import com.gt.inside.core.entity.organize.staff.Staff;
 import com.gt.inside.core.exception.dict.DictException;
+import com.gt.inside.core.exception.organize.staff.StaffException;
 import com.gt.inside.core.service.organize.staff.StaffStageService;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
@@ -43,7 +44,7 @@ public class StaffStageController extends BaseController {
             logger.debug(staffListReq.toString());
             ResponseDTO<List<Staff>> responseDTO =  staffStageService.listStaffByPage(staffListReq);
             return responseDTO;
-        } catch (DictException e){
+        } catch (StaffException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
         } catch (Exception e){
@@ -63,7 +64,7 @@ public class StaffStageController extends BaseController {
             logger.debug(staffAddReq.toString());
             staffStageService.addStaff(staffAddReq);
             return ResponseDTO.createBySuccessMessage("新增员工成功");
-        } catch (DictException e){
+        } catch (StaffException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
         } catch (Exception e){
@@ -83,7 +84,7 @@ public class StaffStageController extends BaseController {
             logger.debug(staffModifyReq.toString());
             staffStageService.modifyStaff(staffModifyReq);
             return ResponseDTO.createBySuccessMessage("修改员工成功");
-        } catch (DictException e){
+        } catch (StaffException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
         } catch (Exception e){
@@ -103,7 +104,7 @@ public class StaffStageController extends BaseController {
             logger.debug(staffDelReq.toString());
             staffStageService.delStaff(staffDelReq);
             return ResponseDTO.createBySuccessMessage("删除员工成功");
-        } catch (DictException e){
+        } catch (StaffException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
         } catch (Exception e){
@@ -123,7 +124,7 @@ public class StaffStageController extends BaseController {
             logger.debug(staffQuitReq.toString());
             staffStageService.quitStaff(staffQuitReq);
             return ResponseDTO.createBySuccessMessage("离职员工成功");
-        } catch (DictException e){
+        } catch (StaffException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
         } catch (Exception e){

@@ -122,6 +122,7 @@ public class StaffStageServiceImpl implements StaffStageService {
         }
         staff.setDeleteFlag(1);
         staffService.updateById(staff);
+        staffService.deleteById(staff.getId());
     }
 
     /**

@@ -11,6 +11,7 @@ public enum ResponseEnums {
     ERROR(200, "请求失败"),
     LOGIN(201, "请先登录"),
     VAILD(202, "数据验证错误"),
+    INFONULL(203, "信息重复"),
     // 300+针对统一业务
     TOKEN_ERROR(301, "无效的Token"),
     SIGN_TIME_OUT(302,"签名请求超时"),
@@ -31,6 +32,8 @@ public enum ResponseEnums {
     PERFOMANCE_INFO_NULL(408, "评分信息不存在"),
     PERFOMANCE_MONTH_NULL(409, "评分月份不存在"),
     PERFOMANCE_NO_RELEASE(410, "评级不可发布"),
+    USER_HAS(411, "用户已存在"),
+    USER_NULL(411, "用户不存在"),
     ;
 
     private final int code;

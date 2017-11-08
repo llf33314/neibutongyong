@@ -10,7 +10,7 @@ inside:
   web:
     url: http://www.ryan.com:8087/#/token/
   sso:
-    url: http://www.ryan.com:7078/
+    url: http://192.168.3.10:7078/
     sign:
       key: GTRYANSSO
 

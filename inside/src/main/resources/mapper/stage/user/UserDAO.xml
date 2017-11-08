@@ -10,11 +10,43 @@
 		<result column="user_pwd" property="userPwd" />
 		<result column="user_status" property="userStatus" />
 		<result column="create_time" property="createTime" />
+		<result column="delete_flag" property="deleteFlag" />
+	</resultMap>
+
+	<!-- 用户列表查询映射结果 -->
+	<resultMap id="UserStaffResultMap" type="com.gt.inside.core.bean.stage.user.res.ListUserRes">
+		<id column="id" property="userId" />
+		<result column="login_name" property="loginName" />
+		<result column="user_name" property="userName" />
+		<result column="user_status" property="userStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="staff_id" property="staffId" />
+		<result column="staff_name" property="staffName" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, login_name, user_name, user_pwd, user_status, create_time
+        id, login_name, user_name, user_pwd, user_status, create_time, delete_flag
     </sql>
+
+    <!-- 用户员工查询结果列 -->
+    <sql id="User_Staff_Column_List">
+        u.id, u.login_name, u.user_name, u.user_status, u.create_time, s.id AS staff_id, s.staff_name
+    </sql>
+
+	<select id="listByPageBySearchAndStatus" resultMap="UserStaffResultMap">
+		SELECT <include refid="User_Staff_Column_List"/>
+		FROM t_user u
+		LEFT JOIN t_staff s ON s.user_id = u.id AND s.delete_flag = 0
+		<where>
+			u.delete_flag = 0
+			<if test="userSearch != null and userSearch != ''">
+				AND ( login_name LIKE concat(concat('%',#{userSearch}),'%') OR user_name LIKE concat(concat('%',#{userSearch}),'%') )
+			</if>
+			<if test="userStatus != null">
+				AND user_status = #{userStatus}
+			</if>
+		</where>
+	</select>
 
 </mapper>

@@ -1,4 +1,4 @@
-package com.gt.inside.core.controller.stage.user;
+package com.gt.inside.core.controller.home;
 
 import com.gt.inside.api.base.BaseController;
 import com.gt.inside.api.dto.ResponseDTO;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by psr on 2017/10/17 0017.
  */
-@Api(value = "/app/test", description = "用户管理")
+@Api(value = "/app/test", description = "测试接口")
 @RestController
 @RequestMapping(value = "/app/test")
 public class TestController extends BaseController {
