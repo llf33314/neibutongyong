@@ -1,7 +1,7 @@
 // 直属领导评分
-<template>                 
+<template>
   <div>
-    <span>评分员工：{{staffInfo.staffName}}</span>
+    <span class="a-gt-own-span">评分员工：{{staffInfo.staffName}}</span>
     <el-table :data="directlyInfoListData" border show-summary style="width: 100%">
       <el-table-column type="index" label="评分项" width="180"></el-table-column>
       <el-table-column prop="performanceName" label="评级纬度"></el-table-column>
@@ -15,9 +15,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" @click="modifyDirectly()" v-show="directlyModifyBoolean == false">直属领导评分</el-button>
-    <el-button type="success" @click="endDirectly()" v-show="directlyModifyBoolean == true">评分完成</el-button>
-    <el-button type="success" @click="uploadOwn()" v-show="directlyModifyBoolean == false">保存并上传评分</el-button>
+    <el-button type="primary" @click="modifyDirectly()" v-show="directlyModifyBoolean == false" style="margin-top: 25px;">直属领导评分</el-button>
+    <el-button type="success" @click="endDirectly()" v-show="directlyModifyBoolean == true" style="margin-top: 25px;">评分完成</el-button>
+    <el-button type="success" @click="uploadOwn()" v-show="directlyModifyBoolean == false" style="margin-top: 25px;">保存并上传评分</el-button>
   </div>
 </template>
 <script>
@@ -95,4 +95,11 @@ export default {
   }
 };
 </script>
-
+<style type="text/css" scoped>
+  .a-gt-own-span{
+    font-size: 14px;
+    color: #666;
+    display: block;
+    padding:0 18px 25px;
+  }
+</style>
