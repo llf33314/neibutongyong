@@ -1,10 +1,7 @@
 package com.gt.inside.core.service.stage.menu;
 
 import com.gt.inside.api.dto.ResponseDTO;
-import com.gt.inside.core.bean.stage.menu.req.AddMenuReq;
-import com.gt.inside.core.bean.stage.menu.req.DelMenuReq;
-import com.gt.inside.core.bean.stage.menu.req.ListMenuReq;
-import com.gt.inside.core.bean.stage.menu.req.ModifyMenuReq;
+import com.gt.inside.core.bean.stage.menu.req.*;
 import com.gt.inside.core.entity.stage.menu.Menu;
 
 import java.util.List;
@@ -37,4 +34,29 @@ public interface MenuStageService {
      * @param delMenuReq
      */
     void del(DelMenuReq delMenuReq);
+
+    /**
+     * 分页获取子菜单列表
+     * @param listSubMenuReq
+     * @return
+     */
+    ResponseDTO<List<Menu>> listSubByPage(ListSubMenuReq listSubMenuReq);
+
+    /**
+     * 新增子菜单
+     * @param addSubMenuReq
+     */
+    void addSub(AddSubMenuReq addSubMenuReq);
+
+    /**
+     * 修改子菜单
+     * @param modifySubMenuReq
+     */
+    void modifySub(ModifySubMenuReq modifySubMenuReq);
+
+    /**
+     * 删除子菜单
+     * @param delSubMenuReq
+     */
+    void delSub(DelSubMenuReq delSubMenuReq);
 }

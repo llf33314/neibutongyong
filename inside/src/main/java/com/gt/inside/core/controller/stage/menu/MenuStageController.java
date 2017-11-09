@@ -2,10 +2,7 @@ package com.gt.inside.core.controller.stage.menu;
 
 import com.gt.inside.api.base.BaseController;
 import com.gt.inside.api.dto.ResponseDTO;
-import com.gt.inside.core.bean.stage.menu.req.AddMenuReq;
-import com.gt.inside.core.bean.stage.menu.req.DelMenuReq;
-import com.gt.inside.core.bean.stage.menu.req.ListMenuReq;
-import com.gt.inside.core.bean.stage.menu.req.ModifyMenuReq;
+import com.gt.inside.core.bean.stage.menu.req.*;
 import com.gt.inside.core.bean.stage.user.res.ListUserRes;
 import com.gt.inside.core.entity.stage.menu.Menu;
 import com.gt.inside.core.exception.stage.menu.MenuException;
@@ -121,11 +118,88 @@ public class MenuStageController extends BaseController{
     }
 
     // 分页获取子菜单列表
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+            @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
+            @ApiResponse(code = 2, message = "菜单对象", response = Menu.class),
+    })
+    @ApiOperation(value = "分页获取子菜单列表", notes = "分页获取子菜单列表")
+    @RequestMapping(value = "/listSubByPage", method = RequestMethod.POST)
+    public ResponseDTO listSubByPage(@RequestBody @ApiParam("分页请求") ListSubMenuReq listSubMenuReq) {
+        try {
+            logger.debug(listSubMenuReq.toString());
+            ResponseDTO<List<Menu>> responseDTO =  menuStageService.listSubByPage(listSubMenuReq);
+            return responseDTO;
+        } catch (MenuException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
 
     // 新增子菜单
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+    })
+    @ApiOperation(value = "新增子菜单", notes = "新增子菜单")
+    @RequestMapping(value = "/addSub", method = RequestMethod.POST)
+    public ResponseDTO addSub(@RequestBody @ApiParam("分页请求") @Valid AddSubMenuReq addSubMenuReq, BindingResult bindingResult) {
+        InvalidParameter(bindingResult);
+        try {
+            logger.debug(addSubMenuReq.toString());
+            menuStageService.addSub(addSubMenuReq);
+            return ResponseDTO.createBySuccessMessage("新增子菜单成功");
+        } catch (MenuException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
 
     // 编辑子菜单
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+    })
+    @ApiOperation(value = "修改子菜单", notes = "修改子菜单")
+    @RequestMapping(value = "/modifySub", method = RequestMethod.POST)
+    public ResponseDTO modifySub(@RequestBody @ApiParam("分页请求") @Valid ModifySubMenuReq modifySubMenuReq, BindingResult bindingResult) {
+        InvalidParameter(bindingResult);
+        try {
+            logger.debug(modifySubMenuReq.toString());
+            menuStageService.modifySub(modifySubMenuReq);
+            return ResponseDTO.createBySuccessMessage("修改子菜单成功");
+        } catch (MenuException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
 
     // 删除子菜单
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+    })
+    @ApiOperation(value = "删除菜单", notes = "删除菜单")
+    @RequestMapping(value = "/delSub", method = RequestMethod.POST)
+    public ResponseDTO delSub(@RequestBody @ApiParam("分页请求") @Valid DelSubMenuReq delSubMenuReq, BindingResult bindingResult) {
+        InvalidParameter(bindingResult);
+        try {
+            logger.debug(delSubMenuReq.toString());
+            menuStageService.delSub(delSubMenuReq);
+            return ResponseDTO.createBySuccessMessage("删除子菜单成功");
+        } catch (MenuException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
 
 }
