@@ -39,3 +39,16 @@ export const requestAddMenuSub = params => { return axios.post(`${inside_base}/a
 export const requestModifyMenuSub = params => { return axios.post(`${inside_base}/app/menu/modifySub`, params).then(res => res.data) }
 /* 删除子菜单 */
 export const requestDelMenuSub = params => { return axios.post(`${inside_base}/app/menu/delSub`, params).then(res => res.data) }
+
+/* 分页获取角色列表 */
+export const requestListRole = params => { return axios.post(`${inside_base}/app/role/listByPage`, params).then(res => res.data) }
+/* 新增角色 */
+export const requestAddRole = params => { return axios.post(`${inside_base}/app/role/add`, params).then(res => res.data) }
+/* 修改角色 */
+export const requestModifyRole = params => { return axios.post(`${inside_base}/app/role/modify`, params).then(res => res.data) }
+/* 删除角色 */
+export const requestDelRole = params => { return axios.post(`${inside_base}/app/role/del`, params).then(res => res.data) }
+/* 查询可关联的菜单 */
+export const requestListAllMenu = params => { return axios.post(`${inside_base}/app/role/listMenu`, params).then(res => res.data) }
+/* 关联菜单 */
+export const requestRelationRoleMenu = params => { return axios.post(`${inside_base}/app/role/relationMenu`, params).then(res => res.data) }

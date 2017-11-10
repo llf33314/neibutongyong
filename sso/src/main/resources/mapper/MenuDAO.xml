@@ -31,7 +31,7 @@
 
 	<!-- 菜单DTO -->
 	<sql id="MenuDTO_Column_List">
-		id, p_id, menu_name, menu_url, menu_icon, menu_sub
+		tm.id, tm.p_id, tm.menu_name, tm.menu_url, tm.menu_icon, tm.menu_sub
 	</sql>
 
 	<select id="selectListUserRoleMenuDTO" parameterType="java.lang.Integer" resultMap="MenuDTOResultMap">

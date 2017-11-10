@@ -324,6 +324,8 @@ export default {
             message: '关联员工成功！'
           });
           this.getUserList();
+        }else if(_code == 203){
+          this.$message.error('该员工已关联其他用户！');
         } else {
           this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
@@ -421,6 +423,7 @@ export default {
       // 关联员工
       this.getUserStaffList();
       this.dialogStaffVisible = true;
+      this.dialogVisible = false;
     },
     saveStaff() {
       // 保存关联员工
@@ -451,6 +454,7 @@ export default {
       // 关联角色
       this.getUserRoleList();
       this.dialogRoleVisible = true;
+      this.dialogVisible = false;
     },
     handleRoleCurrentChange(val) {
       // 弹框角色里面的分页选择

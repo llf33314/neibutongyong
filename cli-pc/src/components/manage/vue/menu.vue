@@ -149,7 +149,7 @@ export default {
       });
     },
     delMenu(id) {
-      this.$confirm('此操作将永久删除该字典以及详情数据，是否继续？', '提示', {
+      this.$confirm('此操作将永久删除该菜单以及相关数据，是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -159,7 +159,7 @@ export default {
           if (_code == 100) {
             this.$message({
               type: 'success',
-              message: '您已删除该字典及其详情数据！'
+              message: '删除成功！'
             });
             this.getMenuList();
           } else {

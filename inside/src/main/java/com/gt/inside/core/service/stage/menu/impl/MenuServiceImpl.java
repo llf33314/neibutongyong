@@ -1,10 +1,14 @@
 package com.gt.inside.core.service.stage.menu.impl;
 
+import com.gt.inside.core.bean.stage.menu.dto.MenuMainDTO;
 import com.gt.inside.core.entity.stage.menu.Menu;
 import com.gt.inside.core.dao.stage.menu.MenuDAO;
 import com.gt.inside.core.service.stage.menu.MenuService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +20,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuDAO, Menu> implements MenuService {
-	
+
+    @Autowired
+    MenuDAO menuDAO;
+
+    /**
+     * 获取所有菜单及其子菜单
+     *
+     * @return
+     */
+    @Override
+    public List<MenuMainDTO> selectListAllMenuWithSub() {
+        return menuDAO.selectListAllMenuWithSub();
+    }
 }

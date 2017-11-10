@@ -8,9 +8,11 @@ import com.gt.inside.api.enums.ResponseEnums;
 import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.core.bean.stage.menu.req.*;
 import com.gt.inside.core.entity.stage.menu.Menu;
+import com.gt.inside.core.entity.stage.role.RoleMenu;
 import com.gt.inside.core.exception.stage.menu.MenuException;
 import com.gt.inside.core.service.stage.menu.MenuService;
 import com.gt.inside.core.service.stage.menu.MenuStageService;
+import com.gt.inside.core.service.stage.role.RoleMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class MenuStageServiceImpl implements MenuStageService {
 
     @Autowired
     MenuService menuService;
+
+    @Autowired
+    RoleMenuService roleMenuService;
 
     /**
      * 分页获取菜单
@@ -98,9 +103,14 @@ public class MenuStageServiceImpl implements MenuStageService {
         }
         menu.setDeleteFlag(1);
         menuService.updateAllColumnById(menu);
+        // 删除对应所有子菜单
         EntityWrapper<Menu> delEntityWrapper = new EntityWrapper<>();
         delEntityWrapper.eq("p_id", delMenuReq.getId());
         menuService.delete(delEntityWrapper);
+        // 删除对应所有角色
+        EntityWrapper<RoleMenu> delRoleMenuEntityWrapper = new EntityWrapper<>();
+        delRoleMenuEntityWrapper.eq("menu_id", delMenuReq.getId());
+        roleMenuService.delete(delRoleMenuEntityWrapper);
         menuService.deleteById(delMenuReq.getId());
     }
 
@@ -133,7 +143,6 @@ public class MenuStageServiceImpl implements MenuStageService {
         menu.setMenuName(addSubMenuReq.getMenuName());
         menu.setMenuSub(0);
         menu.setMenuUrl(addSubMenuReq.getMenuUrl());
-        menu.setpId(0);
         menu.setCreateTime(new Date());
         menu.setDeleteFlag(0);
         menuService.insertAllColumn(menu);
@@ -171,6 +180,10 @@ public class MenuStageServiceImpl implements MenuStageService {
         }
         menu.setDeleteFlag(1);
         menuService.updateAllColumnById(menu);
+        // 删除对应所有角色
+        EntityWrapper<RoleMenu> delRoleMenuEntityWrapper = new EntityWrapper<>();
+        delRoleMenuEntityWrapper.eq("menu_id", delSubMenuReq.getId());
+        roleMenuService.delete(delRoleMenuEntityWrapper);
         menuService.deleteById(delSubMenuReq.getId());
     }
 }

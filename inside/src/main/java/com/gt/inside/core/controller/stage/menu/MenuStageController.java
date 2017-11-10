@@ -3,7 +3,6 @@ package com.gt.inside.core.controller.stage.menu;
 import com.gt.inside.api.base.BaseController;
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.core.bean.stage.menu.req.*;
-import com.gt.inside.core.bean.stage.user.res.ListUserRes;
 import com.gt.inside.core.entity.stage.menu.Menu;
 import com.gt.inside.core.exception.stage.menu.MenuException;
 import com.gt.inside.core.service.stage.menu.MenuStageService;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * Created by psr on 2017/11/8 0008.
  */
-@Api(value = "/app/menu", description = "字典管理")
+@Api(value = "/app/menu", description = "菜单管理")
 @RestController
 @RequestMapping(value = "/app/menu")
 public class MenuStageController extends BaseController{
@@ -60,7 +59,7 @@ public class MenuStageController extends BaseController{
     })
     @ApiOperation(value = "新增菜单", notes = "新增菜单")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseDTO add(@RequestBody @ApiParam("分页请求") @Valid AddMenuReq addMenuReq, BindingResult bindingResult) {
+    public ResponseDTO add(@RequestBody @ApiParam("请求对象") @Valid AddMenuReq addMenuReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(addMenuReq.toString());
@@ -81,7 +80,7 @@ public class MenuStageController extends BaseController{
     })
     @ApiOperation(value = "修改菜单", notes = "修改菜单")
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public ResponseDTO modify(@RequestBody @ApiParam("分页请求") @Valid ModifyMenuReq modifyMenuReq, BindingResult bindingResult) {
+    public ResponseDTO modify(@RequestBody @ApiParam("请求对象") @Valid ModifyMenuReq modifyMenuReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(modifyMenuReq.toString());
@@ -102,7 +101,7 @@ public class MenuStageController extends BaseController{
     })
     @ApiOperation(value = "删除菜单", notes = "删除菜单")
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public ResponseDTO del(@RequestBody @ApiParam("分页请求") @Valid DelMenuReq delMenuReq, BindingResult bindingResult) {
+    public ResponseDTO del(@RequestBody @ApiParam("请求对象") @Valid DelMenuReq delMenuReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(delMenuReq.toString());
@@ -145,7 +144,7 @@ public class MenuStageController extends BaseController{
     })
     @ApiOperation(value = "新增子菜单", notes = "新增子菜单")
     @RequestMapping(value = "/addSub", method = RequestMethod.POST)
-    public ResponseDTO addSub(@RequestBody @ApiParam("分页请求") @Valid AddSubMenuReq addSubMenuReq, BindingResult bindingResult) {
+    public ResponseDTO addSub(@RequestBody @ApiParam("请求对象") @Valid AddSubMenuReq addSubMenuReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(addSubMenuReq.toString());
@@ -166,7 +165,7 @@ public class MenuStageController extends BaseController{
     })
     @ApiOperation(value = "修改子菜单", notes = "修改子菜单")
     @RequestMapping(value = "/modifySub", method = RequestMethod.POST)
-    public ResponseDTO modifySub(@RequestBody @ApiParam("分页请求") @Valid ModifySubMenuReq modifySubMenuReq, BindingResult bindingResult) {
+    public ResponseDTO modifySub(@RequestBody @ApiParam("请求对象") @Valid ModifySubMenuReq modifySubMenuReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(modifySubMenuReq.toString());
@@ -187,7 +186,7 @@ public class MenuStageController extends BaseController{
     })
     @ApiOperation(value = "删除菜单", notes = "删除菜单")
     @RequestMapping(value = "/delSub", method = RequestMethod.POST)
-    public ResponseDTO delSub(@RequestBody @ApiParam("分页请求") @Valid DelSubMenuReq delSubMenuReq, BindingResult bindingResult) {
+    public ResponseDTO delSub(@RequestBody @ApiParam("请求对象") @Valid DelSubMenuReq delSubMenuReq, BindingResult bindingResult) {
         InvalidParameter(bindingResult);
         try {
             logger.debug(delSubMenuReq.toString());

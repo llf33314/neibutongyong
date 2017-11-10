@@ -9,19 +9,17 @@
         </div>
         <div class="a-list-head">
             <el-button type="primary" @click="openAddMenuSub" style="margin-right: 20px;">新增</el-button>
-            <el-input placeholder="子菜单详情编号/子菜单详情内容" icon="search" v-model="menuSubListReq.menuSearch" :on-icon-click="searchClick" style="width:250px!important;"></el-input>
         </div>
     <div class="a-admin-table">
       <el-table :data="menuSubListData" border highlight-current-row style="width: 100%">
-        <el-table-column type="index" width="50"></el-table-column>
-        <el-table-column prop="infoContent" label="详情内容"></el-table-column>
-        <el-table-column prop="infoCode" label="详情编号"></el-table-column>
-        <el-table-column prop="infoRemark" label="详情描述"></el-table-column>
+        <el-table-column type="index" width="100"></el-table-column>
+        <el-table-column prop="menuName" label="菜单名称"></el-table-column>
+        <el-table-column prop="menuUrl" label="菜单路径"></el-table-column>
         <el-table-column label="创建时间">
-          <template slot-scope="scope">
-            <el-icon name="time"></el-icon>
-            <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
-          </template>
+            <template slot-scope="scope">
+                <el-icon name="time"></el-icon>
+                <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
+            </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -38,14 +36,11 @@
     <div>
       <el-dialog :title="dialogOpe.name" :visible.sync="dialogMenuSubVisible">
         <el-form :model="menuSub">
-          <el-form-item label="子菜单详情编号" :label-width="formLabelWidth">
-            <el-input v-model="menuSub.infoCode" auto-complete="off" placeholder="4位数字"></el-input>
+          <el-form-item label="子菜单名：" :label-width="formLabelWidth">
+            <el-input v-model="menuSub.menuName" auto-complete="off" placeholder="4位数字"></el-input>
           </el-form-item>
-          <el-form-item label="子菜单详情内容" :label-width="formLabelWidth">
-            <el-input v-model="menuSub.infoContent" auto-complete="off" placeholder="10字以内"></el-input>
-          </el-form-item>
-          <el-form-item label="子菜单详情描述" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="menuSub.infoRemark" placeholder="25字以内"></el-input>
+          <el-form-item label="子菜单链接：" :label-width="formLabelWidth">
+            <el-input v-model="menuSub.menuUrl" auto-complete="off" placeholder="10字以内"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -67,8 +62,7 @@ export default {
   data() {
     return {
       menuSubListReq: {
-        menuId: 0,
-        menuSearch: '',
+        pid: 0,
         current: 1,
         size: 2
       },
@@ -79,10 +73,9 @@ export default {
       menuSubListData: [],
       menuSub: {
         id: 0,
-        menuId: 0,
-        infoCode: 0,
-        infoContent: '',
-        infoRemark: ''
+        pid: 0,
+        menuName: '',
+        menuUrl: ''
       },
       dialogOpe: {
         name: '子菜单信息',
@@ -136,7 +129,7 @@ export default {
       });
     },
     delMenuSub(id) {
-      this.$confirm('此操作将永久删除该条数据，是否继续？', '提示', {
+      this.$confirm('此操作将永久删除该条数据及相关数据，是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -146,7 +139,7 @@ export default {
           if (_code == 100) {
             this.$message({
               type: 'success',
-              message: '您已删除数据！'
+              message: '删除成功！'
             });
             this.getMenuSubList();
           } else {
@@ -158,6 +151,7 @@ export default {
     openAddMenuSub() {
       // 新增子菜单详情
       this.menuSub = {};
+      this.menuSub.pid = this.menuSubListReq.pid;
       this.dialogOpe.name = '新增子菜单';
       this.dialogOpe.status = 1;
       this.dialogMenuSubVisible = true;
@@ -196,10 +190,14 @@ export default {
     },
     handleCurrentChange(val) {
       this.getMenuSubList();
+    },
+    handleSizeChange(val) {
+      this.menuSubListReq.size = val;
+      this.getMenuSubList();
     }
   },
   created() {
-    this.menuSubListReq.menuId = this.$route.query.id;
+    this.menuSubListReq.pid = this.$route.query.id;
     this.getMenuSubList();
   }
 };

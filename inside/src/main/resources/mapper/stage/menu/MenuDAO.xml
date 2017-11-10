@@ -14,9 +14,32 @@
 		<result column="delete_flag" property="deleteFlag" />
 	</resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+	<!-- MenuDTO查询映射结果 -->
+	<resultMap id="MenuMainDTOResultMap" type="com.gt.inside.core.bean.stage.menu.dto.MenuMainDTO">
+		<id column="id" property="id" />
+		<result column="p_id" property="pId" />
+		<result column="menu_name" property="menuName" />
+		<collection property="menuSubDTOList" ofType="com.gt.inside.core.bean.stage.menu.dto.MenuSubDTO">
+			<id column="sid" property="id"/>
+			<result column="smenu_name" property="menuName"/>
+		</collection>
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
         id, p_id, menu_name, menu_url, menu_icon, menu_sub, create_time, delete_flag
     </sql>
+
+	<!-- 通用查询结果列 -->
+	<sql id="MenuMainDTO_Column_List">
+		m.id, m.menu_name, ms.id AS sid, ms.menu_name AS smenu_name
+	</sql>
+
+	<select id="selectListAllMenuWithSub" resultMap="MenuMainDTOResultMap">
+		SELECT <include refid="MenuMainDTO_Column_List"/>
+		FROM t_menu m
+		LEFT JOIN t_menu ms ON m.id = ms.p_id AND ms.delete_flag = 0
+		WHERE m.delete_flag = 0 AND m.p_id = 0
+	</select>
 
 </mapper>

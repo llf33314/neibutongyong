@@ -188,9 +188,8 @@ public class UserServiceImpl extends ServiceImpl<UserDAO, User> implements UserS
     public void relationStaff(RelationStaffReq relationStaffReq) {
         Staff staffCheck = staffService.selectByUserId(relationStaffReq.getUserId());
         if (CommonUtil.isNotEmpty(staffCheck)){
-            if (!staffCheck.getUserId().equals(relationStaffReq.getUserId())){
-                throw new UserException(ResponseEnums.INFONULL);
-            }
+            staffCheck.setUserId(null);
+            staffService.updateAllColumnById(staffCheck);
         }
         Staff staff = staffService.selectById(relationStaffReq.getStaffId());
         if (CommonUtil.isEmpty(staff)){

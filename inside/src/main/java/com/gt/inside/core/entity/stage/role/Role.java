@@ -58,4 +58,51 @@ public class Role extends Model<Role> {
 		return this.id;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public Integer getRolePower() {
+		return rolePower;
+	}
+
+	public void setRolePower(Integer rolePower) {
+		this.rolePower = rolePower;
+	}
+
+	public String getRoleRemark() {
+		return roleRemark;
+	}
+
+	public void setRoleRemark(String roleRemark) {
+		this.roleRemark = roleRemark;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
 }
