@@ -5,28 +5,33 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.gt.inside.sso.core.entity.Menu">
 		<id column="id" property="id" />
+		<result column="p_id" property="pId" />
 		<result column="menu_name" property="menuName" />
 		<result column="menu_url" property="menuUrl" />
 		<result column="menu_icon" property="menuIcon" />
+		<result column="menu_sub" property="menuSub" />
 		<result column="creat_time" property="creatTime" />
 		<result column="delete_flag" property="deleteFlag" />
 	</resultMap>
 
 	<!-- 菜单DTO查询映射结果 -->
 	<resultMap id="MenuDTOResultMap" type="com.gt.inside.api.dto.MenuDTO">
+		<result column="id" property="id" />
+		<result column="p_id" property="pId" />
 		<result column="menu_name" property="menuName" />
 		<result column="menu_url" property="menuUrl" />
 		<result column="menu_icon" property="menuIcon" />
+		<result column="menu_sub" property="menuSub" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, menu_name, menu_url, menu_icon, creat_time, delete_flag
+        id, p_id, menu_name, menu_url, menu_icon, menu_sub, creat_time, delete_flag
     </sql>
 
 	<!-- 菜单DTO -->
 	<sql id="MenuDTO_Column_List">
-		menu_name, menu_url, menu_icon
+		tm.id, tm.p_id, tm.menu_name, tm.menu_url, tm.menu_icon, tm.menu_sub
 	</sql>
 
 	<select id="selectListUserRoleMenuDTO" parameterType="java.lang.Integer" resultMap="MenuDTOResultMap">

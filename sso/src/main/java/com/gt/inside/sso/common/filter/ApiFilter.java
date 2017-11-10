@@ -44,7 +44,7 @@ public class ApiFilter implements Filter {
         servletResponse.setContentType("application/json; charset=utf-8");
 
         logger.debug("api filter");
-        Integer code = SignFilterUtils.postByHttp(servletRequest, signKey);
+        /*Integer code = SignFilterUtils.postByHttp(servletRequest, signKey);
         logger.debug(code);
         if (ResponseEnums.SIGN_TIME_OUT.getCode() == code){
             // 超过指定时间
@@ -61,7 +61,7 @@ public class ApiFilter implements Filter {
             servletResponse.getWriter().write(JSONObject.toJSONString(ResponseDTO.createByEnums(ResponseEnums.TOKEN_NULL)));
             return;
         }
-        logger.debug("api token --> " + token);
+        logger.debug("api token --> " + token);*/
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

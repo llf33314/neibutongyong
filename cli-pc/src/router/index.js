@@ -5,6 +5,14 @@ import axios from './../http'
 import { homeAdminRouter } from '@/components/home/router.js'
 // 字典
 import { dictAppRouter } from '@/components/dict/router.js'
+// 员工
+import { staffAppRouter } from '@/components/staff/router.js'
+// 部门
+import { departRouter } from '@/components/department/router.js'
+// 绩效
+import { performanceAppRouter } from '@/components/function/performance/router.js'
+// 后台管理
+import { manageAppRouter } from '@/components/manage/router.js'
 
 const menu = () => import('@/components/home/vue/menu')
 const home = () => import('@/components/home/vue/home')
@@ -16,6 +24,10 @@ var childrenRouter = [];
 // 多个子路由
 childrenRouter = childrenRouter.concat(homeAdminRouter);
 childrenRouter = childrenRouter.concat(dictAppRouter);
+childrenRouter = childrenRouter.concat(staffAppRouter);
+childrenRouter = childrenRouter.concat(departRouter);
+childrenRouter = childrenRouter.concat(performanceAppRouter);
+childrenRouter = childrenRouter.concat(manageAppRouter);
 
 // 主路由
 var routes = [{

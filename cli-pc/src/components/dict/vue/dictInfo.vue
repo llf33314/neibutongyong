@@ -1,14 +1,17 @@
 <template>
   <div>
     <div>
-      <div>
-        <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/app/dict' }">字典列表</el-breadcrumb-item>
-            <el-breadcrumb-item>字典详情</el-breadcrumb-item>
-        </el-breadcrumb>
-        <el-button type="primary" @click="openAddDictInfo">新增</el-button>
-        <el-input placeholder="字典详情编号/字典详情内容" icon="search" v-model="dictInfoListReq.dictSearch" :on-icon-click="searchClick"></el-input>
-      </div>
+        <div class="a-list-top">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item :to="{ path: '/app/dict' }">字典列表</el-breadcrumb-item>
+                <el-breadcrumb-item>字典详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="a-list-head">
+            <el-button type="primary" @click="openAddDictInfo" style="margin-right: 20px;">新增</el-button>
+            <el-input placeholder="字典详情编号/字典详情内容" icon="search" v-model="dictInfoListReq.dictSearch" :on-icon-click="searchClick" style="width:250px!important;"></el-input>
+        </div>
+    <div class="a-admin-table">
       <el-table :data="dictInfoListData" border highlight-current-row style="width: 100%">
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column prop="infoContent" label="详情内容"></el-table-column>
@@ -27,8 +30,9 @@
             </template>
         </el-table-column>
       </el-table>
-      <el-pagination @current-change="handleCurrentChange"
-        :current-page.sync="dictInfoListReq.current" :page-size="dictInfoListReq.size" layout="total, prev, pager, next" :total="page.totalNums">
+    </div>
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="dictInfoListReq.current" 
+        :page-sizes="[10, 20, 50, 100]" :page-size="dictInfoListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
       </el-pagination>
     </div>
     <div>
@@ -61,7 +65,7 @@ export default {
         dictId: 0,
         dictSearch: "",
         current: 1,
-        size: 10
+        size: 2
       },
       page: {
         totalNums: 1,
@@ -196,3 +200,15 @@ export default {
 };
 </script>
 
+
+<style>
+.a-list-top{
+    padding:25px;
+}
+.a-list-head{
+    padding: 0 0 35px 25px;
+}
+.a-admin-table{
+  margin:0 25px 25px;;
+}
+</style>

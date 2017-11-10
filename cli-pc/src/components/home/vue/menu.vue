@@ -19,16 +19,25 @@
           <i class="iconfont gt-shouye"></i>
           <span slot="title">首页</span>
         </el-menu-item>
-        <el-menu-item index="1" @click="gtToRouter('/set')">
-          <i class="iconfont gt-shezhi"></i>
-          <span slot="title">设置</span>
-        </el-menu-item>
 
-        <el-menu-item v-for="(menus, index) in menusList":key="menus.menuUrl" :index="index+'m'" @click="gtToRouter(menus.menuUrl)">
-          <i :class="'iconfont' + menus.menuIcon"></i>
+        <el-menu-item v-for="(menus, index) in menusList" :key="menus.menuUrl" v-show="menus.menuSub == 0" :index="index+'m'" 
+          @click="gtToRouter(menus.menuUrl)">
+          <i :class="'iconfont ' + menus.menuIcon"></i>
           <span slot="title">{{menus.menuName}}</span>
         </el-menu-item>
 
+        <el-submenu v-for="(menus, index) in menusList" :key="menus.menuUrl" :index="index+'m'" v-show="menus.menuSub == 1">
+            <template slot="title">
+              <i :class="'iconfont ' + menus.menuIcon"></i>
+              <span slot="title">{{menus.menuName}}</span>
+            </template>
+            <el-menu-item-group v-for="(subMenu, subIndex) in menus.subMenuList" :key="subMenu.menuUrl">
+              <el-menu-item :index="index + '-' + subIndex" @click="gtToRouter(subMenu.menuUrl)">
+                {{subMenu.menuName}}
+              </el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
+                
       </el-menu>
     </div>
     <div class="content">
