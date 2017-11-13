@@ -129,4 +129,11 @@ public interface PerformanceStageService {
      * @param userDTO
      */
     void exportExcel(UserDTO userDTO);
+
+    /**
+     * 获取绩效权限
+     * @param userDTO
+     * @return
+     */
+    PowerRes getPower(UserDTO userDTO);
 }

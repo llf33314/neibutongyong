@@ -78,6 +78,20 @@ export default {
       this.directlyModifyBoolean = false;
     },
     uploadOwn() {
+      var _checkData = this.directlyInfoListData;
+      console.log(_checkData);
+      for (var i = 0; i < _checkData.length; i++) {
+        if (
+          _checkData[i].directlyScore == '' ||
+          _checkData[i].directlyScore == null
+        ) {
+          this.$message({
+            message: '请先完成评分!',
+            type: 'warning'
+          });
+          return;
+        }
+      }
       this.$confirm('上传评分后将不可修改，是否继续上传？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -96,10 +110,10 @@ export default {
 };
 </script>
 <style type="text/css" scoped>
-  .a-gt-own-span{
-    font-size: 14px;
-    color: #666;
-    display: block;
-    padding:0 18px 25px;
-  }
+.a-gt-own-span {
+  font-size: 14px;
+  color: #666;
+  display: block;
+  padding: 0 18px 25px;
+}
 </style>

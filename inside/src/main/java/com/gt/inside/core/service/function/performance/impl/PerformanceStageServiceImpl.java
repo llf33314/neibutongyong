@@ -77,6 +77,40 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     private static Integer levelRelease = 1; // 发布
 
     /**
+     * 获取绩效权限
+     *
+     * @param userDTO
+     * @return
+     */
+    @Override
+    public PowerRes getPower(UserDTO userDTO) {
+        PowerRes powerRes = new PowerRes();
+        if (userDTO.getRoleStatus().equals(1)){
+            powerRes.setOrganizeSetFlag(true);
+        }
+        Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
+        if (CommonUtil.isEmpty(staff)){
+            powerRes.setOwnFlag(false);
+            return powerRes;
+        }
+        EntityWrapper<StaffPerformanceOrganize> entityWrapperDirectly = new EntityWrapper<>();
+        entityWrapperDirectly.eq("staff_org_id", staff.getId());
+        entityWrapperDirectly.eq("staff_org_code", directlyCode);
+        int countDirectly = staffPerformanceOrganizeService.selectCount(entityWrapperDirectly);
+        if (countDirectly > 0){
+            powerRes.setDirectlyFlag(true);
+        }
+        EntityWrapper<StaffPerformanceOrganize> entityWrapperBranch = new EntityWrapper<>();
+        entityWrapperBranch.eq("staff_org_id", staff.getId());
+        entityWrapperBranch.eq("staff_org_code", branchCode);
+        int countBranch = staffPerformanceOrganizeService.selectCount(entityWrapperBranch);
+        if (countBranch > 0){
+            powerRes.setBranchFlag(true);
+        }
+        return powerRes;
+    }
+
+    /**
      * 获取绩效总览
      *
      * @param userDTO
@@ -430,6 +464,10 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
      */
     @Override
     public void addDirectly(UserDTO userDTO, AddDirectlyInfoReq addDirectlyInfoReq) {
+        Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
+        if (CommonUtil.isEmpty(staff)){
+            throw new PerformanceException(ResponseEnums.STAFF_NULL);
+        }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
         if (CommonUtil.isEmpty(staffPerformanceMonth)){
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
@@ -441,6 +479,14 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         if (CommonUtil.isEmpty(staffPerformanceTotal)){
             throw new PerformanceException(ResponseEnums.PERFOMANCE_INFO_NULL);
         }
+        EntityWrapper<StaffPerformanceTotalOrg> entityWrapperTotalOrg = new EntityWrapper<>();
+        entityWrapperTotalOrg.eq("staff_org_code", directlyCode);
+        entityWrapperTotalOrg.eq("pfm_total_id", staffPerformanceTotal.getId());
+        entityWrapperTotalOrg.eq("staff_org_id", staff.getId());
+        StaffPerformanceTotalOrg staffPerformanceTotalOrgCheck = staffPerformanceTotalOrgService.selectOne(entityWrapperTotalOrg);
+        if (CommonUtil.isNotEmpty(staffPerformanceTotalOrgCheck)){
+            throw new PerformanceException(ResponseEnums.PERFOMANCE_INFO_HAS);
+        }
         List<StaffPerformanceInfoOrg> staffPerformanceInfoOrgList = new ArrayList<>();
         List<AddDirectlyReq> addDirectlyReqList = addDirectlyInfoReq.getAddDirectlyReqList();
         int orgTotal = 0;
@@ -449,7 +495,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             staffPerformanceInfoOrg.setCreateTime(new Date());
             staffPerformanceInfoOrg.setPfmInfoId(addDirectlyReq.getId());
             staffPerformanceInfoOrg.setStaffOrgCode(directlyCode);
-            staffPerformanceInfoOrg.setStaffOrgId(userDTO.getUserId());
+            staffPerformanceInfoOrg.setStaffOrgId(staff.getId());
             orgTotal += addDirectlyReq.getDirectlyScore();
             staffPerformanceInfoOrg.setStaffOrgScore(addDirectlyReq.getDirectlyScore());
             staffPerformanceInfoOrgList.add(staffPerformanceInfoOrg);
@@ -459,7 +505,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         staffPerformanceTotalOrg.setCreateTime(new Date());
         staffPerformanceTotalOrg.setPfmTotalId(staffPerformanceTotal.getId());
         staffPerformanceTotalOrg.setStaffOrgCode(directlyCode);
-        staffPerformanceTotalOrg.setStaffOrgId(userDTO.getUserId());
+        staffPerformanceTotalOrg.setStaffOrgId(staff.getId());
         staffPerformanceTotalOrg.setStaffOrgTotal(orgTotal);
         staffPerformanceTotalOrgService.insert(staffPerformanceTotalOrg);
     }
@@ -500,7 +546,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         Integer monthId = staffPerformanceMonth.getId();
-        List<ListOrganizeTotalDTO> listOrganizeTotalDTOList = staffPerformanceTotalService.selectListByMonIdWithOrgCode(staffIds, directlyCode, staffOrgId, monthId);
+        List<ListOrganizeTotalDTO> listOrganizeTotalDTOList = staffPerformanceTotalService.selectListAllByMonIdWithOrgCode(staffIds, directlyCode, monthId);
         Map<Integer, String> dictInfoMap = dictApiService.getDictInfoByDictCode(LevelDictCode);
         for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList){
             for (ListBranchStaffRes listBranchStaffRes : listBranchStaffResList){
@@ -584,12 +630,16 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
      * @return
      */
     private List<StaffPerformanceTotal> getReleaseLevelTotalIds(UserDTO userDTO) {
+        Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
+        if (CommonUtil.isEmpty(staff)){
+            throw new PerformanceException(ResponseEnums.STAFF_NULL);
+        }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
         if (CommonUtil.isEmpty(staffPerformanceMonth)){
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         EntityWrapper<StaffPerformanceOrganize> entityWrapper = new EntityWrapper<>();
-        entityWrapper.eq("staff_org_id", userDTO.getUserId());
+        entityWrapper.eq("staff_org_id", staff.getId());
         entityWrapper.eq("staff_org_code", branchCode);
         List<StaffPerformanceOrganize> staffPerformanceOrganizeList = staffPerformanceOrganizeService.selectList(entityWrapper);
         if (CommonUtil.isEmpty(staffPerformanceOrganizeList)){

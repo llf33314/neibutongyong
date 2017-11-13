@@ -40,6 +40,29 @@ public class PerformanceStageController extends BaseController {
             @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
             @ApiResponse(code = 2, message = "数组对象", response = ListTotalRes.class),
     })
+    @ApiOperation(value = "获取员工绩效管理权限", notes = "获取员工绩效管理权限")
+    @RequestMapping(value = "/getPower", method = RequestMethod.POST)
+    public ResponseDTO getPower(@RequestHeader String token) {
+        try {
+            logger.debug("getPower");
+            UserDTO userDTO = ssoService.getSSOUerDTO(token);
+            PowerRes powerRes =  performanceStageService.getPower(userDTO);
+            return ResponseDTO.createBySuccess("获取员工绩效管理权限成功", powerRes);
+        } catch (PerformanceException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
+
+
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+            @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
+            @ApiResponse(code = 2, message = "数组对象", response = ListTotalRes.class),
+    })
     @ApiOperation(value = "获取绩效总览列表", notes = "获取绩效总览列表")
     @RequestMapping(value = "/listTotal", method = RequestMethod.POST)
     public ResponseDTO listTotal(@RequestHeader String token) {

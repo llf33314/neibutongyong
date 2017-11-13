@@ -1,6 +1,8 @@
 // 绩效总览
 <template>
   <div>
+    <el-alert v-if="showAlert" title="你的账号还未关联员工" type="warning" description="请联系管理员管理员工信息到此账号！" show-icon></el-alert>
+    <br v-if="showAlert" />
     <el-table border :data="performanceData" v-loading="loading" style="width: 100%">
         <el-table-column type="expand">
         <template slot-scope="props">
@@ -23,12 +25,13 @@
   </div>
 </template>
 <script>
-import { requestListTotal } from "../api/api";
+import { requestListTotal } from '../api/api';
 export default {
   data() {
     return {
       performanceData: [],
-      loading: false
+      loading: false,
+      showAlert: false
     };
   },
   methods: {
@@ -39,8 +42,10 @@ export default {
         var _code = data.code;
         if (_code == 100) {
           this.performanceData = data.data;
+        } else if (_code == 406) {
+          this.showAlert = true;
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
         this.loading = false;
       });

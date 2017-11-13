@@ -32,15 +32,15 @@
     </div>
     <div>
       <el-dialog :title="dialogOpe.name" :visible.sync="dialogDictVisible">
-        <el-form :model="dict">
-          <el-form-item label="字典编号" :label-width="formLabelWidth">
-            <el-input v-model="dict.dictCode" auto-complete="off" placeholder="4位数字"></el-input>
+        <el-form :model="dict" :rules="dictRules" ref="dictRules">
+          <el-form-item label="字典编号：" prop="dictCode" :label-width="formLabelWidth">
+            <el-input v-model="dict.dictCode" type='number' auto-complete="off" placeholder="请输入4位数字的字典编号"></el-input>
           </el-form-item>
-          <el-form-item label="字典名称" :label-width="formLabelWidth">
-            <el-input v-model="dict.dictName" auto-complete="off" placeholder="10字以内"></el-input>
+          <el-form-item label="字典名称：" prop="dictName" :label-width="formLabelWidth">
+            <el-input v-model="dict.dictName" auto-complete="off" placeholder="请输入10字以内的字典名称"></el-input>
           </el-form-item>
-          <el-form-item label="字典描述" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="dict.dictRemark" placeholder="25字以内"></el-input>
+          <el-form-item label="字典描述：" prop="dictRemark" :label-width="formLabelWidth">
+            <el-input type="textarea" v-model="dict.dictRemark" placeholder="请输入25字以内的字典描述"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -52,32 +52,48 @@
   </div>
 </template>
 <script>
-import { requestListDict, requestAddDict, requestModifyDict, requestDelDict } from "../api/api";
+import {
+  requestListDict,
+  requestAddDict,
+  requestModifyDict,
+  requestDelDict
+} from '../api/api';
 export default {
   data() {
     return {
       dictListReq: {
-        dictSearch: "",
+        dictSearch: '',
         current: 1,
         size: 10
       },
-      page:{
+      page: {
         totalNums: 1,
         totalPages: 1
       },
       dictListData: [],
       dict: {
         id: 0,
-        dictCode: 0,
-        dictName: "",
-        dictRemark: ""
+        dictCode: '0',
+        dictName: '',
+        dictRemark: ''
       },
       dialogOpe: {
-        name: "字典信息",
+        name: '字典信息',
         status: 0 // 0：无，1：新增，2：编辑
       },
       dialogDictVisible: false,
-      formLabelWidth: "120px"
+      formLabelWidth: '120px',
+      dictRules: {
+        dictCode: [
+          { required: true, message: '请输入字典编号', trigger: 'blur' },
+          { min: 4, max: 4, message: '长度为4位数字', trigger: 'blur' }
+        ],
+        dictName: [
+          { required: true, message: '请选输入字典名称', trigger: 'blur' },
+          { min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur' }
+        ],
+        dictRemark: [{ max: 25, message: '长度不超过25个字符', trigger: 'blur' }]
+      }
     };
   },
   methods: {
@@ -90,20 +106,23 @@ export default {
           this.page.totalNums = data.page.totalNums;
           this.page.totalPages = data.page.totalPages;
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
       });
     },
     addDict() {
-      console.log(this.dict);
+      // console.log(this.dict);
       requestAddDict(this.dict).then(data => {
-        console.log(data);
+        // console.log(data);
         var _code = data.code;
         if (_code == 100) {
-          this.dictListData = data.data;
+          this.$message({
+            type: 'success',
+            message: '新增成功！'
+          });
           this.getDictList();
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
         this.dialogCancel();
       });
@@ -114,51 +133,56 @@ export default {
         // console.log(data);
         var _code = data.code;
         if (_code == 100) {
-          this.dictListData = data.data;
+          this.$message({
+            type: 'success',
+            message: '编辑成功！'
+          });
           this.getDictList();
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
         this.dialogCancel();
       });
     },
-    delDict(id){
-      this.$confirm("此操作将永久删除该字典以及详情数据，是否继续？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+    delDict(id) {
+      this.$confirm('此操作将永久删除该字典以及详情数据，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
         requestDelDict({ id: id }).then(data => {
           var _code = data.code;
           if (_code == 100) {
             this.$message({
-              type: "success",
-              message: "您已删除该字典及其详情数据！"
+              type: 'success',
+              message: '您已删除该字典及其详情数据！'
             });
             this.getDictList();
           } else {
-            this.$message.error(data.msg + "[错误码：" + _code + "]");
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
           }
         });
       });
     },
-    openDictInfo(dict){
+    openDictInfo(dict) {
       this.$router.push({
-        path: "/app/dictInfo",
-        query: {id: dict.id}
+        path: '/app/dictInfo',
+        query: { id: dict.id }
       });
     },
     openAddDict() {
       // 新增字典
       this.dict = {};
-      this.dialogOpe.name = "新增字典";
+      this.dialogOpe.name = '新增字典';
       this.dialogOpe.status = 1;
       this.dialogDictVisible = true;
     },
     openModifyDict(dict) {
       // 编辑字典
       this.dict = dict;
-      this.dialogOpe.name = "编辑字典";
+      this.dict.dictCode = this.dict.dictCode + '';
+      console.log(this.dict);
+      this.dialogOpe.name = '编辑字典';
       this.dialogOpe.status = 2;
       this.dialogDictVisible = true;
     },
@@ -168,24 +192,32 @@ export default {
     },
     dialogCancel() {
       // 取消弹出框
-      this.dialogOpe.name = "字典信息";
+      this.dialogOpe.name = '字典信息';
       this.dialogOpe.status = 0;
       this.dialogDictVisible = false;
     },
     dialogConfirm(status) {
-      console.log(status);
-      // 确定弹出框
-      switch (status) {
-        case 1:
-          this.addDict();
-          break;
-        case 2:
-          this.modifyDict();
-          break;
-        default:
-          this.dialogCancel();
-          break;
-      }
+      this.$refs['dictRules'].validate(valid => {
+        // console.log(valid);
+        if (valid) {
+          // 数据验证
+          // console.log(status);
+          // 确定弹出框
+          switch (status) {
+            case 1:
+              this.addDict();
+              break;
+            case 2:
+              this.modifyDict();
+              break;
+            default:
+              this.dialogCancel();
+              break;
+          }
+        } else {
+          return false;
+        }
+      });
     },
     handleCurrentChange(val) {
       this.getDictList();
@@ -201,27 +233,27 @@ export default {
 };
 </script>
 <style>
-.a-admin-head{
-    padding: 35px 0 35px 25px;
+.a-admin-head {
+  padding: 35px 0 35px 25px;
 }
-.a-admin-table{
-  margin:0 25px 25px;;
+.a-admin-table {
+  margin: 0 25px 25px;
 }
 .el-pagination {
-    float: right;
-    margin-right: 20px;
+  float: right;
+  margin-right: 20px;
 }
 .el-dialog {
-    position: absolute;
-    left: 50%;
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
-    background: #fff;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.3);
-    box-sizing: border-box;
-    margin-bottom: 50px;
-    margin-left: 80px;
-    margin-top: 165px;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  margin-bottom: 50px;
+  margin-left: 80px;
+  margin-top: 165px;
 }
 </style>

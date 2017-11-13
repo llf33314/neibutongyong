@@ -3,9 +3,9 @@ inside:
   login:
     url: http://192.168.3.98:7075/m/login/success/
   web:
-    url: http://192.168.3.98:7075/manage/#/token/
+    url: http://192.168.3.98:7075/#/token/
   sso:
-    url: http://192.168.3.10:7078/
+    url: http://192.168.3.98:7078/
     sign:
       key: GTRYANSSO
 

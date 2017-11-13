@@ -3,7 +3,7 @@
     <div>
       <div style="margin-bottom: 20px;">
         <el-button type="primary" @click="openAddUser" style="margin-right:15px;">新增</el-button>
-        <el-input placeholder="登录名/真实姓名" icon="search" v-model="userListReq.userSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
+        <el-input placeholder="登录账号/真实姓名" icon="search" v-model="userListReq.userSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
         <el-select v-model="userListReq.userStatus" @change="changeStatus" style="width:80px!important;">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
@@ -11,7 +11,7 @@
       <div>
         <el-table :data="userListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column prop="loginName" label="登录名"></el-table-column>
+          <el-table-column prop="loginName" label="登录账号"></el-table-column>
           <el-table-column prop="userName" label="真实姓名"></el-table-column>
           <el-table-column prop="staffName" label="员工姓名"></el-table-column>
           <el-table-column prop="userStatus" label="状态">
@@ -41,15 +41,15 @@
     </div>
     <div>
         <el-dialog :title="dialogOpe.name" :visible.sync="dialogFormVisible">
-          <el-form :model="userAddReq">
-            <el-form-item label="登录名：" :label-width="formLabelWidth">
-              <el-input v-model="userAddReq.loginName" auto-complete="off"></el-input>
+          <el-form :model="userAddReq" :rules="userRules" ref="userRules">
+            <el-form-item label="登录账号：" prop="loginName" :label-width="formLabelWidth">
+              <el-input v-model="userAddReq.loginName" auto-complete="off" placeholder="请输入3到15字的登录账号"></el-input>
             </el-form-item>
-            <el-form-item label="真实姓名：" :label-width="formLabelWidth">
-              <el-input v-model="userAddReq.userName" auto-complete="off"></el-input>
+            <el-form-item label="真实姓名：" prop="userName" :label-width="formLabelWidth">
+              <el-input v-model="userAddReq.userName" auto-complete="off" placeholder="请输入15字以内的真实姓名"></el-input>
             </el-form-item>
-            <el-form-item label="密码：" :label-width="formLabelWidth">
-              <el-input v-model="userAddReq.password" type="password" auto-complete="off"></el-input>
+            <el-form-item label="密码：" prop="password" :label-width="formLabelWidth">
+              <el-input v-model="userAddReq.password" type="password" auto-complete="off" placeholder="请输入4到15字的密码"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -78,8 +78,8 @@
         <el-pagination @size-change="handleStaffSizeChange" @current-change="handleStaffCurrentChange" :current-page.sync="userStaffListReq.current"
           :page-sizes="[10, 20, 50, 100]" :page-size="userStaffListReq.size" layout="total, sizes, prev, pager, next" :total="pageStaff.totalNums">
         </el-pagination>
-        <span>当前关联的员工：{{userOpe.staffName}}</span>
-        <el-button type="primary" @click="saveStaff" style="margin-left: 15px;margin-top: 25px;">保存选择</el-button>
+        <span v-show="userOpe.staffName != null">当前关联的员工：{{userOpe.staffName}}</span>
+        <el-button v-show="userOpe.staffName != null" type="primary" @click="saveStaff" style="margin-left: 15px;margin-top: 25px;">保存选择</el-button>
       </el-dialog>
     </div>
     <div>
@@ -185,13 +185,27 @@ export default {
       userRoleListReq: {
         current: 1,
         size: 10,
-        userId:''
+        userId: ''
       },
       pageRole: {
         totalNums: 1,
         totalPages: 1
       },
-      userRoleListData:[]
+      userRoleListData: [],
+      userRules: {
+        loginName: [
+          { required: true, message: '请输入登录账号', trigger: 'blur' },
+          { min: 3, max: 15, message: '长度3~15个字符', trigger: 'blur' }
+        ],
+        userName: [
+          { required: true, message: '请选输入真实姓名', trigger: 'blur' },
+          { min: 1, max: 15, message: '长度不超过15个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请选输入密码', trigger: 'blur' },
+          { min: 4, max: 15, message: '长度4~15个字符', trigger: 'blur' }
+        ]
+      }
     };
   },
   methods: {
@@ -324,14 +338,14 @@ export default {
             message: '关联员工成功！'
           });
           this.getUserList();
-        }else if(_code == 203){
+        } else if (_code == 203) {
           this.$message.error('该员工已关联其他用户！');
         } else {
           this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
       });
     },
-    relationRole(roleId){
+    relationRole(roleId) {
       // 关联角色
       var userId = this.userRoleListReq.userId;
       this.$confirm('确定关联角色到该用户？', '提示', {
@@ -347,13 +361,14 @@ export default {
               message: '关联成功！'
             });
             this.getUserRoleList();
+            this.getUserList();
           } else {
             this.$message.error(data.msg + '[错误码：' + _code + ']');
           }
         });
       });
     },
-    cancelRelationRole(roleId){
+    cancelRelationRole(roleId) {
       // 取消关联
       var userId = this.userRoleListReq.userId;
       this.$confirm('确定取消关联角色到该用户？', '提示', {
@@ -361,7 +376,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        requestCancelRelationRole({ userId: userId, roleId: roleId }).then(data => {
+        requestCancelRelationRole({
+          userId: userId,
+          roleId: roleId
+        }).then(data => {
           var _code = data.code;
           if (_code == 100) {
             this.$message({
@@ -369,6 +387,7 @@ export default {
               message: '取消关联成功！'
             });
             this.getUserRoleList();
+            this.getUserList();
           } else {
             this.$message.error(data.msg + '[错误码：' + _code + ']');
           }
@@ -391,15 +410,22 @@ export default {
       this.dialogOpe.status = 1;
     },
     dialogConfirm(status) {
-      //新增确定事件
-      if (status == 1) {
-        // 新增
-        this.dialogFormVisible = false;
-        this.addUser();
-      } else if (status == 2) {
-        // 编辑（无用）
-        this.dialogFormVisible = false;
-      }
+      this.$refs['userRules'].validate(valid => {
+        // console.log(valid);
+        if (valid) {
+          //新增确定事件
+          if (status == 1) {
+            // 新增
+            this.dialogFormVisible = false;
+            this.addUser();
+          } else if (status == 2) {
+            // 编辑（无用）
+            this.dialogFormVisible = false;
+          }
+        } else {
+          return false;
+        }
+      });
     },
     handleCurrentChange(val) {
       //分页
@@ -450,7 +476,7 @@ export default {
       this.relationStaffBean.staffId = val.id;
       this.userOpe.staffName = val.staffName;
     },
-    toRelationRole(){
+    toRelationRole() {
       // 关联角色
       this.getUserRoleList();
       this.dialogRoleVisible = true;
@@ -465,7 +491,7 @@ export default {
       this.userRoleListReq.size = val;
       // console.log(this.userRoleListReq.size);
       this.getUserRoleList();
-    },
+    }
   },
   created() {
     this.getUserList();
@@ -473,36 +499,36 @@ export default {
 };
 </script>
 <style type="text/css" scoped>
-  .a-gt-user {
-    padding: 25px;
-  }
-  .el-dialog {
-    position: absolute;
-    left: 56%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    background: #fff;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
-    box-shadow: 0 1px 3px rgba(0,0,0,.3);
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    margin-bottom: 32px;
-    margin-left: 0px;
-    top: 32% !important;
-  }
-  .el-dialog--small {
-    width: 55%;
-  }
-  .el-pagination {
-    white-space: nowrap;
-    padding: 25px 5px;
-    color: #48576a;
-    text-align: right;
-  }
-  .yong{
-    width: 55%;
-    left: 30%;
-    top: 12%;
-  }
+.a-gt-user {
+  padding: 25px;
+}
+.el-dialog {
+  position: absolute;
+  left: 56%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  margin-left: 0px;
+  top: 32% !important;
+}
+.el-dialog--small {
+  width: 55%;
+}
+.el-pagination {
+  white-space: nowrap;
+  padding: 25px 5px;
+  color: #48576a;
+  text-align: right;
+}
+.yong {
+  width: 55%;
+  left: 30%;
+  top: 12%;
+}
 </style>

@@ -155,6 +155,9 @@ public class RoleStageServiceImpl implements RoleStageService {
         EntityWrapper<RoleMenu> delRoleMenuEntityWrapper = new EntityWrapper<>();
         delRoleMenuEntityWrapper.eq("role_id", relationMenuReq.getRoleId());
         roleMenuService.delete(delRoleMenuEntityWrapper);
+        if (CommonUtil.isEmpty(relationMenuReq.getMenuIdList()) || relationMenuReq.getMenuIdList().size() <= 0){
+            return;
+        }
         List<RoleMenu> roleMenuList = new ArrayList<>();
         for (Integer menuId : relationMenuReq.getMenuIdList()){
             RoleMenu roleMenu = new RoleMenu();

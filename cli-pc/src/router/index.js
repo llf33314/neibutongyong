@@ -6,9 +6,9 @@ import { homeAdminRouter } from '@/components/home/router.js'
 // 字典
 import { dictAppRouter } from '@/components/dict/router.js'
 // 员工
-import { staffAppRouter } from '@/components/staff/router.js'
+import { staffAppRouter } from '@/components/organize/staff/router.js'
 // 部门
-import { departRouter } from '@/components/department/router.js'
+import { departRouter } from '@/components/organize/department/router.js'
 // 绩效
 import { performanceAppRouter } from '@/components/function/performance/router.js'
 // 后台管理

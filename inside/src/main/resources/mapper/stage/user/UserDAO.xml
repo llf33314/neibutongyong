@@ -39,7 +39,7 @@
 		FROM t_user u
 		LEFT JOIN t_staff s ON s.user_id = u.id AND s.delete_flag = 0
 		<where>
-			u.delete_flag = 0
+			u.delete_flag = 0 AND u.id > 1
 			<if test="userSearch != null and userSearch != ''">
 				AND ( login_name LIKE concat(concat('%',#{userSearch}),'%') OR user_name LIKE concat(concat('%',#{userSearch}),'%') )
 			</if>

@@ -36,12 +36,12 @@
     </div>
     <div>
       <el-dialog :title="dialogOpe.name" :visible.sync="dialogRoleVisible">
-        <el-form :model="role">
-          <el-form-item label="角色名称：" :label-width="formLabelWidth">
-            <el-input v-model="role.roleName" auto-complete="off" placeholder="10字以内"></el-input>
+        <el-form :model="role" :rules="roleRules" ref="roleRules">
+          <el-form-item label="角色名称：" prop="roleName" :label-width="formLabelWidth">
+            <el-input v-model="role.roleName" auto-complete="off"  placeholder="请输入10字以内的角色名称"></el-input>
           </el-form-item>
-          <el-form-item label="角色描述：" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="role.roleRemark" auto-complete="off" placeholder="25字以内"></el-input>
+          <el-form-item label="角色描述：" prop="roleRemark" :label-width="formLabelWidth">
+            <el-input type="textarea" v-model="role.roleRemark" auto-complete="off" placeholder="请输入25字以内的角色描述"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -109,6 +109,16 @@ export default {
       relationMenuReq: {
         roleId: 0,
         menuIdList: []
+      },
+      roleRules: {
+        roleName: [
+          { required: true, message: '请输入角色名称', trigger: 'blur' },
+          { min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur' }
+        ],
+        roleRemark: [
+          { required: false, message: '请选输入角色描述', trigger: 'blur' },
+          { max: 25, message: '长度不超过25个字符', trigger: 'blur' }
+        ]
       }
     };
   },
@@ -234,19 +244,26 @@ export default {
       this.dialogRoleVisible = false;
     },
     dialogConfirm(status) {
-      console.log(status);
-      // 确定弹出框
-      switch (status) {
-        case 1:
-          this.addRole();
-          break;
-        case 2:
-          this.modifyRole();
-          break;
-        default:
-          this.dialogCancel();
-          break;
-      }
+      this.$refs['roleRules'].validate(valid => {
+        // console.log(valid);
+        if (valid) {
+          // console.log(status);
+          // 确定弹出框
+          switch (status) {
+            case 1:
+              this.addRole();
+              break;
+            case 2:
+              this.modifyRole();
+              break;
+            default:
+              this.dialogCancel();
+              break;
+          }
+        } else {
+          return false;
+        }
+      });
     },
     handleCurrentChange(val) {
       this.getRoleList();

@@ -37,15 +37,15 @@
     </div>
     <div>
       <el-dialog :title="dialogOpe.name" :visible.sync="dialogDictInfoVisible">
-        <el-form :model="dictInfo">
-          <el-form-item label="字典详情编号" :label-width="formLabelWidth">
-            <el-input v-model="dictInfo.infoCode" auto-complete="off" placeholder="4位数字"></el-input>
+        <el-form :model="dictInfo" :rules="dictInfoRules" ref="dictInfoRules">
+          <el-form-item label="字典详情编号：" prop="infoCode" :label-width="formLabelWidth">
+            <el-input v-model="dictInfo.infoCode" type='number' auto-complete="off" placeholder="请输入4位数字以内的字典详情编号"></el-input>
           </el-form-item>
-          <el-form-item label="字典详情内容" :label-width="formLabelWidth">
-            <el-input v-model="dictInfo.infoContent" auto-complete="off" placeholder="10字以内"></el-input>
+          <el-form-item label="字典详情内容：" prop="infoContent" :label-width="formLabelWidth">
+            <el-input v-model="dictInfo.infoContent" auto-complete="off" placeholder="请输入10字以内的字典详情内容"></el-input>
           </el-form-item>
-          <el-form-item label="字典详情描述" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="dictInfo.infoRemark" placeholder="25字以内"></el-input>
+          <el-form-item label="字典详情描述：" prop="infoRemark" :label-width="formLabelWidth">
+            <el-input type="textarea" v-model="dictInfo.infoRemark" placeholder="请输入25字以内的字典详情描述"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -57,15 +57,20 @@
   </div>
 </template>
 <script>
-import { requestListDictInfo, requestAddDictInfo, requestModifyDictInfo, requestDelDictInfo } from "../api/api";
+import {
+  requestListDictInfo,
+  requestAddDictInfo,
+  requestModifyDictInfo,
+  requestDelDictInfo
+} from '../api/api';
 export default {
   data() {
     return {
       dictInfoListReq: {
         dictId: 0,
-        dictSearch: "",
+        dictSearch: '',
         current: 1,
-        size: 2
+        size: 10
       },
       page: {
         totalNums: 1,
@@ -76,15 +81,26 @@ export default {
         id: 0,
         dictId: 0,
         infoCode: 0,
-        infoContent: "",
-        infoRemark: ""
+        infoContent: '',
+        infoRemark: ''
       },
       dialogOpe: {
-        name: "字典信息",
+        name: '字典信息',
         status: 0 // 0：无，1：新增，2：编辑
       },
       dialogDictInfoVisible: false,
-      formLabelWidth: "120px"
+      formLabelWidth: '150px',
+      dictInfoRules: {
+        infoCode: [
+          { required: true, message: '请输入字典详情编号', trigger: 'blur' },
+          { min: 1, max: 4, message: '长度不超过4个字符数字', trigger: 'blur' }
+        ],
+        infoContent: [
+          { required: true, message: '请选输入字典详情内容', trigger: 'blur' },
+          { min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur' }
+        ],
+        infoRemark: [{ max: 25, message: '长度不超过25个字符', trigger: 'blur' }]
+      }
     };
   },
   methods: {
@@ -97,7 +113,7 @@ export default {
           this.page.totalNums = data.page.totalNums;
           this.page.totalPages = data.page.totalPages;
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
       });
     },
@@ -108,10 +124,13 @@ export default {
         // console.log(data);
         var _code = data.code;
         if (_code == 100) {
-          this.dictInfoListData = data.data;
+          this.$message({
+            type: 'success',
+            message: '新增成功！'
+          });
           this.getDictInfoList();
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
         this.dialogCancel();
       });
@@ -122,30 +141,33 @@ export default {
         // console.log(data);
         var _code = data.code;
         if (_code == 100) {
-          this.dictInfoListData = data.data;
+          this.$message({
+            type: 'success',
+            message: '编辑成功！'
+          });
           this.getDictInfoList();
         } else {
-          this.$message.error(data.msg + "[错误码：" + _code + "]");
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
         }
         this.dialogCancel();
       });
     },
     delDictInfo(id) {
-      this.$confirm("此操作将永久删除该条数据，是否继续？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('此操作将永久删除该条数据，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
         requestDelDictInfo({ id: id }).then(data => {
           var _code = data.code;
           if (_code == 100) {
             this.$message({
-              type: "success",
-              message: "您已删除数据！"
+              type: 'success',
+              message: '您已删除数据！'
             });
             this.getDictInfoList();
           } else {
-            this.$message.error(data.msg + "[错误码：" + _code + "]");
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
           }
         });
       });
@@ -153,14 +175,15 @@ export default {
     openAddDictInfo() {
       // 新增字典详情
       this.dictInfo = {};
-      this.dialogOpe.name = "新增字典";
+      this.dialogOpe.name = '新增字典';
       this.dialogOpe.status = 1;
       this.dialogDictInfoVisible = true;
     },
     openModifyDictInfo(dictInfo) {
       // 编辑字典详情
       this.dictInfo = dictInfo;
-      this.dialogOpe.name = "编辑字典";
+      this.dictInfo.infoCode = dictInfo.infoCode + '';
+      this.dialogOpe.name = '编辑字典';
       this.dialogOpe.status = 2;
       this.dialogDictInfoVisible = true;
     },
@@ -170,24 +193,34 @@ export default {
     },
     dialogCancel() {
       // 取消弹出框
-      this.dialogOpe.name = "字典信息";
+      this.dialogOpe.name = '字典信息';
       this.dialogOpe.status = 0;
       this.dialogDictInfoVisible = false;
     },
     dialogConfirm(status) {
-      console.log(status);
-      // 确定弹出框
-      switch (status) {
-        case 1:
-          this.addDictInfo();
-          break;
-        case 2:
-          this.modifyDictInfo();
-          break;
-        default:
-          this.dialogCancel();
-          break;
-      }
+      this.$refs['dictInfoRules'].validate(valid => {
+        if (valid) {
+          // console.log(status);
+          // 确定弹出框
+          switch (status) {
+            case 1:
+              this.addDictInfo();
+              break;
+            case 2:
+              this.modifyDictInfo();
+              break;
+            default:
+              this.dialogCancel();
+              break;
+          }
+        } else {
+          return false;
+        }
+      });
+    },
+    handleSizeChange(val) {
+      this.dictInfoListReq.size = val;
+      this.getDictInfoList();
     },
     handleCurrentChange(val) {
       this.getDictInfoList();
@@ -202,13 +235,13 @@ export default {
 
 
 <style>
-.a-list-top{
-    padding:25px;
+.a-list-top {
+  padding: 25px;
 }
-.a-list-head{
-    padding: 0 0 35px 25px;
+.a-list-head {
+  padding: 0 0 35px 25px;
 }
-.a-admin-table{
-  margin:0 25px 25px;;
+.a-admin-table {
+  margin: 0 25px 25px;
 }
 </style>

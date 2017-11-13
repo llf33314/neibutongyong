@@ -143,18 +143,24 @@ export default {
     },
     releaseLevel() {
       // 发布评级
-      requestReleaseLevel().then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.$message({
-            message: '发布评级成功',
-            type: 'success'
-          });
-          this.listBranchStaff();
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
-        }
+      this.$confirm('发布评级后将不可修改，相关人员也能看到对应评级，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        requestReleaseLevel().then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.$message({
+              message: '发布评级成功',
+              type: 'success'
+            });
+            this.listBranchStaff();
+          } else {
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
+          }
+        });
       });
     },
     exportExcel() {
@@ -202,16 +208,16 @@ export default {
 };
 </script>
 <style type="text/css" scoped>
-  .a-gt-own-span{
-    font-size: 14px;
-    color: #666;
-    display: block;
-    padding: 7px 20px 25px;
-  }
-  .el-pagination {
-    text-align: right;
-    margin-top: 25px;
-  }
+.a-gt-own-span {
+  font-size: 14px;
+  color: #666;
+  display: block;
+  padding: 7px 20px 25px;
+}
+.el-pagination {
+  text-align: right;
+  margin-top: 25px;
+}
 </style>
 
 

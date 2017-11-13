@@ -49,7 +49,10 @@
 		SELECT <include refid="Organize_Column_List"/>
 		FROM t_staff_performance_total spt
 		LEFT JOIN t_staff_performance_total_org spto
-		ON spt.id = spto.pfm_total_id AND spto.staff_org_code = #{code} AND spto.staff_org_id = #{staffOrgId}
+		ON spt.id = spto.pfm_total_id AND spto.staff_org_code = #{code}
+		<if test="staffOrgId != null">
+			AND spto.staff_org_id = #{staffOrgId}
+		</if>
 		WHERE spt.month_id = #{monthId} AND spt.staff_id IN
 		<foreach collection="staffIds" index="index" item="staffId" open="(" separator="," close=")">
 			#{staffId}

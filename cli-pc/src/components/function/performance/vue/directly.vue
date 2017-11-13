@@ -72,6 +72,7 @@ export default {
     },
     openStaffInfo(staffInfo) {
       // 打开员工绩效评分详情
+      console.log(staffInfo);
       this.$router.push({
         path: '/app/performance/directlyInfo',
         query: staffInfo

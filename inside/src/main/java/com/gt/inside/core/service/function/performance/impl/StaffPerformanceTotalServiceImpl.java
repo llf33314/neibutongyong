@@ -49,4 +49,17 @@ public class StaffPerformanceTotalServiceImpl extends ServiceImpl<StaffPerforman
     public List<ListOrganizeTotalDTO> selectListByMonIdWithOrgCode(List<Integer> staffIds, Integer code, Integer staffOrgId, Integer monthId) {
         return staffPerformanceTotalDAO.selectListByMonIdWithOrgCode(staffIds, code, staffOrgId, monthId);
     }
+
+    /**
+     * 根据组织关系及月份，获取员工对应评分信息，所有的直属领导评分信息
+     *
+     * @param staffIds
+     * @param directlyCode
+     * @param monthId
+     * @return
+     */
+    @Override
+    public List<ListOrganizeTotalDTO> selectListAllByMonIdWithOrgCode(List<Integer> staffIds, Integer directlyCode, Integer monthId) {
+        return staffPerformanceTotalDAO.selectListByMonIdWithOrgCode(staffIds, directlyCode, null, monthId);
+    }
 }

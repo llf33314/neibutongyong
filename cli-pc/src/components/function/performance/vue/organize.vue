@@ -30,8 +30,8 @@
         <el-pagination @size-change="handleStaffSizeChange" @current-change="handleStaffCurrentChange" :current-page.sync="staffListReq.current"
           :page-sizes="[10, 20, 50, 100]" :page-size="staffListReq.size" layout="total, sizes, prev, pager, next" :total="pageStaff.totalNums">
         </el-pagination>
-        <span>当前选择的{{organizeOpe.name}}：{{organize.staffOrgName}}</span>
-        <el-button type="primary" @click="saveSelect()" style="margin-left: 15px;">保存选择</el-button>
+        <span v-show="organize.staffOrgId != ''">当前选择的{{organizeOpe.name}}：{{organize.staffOrgName}}</span>
+        <el-button v-show="organize.staffOrgId != ''" type="primary" @click="saveSelect()" style="margin-left: 15px;">保存选择</el-button>
       </el-dialog>
     </div>
   </div>
@@ -189,6 +189,8 @@ export default {
     },
     relationDirectly(organizeBean) {
       // 打开关联直属领导
+      this.organizeOpe.status = 0;
+      this.organizeOpe.name = '';
       this.organize.staffId = '';
       this.organize.staffOrgId = '';
       console.log(organizeBean);
@@ -200,6 +202,8 @@ export default {
     },
     relationBranch(organizeBean) {
       // 打开关联分管领导
+      this.organizeOpe.status = 0;
+      this.organizeOpe.name = '';
       this.organize.staffId = '';
       this.organize.staffOrgId = '';
       console.log(organizeBean);
