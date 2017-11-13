@@ -131,7 +131,6 @@ export default {
   width: 100%;
   background-color: #293038;
   height: 50px;
-  z-index: 9999;
 }
 
 .logo-box {
