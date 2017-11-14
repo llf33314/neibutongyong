@@ -1,9 +1,5 @@
 ################### 内部管理配置（开发环境）
 inside:
-  login:
-    url: http://192.168.3.98:7075/m/login/success/
-  web:
-    url: http://192.168.3.98:7075/#/token/
   sso:
     url: http://192.168.3.98:7078/
     sign:

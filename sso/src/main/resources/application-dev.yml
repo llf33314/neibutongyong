@@ -3,7 +3,7 @@ sso:
   task:
     over_time: 3
   redirect:
-    url: http://www.duofriend.com/
+    url: http://192.168.3.98:8087/#/index
   sign:
     key: GTRYANSSO
 
