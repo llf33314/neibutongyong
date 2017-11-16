@@ -9,7 +9,7 @@ spring:
     name: inside
   profiles:
     # 选择配置文件
-    active: dev
+    active: pro
 
 ################### mybatis
 #mybatis plus
