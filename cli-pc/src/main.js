@@ -16,6 +16,9 @@ Vue.prototype.$util = util
 import ElementUI from 'gt-pc-ui'
 import 'gt-pc-ui/lib/theme-default/index.css'
 import { timeTransForm } from './assets/js/Lib'
+const gt = require('gt-public-js/dist/gt.min')
+Vue.prototype.gt = gt
+
 Vue.use(ElementUI)
 // 时间戳转化
 Vue.prototype.timeTransForm = timeTransForm
