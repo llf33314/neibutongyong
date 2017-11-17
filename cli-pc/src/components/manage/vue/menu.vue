@@ -22,7 +22,7 @@
                     <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="250">
                 <template slot-scope="scope">
                     <el-button size="small" @click="openModifyMenu(scope.row)">编辑</el-button>
                     <el-button v-if="scope.row.menuSub == 1" size="small" type="primary" @click="openMenuInfo(scope.row)">子菜单详情</el-button>
