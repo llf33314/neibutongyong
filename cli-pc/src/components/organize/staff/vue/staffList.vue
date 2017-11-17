@@ -136,10 +136,6 @@ export default {
           { required: true, message: '请输入员工编号', trigger: 'blur' },
           { min: 1, max: 15, message: '长度不超过15个字符', trigger: 'blur' }
         ],
-        //depId: [{ required: true, message: '请选择部门', trigger: 'blur' }],
-        // staffJoinTime: [
-        //   { required: true, message: '请选择入职时间', trigger: 'blur' }
-        // ],
         staffPhone: [
           { required: true, message: '请选输入电话', trigger: 'blur' },
           { min: 1, max: 15, message: '长度不超过15个字符', trigger: 'blur' }

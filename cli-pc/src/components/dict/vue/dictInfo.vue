@@ -42,7 +42,7 @@
             <el-input v-model="dictInfo.infoCode" type='number' auto-complete="off" placeholder="请输入4位数字以内的字典详情编号"></el-input>
           </el-form-item>
           <el-form-item label="字典详情内容：" prop="infoContent" :label-width="formLabelWidth">
-            <el-input v-model="dictInfo.infoContent" auto-complete="off" placeholder="请输入10字以内的字典详情内容"></el-input>
+            <el-input v-model="dictInfo.infoContent" auto-complete="off" placeholder="请输入12字以内的字典详情内容"></el-input>
           </el-form-item>
           <el-form-item label="字典详情描述：" prop="infoRemark" :label-width="formLabelWidth">
             <el-input type="textarea" v-model="dictInfo.infoRemark" placeholder="请输入25字以内的字典详情描述"></el-input>
@@ -97,7 +97,7 @@ export default {
         ],
         infoContent: [
           { required: true, message: '请选输入字典详情内容', trigger: 'blur' },
-          { min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur' }
+          { min: 1, max: 12, message: '长度不超过12个字符', trigger: 'blur' }
         ],
         infoRemark: [{ max: 25, message: '长度不超过25个字符', trigger: 'blur' }]
       }
