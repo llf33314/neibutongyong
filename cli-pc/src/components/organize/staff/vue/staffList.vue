@@ -26,7 +26,7 @@
               {{ scope.row.staffStatus == 0 ? '在职':'离职'}}
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                   <el-button size="small" @click="openModifyStaff(scope.row)">编辑</el-button>                  
                   <el-button size="small" type="danger" @click="delStaff(scope.row.id)">删除</el-button>
@@ -57,6 +57,21 @@
               <el-option v-for="item in departmentListData" :key="item.id" :label="item.depName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="员工类型" prop="staffType" :label-width="formLabelWidth">
+            <el-select v-model="staff.staffType" placeholder="请选择员工类型">
+              <el-option v-for="item in listStaffTypeData" :key="item.code" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item v-show="staff.staffType != null && staff.staffType != '' && staff.staffType != 0" label="员工等级" prop="staffLevel" :label-width="formLabelWidth">
+            <el-select v-model="staff.staffLevel" placeholder="请选择员工等级">
+              <el-option v-for="item in listStaffLevelData" :key="item.code" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="员工职务" prop="staffDuties" :label-width="formLabelWidth">
+            <el-select v-model="staff.staffDuties" placeholder="请选择员工职务">
+              <el-option v-for="item in listStaffDutiesData" :key="item.code" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="入职时间" prop="staffJoinTime" :label-width="formLabelWidth">
             <el-date-picker type="date" v-model="staff.staffJoinTime" placeholder="选择日期"></el-date-picker>
           </el-form-item>
@@ -79,7 +94,10 @@ import {
   requestModifyStaff,
   requestDelStaff,
   requestQuitStaff,
-  requestListDepartment
+  requestListDepartment,
+  requestListStaffType,
+  requestListStaffDuties,
+  requestListStaffLevel
 } from '../api/api';
 export default {
   data() {
@@ -122,7 +140,10 @@ export default {
           label: '离职'
         }
       ],
-      departmentListData: [],
+      departmentListData: [], // 部门列表
+      listStaffTypeData: [], // 员工类型列表
+      listStaffLevelData: [], // 员工级别列表
+      listStaffDutiesData: [], // 员工职务列表
       staffRules: {
         staffName: [
           { required: true, message: '请输入名称', trigger: 'blur' },
@@ -136,10 +157,6 @@ export default {
           { required: true, message: '请输入员工编号', trigger: 'blur' },
           { min: 1, max: 15, message: '长度不超过15个字符', trigger: 'blur' }
         ],
-        //depId: [{ required: true, message: '请选择部门', trigger: 'blur' }],
-        // staffJoinTime: [
-        //   { required: true, message: '请选择入职时间', trigger: 'blur' }
-        // ],
         staffPhone: [
           { required: true, message: '请选输入电话', trigger: 'blur' },
           { min: 1, max: 15, message: '长度不超过15个字符', trigger: 'blur' }
@@ -242,6 +259,42 @@ export default {
         }
       });
     },
+    getStaffTypeList() {
+      // 获取员工类型
+      requestListStaffType().then(data => {
+        // console.log(data);
+        var _code = data.code;
+        if (_code == 100) {
+          this.listStaffTypeData = data.data;
+        } else {
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
+        }
+      });
+    },
+    getStaffLevelList() {
+      // 获取员工类型
+      requestListStaffLevel({ staffType: this.staff.staffType }).then(data => {
+        // console.log(data);
+        var _code = data.code;
+        if (_code == 100) {
+          this.listStaffLevelData = data.data;
+        } else {
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
+        }
+      });
+    },
+    getStaffDutiesList() {
+      // 获取员工职务
+      requestListStaffDuties().then(data => {
+        // console.log(data);
+        var _code = data.code;
+        if (_code == 100) {
+          this.listStaffDutiesData = data.data;
+        } else {
+          this.$message.error(data.msg + '[错误码：' + _code + ']');
+        }
+      });
+    },
     openAddStaff() {
       // 新增员工
       this.staff = {};
@@ -250,6 +303,8 @@ export default {
       this.dialogStaffVisible = true;
       this.departmentListData = [];
       this.getDepartmentList();
+      this.getStaffTypeList();
+      this.getStaffDutiesList();
     },
     openModifyStaff(staff) {
       // 编辑员工
@@ -258,6 +313,8 @@ export default {
       this.dialogOpe.status = 2;
       this.departmentListData = [];
       this.getDepartmentList();
+      this.getStaffTypeList();
+      this.getStaffDutiesList();
       this.dialogStaffVisible = true;
     },
     searchClick() {
@@ -308,6 +365,11 @@ export default {
     'staffListReq.staffStatus': function(val) {
       //此处不要使用箭头函数
       this.getStaffList();
+    },
+    'staff.staffType': function(val) {
+      if (this.dialogStaffVisible == true && this.staff.staffType != null && this.staff.staffType != '' && this.staff.staffType != 0) {
+        this.getStaffLevelList();
+      }
     }
   }
 };

@@ -53,4 +53,17 @@ public class StaffPerformanceInfoServiceImpl extends ServiceImpl<StaffPerformanc
     public List<ListOrganizeInfoDTO> selectOrganizeListByStaffIdAndMonthIdAndOrgId(Integer staffId, Integer monthId, Integer orgId, Integer orgCode) {
         return staffPerformanceInfoDAO.selectOrganizeListByStaffIdAndMonthIdAndOrgId(staffId, monthId, orgId, orgCode);
     }
+
+    /**
+     * 获取员工们相关组织，相关月份的评分信息
+     *
+     * @param staffIds
+     * @param monthId
+     * @param orgCode
+     * @return
+     */
+    @Override
+    public List<ListOrganizeInfoDTO> selectListByStaffIdsAndMonthIdAndOrgCode(List<Integer> staffIds, Integer monthId, Integer orgCode) {
+        return staffPerformanceInfoDAO.selectListByStaffIdsAndMonthIdAndOrgCode(staffIds, monthId, orgCode);
+    }
 }

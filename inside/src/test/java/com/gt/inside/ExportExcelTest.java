@@ -1,8 +1,9 @@
 package com.gt.inside;
 
 import com.gt.inside.api.util.excel.ExcelUtil;
-import com.gt.inside.bean.PFMDto;
+import com.gt.inside.core.bean.function.performance.dto.PfmExcelDto;
 import com.gt.inside.bean.WebDto;
+import com.psr.tool.agile.AnalyticClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,22 +37,30 @@ public class ExportExcelTest {
     }
 
     @Test
-    public void testPfm() throws Exception {
-        List<PFMDto> list = new ArrayList<>();
-        PFMDto pfmDto1 = new PFMDto();
-        pfmDto1.setGzyj("1、制定工作计划；2、完成工作任务；3、招聘人员’5、开发定制小公园");
-        pfmDto1.setIndex(1);
-        pfmDto1.setJb("P1-1");
-        pfmDto1.setLevel("K2");
-        pfmDto1.setName("赵一");
-        pfmDto1.setZw("研发工程师");
+    public void testPfmNew() throws Exception {
+        List<PfmExcelDto> list = new ArrayList<>();
+        PfmExcelDto pfmExcelDto = new PfmExcelDto();
+        AnalyticClass<PfmExcelDto> analyticClass = new AnalyticClass<>();
+        list = analyticClass.buildList(PfmExcelDto.class, 5);
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("title", "技术/专业类员工2017年10月份绩效评定表");
         map.put("department", "惠州研发事业部");
 
-        ExcelUtil.getInstance().exportObj2ExcelByTemplate(map, "performance-template.xls", new FileOutputStream("F:/dev/pfmOut.xls"),
-                list, PFMDto.class, true);
+        map.put("devNum", "11");
+        map.put("devK1Num", "2");
+        map.put("devK2Num", "4");
+        map.put("devK3Num", "4");
+        map.put("devK4Num", "1");
+
+        map.put("majorNum", "5");
+        map.put("majorK1Num", "1");
+        map.put("majorK2Num", "1");
+        map.put("majorK3Num", "2");
+        map.put("majorK4Num", "1");
+
+        ExcelUtil.getInstance().exportObj2ExcelByTemplate(map, "performance-template.xls", new FileOutputStream("E:/dev/pfmOut.xls"),
+                list, PfmExcelDto.class, true);
     }
 
     private String getDate() {

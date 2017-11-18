@@ -25,4 +25,13 @@ public interface StaffPerformanceInfoDAO extends BaseMapper<StaffPerformanceInfo
      * @return
      */
     List<ListOrganizeInfoDTO> selectOrganizeListByStaffIdAndMonthIdAndOrgId(@Param("staffId") Integer staffId, @Param("monthId") Integer monthId, @Param("orgId") Integer orgId, @Param("orgCode") Integer orgCode);
+
+    /**
+     * 获取员工们相关组织，相关月份的评分信息
+     * @param staffIds
+     * @param monthId
+     * @param orgCode
+     * @return
+     */
+    List<ListOrganizeInfoDTO> selectListByStaffIdsAndMonthIdAndOrgCode(@Param("staffIds") List<Integer> staffIds, @Param("monthId") Integer monthId, @Param("orgCode") Integer orgCode);
 }

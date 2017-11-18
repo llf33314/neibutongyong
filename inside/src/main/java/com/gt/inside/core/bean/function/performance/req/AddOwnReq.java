@@ -15,6 +15,9 @@ public class AddOwnReq {
     @ApiModelProperty(value = "状态（0：可编辑，1：不可编辑）")
     private Integer status; // 状态（0：可编辑，1：不可编辑）
 
+    @ApiModelProperty(value = "评分码，对应字典1002详情code")
+    private Integer performanceCode; // 评分码，对应字典1002详情code
+
     @ApiModelProperty(value = "评级纬度")
     private String performanceName; // 评级纬度
 
@@ -69,10 +72,19 @@ public class AddOwnReq {
         this.ownScore = ownScore;
     }
 
+    public Integer getPerformanceCode() {
+        return performanceCode;
+    }
+
+    public void setPerformanceCode(Integer performanceCode) {
+        this.performanceCode = performanceCode;
+    }
+
     @Override
     public String toString() {
         return "AddOwnReq{" +
                 "status=" + status +
+                ", performanceCode=" + performanceCode +
                 ", performanceName='" + performanceName + '\'' +
                 ", performanceContent='" + performanceContent + '\'' +
                 ", performanceScore=" + performanceScore +

@@ -14,3 +14,9 @@ export const requestDelStaff = params => { return axios.post(`${inside_base}/app
 export const requestQuitStaff = params => { return axios.post(`${inside_base}/app/staff/quit`, params).then(res => res.data) }
 /* 获取部门列表 */
 export const requestListDepartment = params => { return axios.post(`${inside_base}/app/department/listAll`, params).then(res => res.data) }
+/* 获取员工类型列表 */
+export const requestListStaffType = params => { return axios.post(`${inside_base}/app/staff/listStaffType`, params).then(res => res.data) }
+/* 获取员工职务列表 */
+export const requestListStaffDuties = params => { return axios.post(`${inside_base}/app/staff/listStaffDuties`, params).then(res => res.data) }
+/* 获取员工级别列表 */
+export const requestListStaffLevel = params => { return axios.post(`${inside_base}/app/staff/listStaffLevel`, params).then(res => res.data) }

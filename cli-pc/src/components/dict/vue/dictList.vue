@@ -17,7 +17,7 @@
                     <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作"  width="250">
                 <template slot-scope="scope">
                     <el-button size="small" @click="openModifyDict(scope.row)">编辑</el-button>
                     <el-button size="small" type="primary" @click="openDictInfo(scope.row)">字典详情</el-button>
@@ -37,7 +37,7 @@
             <el-input v-model="dict.dictCode" type='number' auto-complete="off" placeholder="请输入4位数字的字典编号"></el-input>
           </el-form-item>
           <el-form-item label="字典名称：" prop="dictName" :label-width="formLabelWidth">
-            <el-input v-model="dict.dictName" auto-complete="off" placeholder="请输入10字以内的字典名称"></el-input>
+            <el-input v-model="dict.dictName" auto-complete="off" placeholder="请输入12字以内的字典名称"></el-input>
           </el-form-item>
           <el-form-item label="字典描述：" prop="dictRemark" :label-width="formLabelWidth">
             <el-input type="textarea" v-model="dict.dictRemark" placeholder="请输入25字以内的字典描述"></el-input>
@@ -90,7 +90,7 @@ export default {
         ],
         dictName: [
           { required: true, message: '请选输入字典名称', trigger: 'blur' },
-          { min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur' }
+          { min: 1, max: 12, message: '长度不超过12个字符', trigger: 'blur' }
         ],
         dictRemark: [{ max: 25, message: '长度不超过25个字符', trigger: 'blur' }]
       }

@@ -3,6 +3,9 @@ package com.gt.inside.core.controller.organize.staff;
 import com.gt.inside.api.base.BaseController;
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.core.bean.organize.staff.req.*;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffDutiesRes;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffLevelRes;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffTypeRes;
 import com.gt.inside.core.entity.organize.staff.Staff;
 import com.gt.inside.core.exception.dict.DictException;
 import com.gt.inside.core.exception.organize.staff.StaffException;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -124,6 +128,68 @@ public class StaffStageController extends BaseController {
             logger.debug(staffQuitReq.toString());
             staffStageService.quitStaff(staffQuitReq);
             return ResponseDTO.createBySuccessMessage("离职员工成功");
+        } catch (StaffException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
+
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+            @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
+            @ApiResponse(code = 2, message = "类型对象", response = ListStaffTypeRes.class),
+    })
+    @ApiOperation(value = "获取员工类型列表", notes = "分页获取员工类型列表")
+    @RequestMapping(value = "/listStaffType", method = RequestMethod.POST)
+    public ResponseDTO listStaffType() {
+        try {
+            List<ListStaffTypeRes> listStaffTypeResList =  staffStageService.listStaffType();
+            return ResponseDTO.createBySuccess("获取员工类型列表成功", listStaffTypeResList);
+        } catch (StaffException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
+
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+            @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
+            @ApiResponse(code = 2, message = "级别对象", response = ListStaffLevelRes.class),
+    })
+    @ApiOperation(value = "获取员工级别列表", notes = "分页获取员工级别列表")
+    @RequestMapping(value = "/listStaffLevel", method = RequestMethod.POST)
+    public ResponseDTO listStaffLevel(@RequestBody @ApiParam("请求对象") @Valid ListStaffLevelReq listStaffLevelReq, BindingResult bindingResult) {
+        InvalidParameter(bindingResult);
+        try {
+            logger.debug(listStaffLevelReq.toString());
+            List<ListStaffLevelRes> listStaffLevelResList =  staffStageService.listStaffLevel(listStaffLevelReq);
+            return ResponseDTO.createBySuccess("获取员工级别列表成功", listStaffLevelResList);
+        } catch (StaffException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
+
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+            @ApiResponse(code = 1, message = "data对象（数组对象）", response = List.class),
+            @ApiResponse(code = 2, message = "职务对象", response = ListStaffDutiesRes.class),
+    })
+    @ApiOperation(value = "获取员工职务列表", notes = "分页获取员工职务列表")
+    @RequestMapping(value = "/listStaffDuties", method = RequestMethod.POST)
+    public ResponseDTO listStaffDuties() {
+        try {
+            List<ListStaffDutiesRes> listStaffDutiesResList =  staffStageService.listStaffDuties();
+            return ResponseDTO.createBySuccess("获取员工职务列表成功", listStaffDutiesResList);
         } catch (StaffException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());

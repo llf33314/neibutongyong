@@ -10,7 +10,7 @@
       <el-table-column prop="departmentName" label="部门"></el-table-column>
       <el-table-column prop="directlyName" label="直属领导"></el-table-column>
       <el-table-column prop="branchName" label="分管领导"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="250">
           <template slot-scope="scope">
               <el-button size="small" type="primary" @click="relationDirectly(scope.row)">关联直属领导</el-button>
               <el-button size="small" type="primary" @click="relationBranch(scope.row)">关联分管领导</el-button>

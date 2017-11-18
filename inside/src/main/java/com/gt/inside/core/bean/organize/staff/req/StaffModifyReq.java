@@ -39,6 +39,18 @@ public class StaffModifyReq {
     @NotNull(message = "部门id不能为空")
     private Integer depId; // 部门id
 
+    @ApiModelProperty(value = "员工类型")
+    @NotNull(message = "员工类型不能为空")
+    private Integer staffType; // 员工类型（对应字典1004，技术类，专业类）
+
+    @ApiModelProperty(value = "员工等级")
+    @NotNull(message = "员工等级不能为空")
+    private Integer staffLevel; // 员工等级（对应字典1005 或 字典1006 或 字典 1007，P级或T级）
+
+    @ApiModelProperty(value = "员工职务")
+    @NotNull(message = "员工职务不能为空")
+    private Integer staffDuties; // 员工职务（对应字典1008）
+
     public Integer getId() {
         return id;
     }
@@ -95,6 +107,30 @@ public class StaffModifyReq {
         this.depId = depId;
     }
 
+    public Integer getStaffType() {
+        return staffType;
+    }
+
+    public void setStaffType(Integer staffType) {
+        this.staffType = staffType;
+    }
+
+    public Integer getStaffLevel() {
+        return staffLevel;
+    }
+
+    public void setStaffLevel(Integer staffLevel) {
+        this.staffLevel = staffLevel;
+    }
+
+    public Integer getStaffDuties() {
+        return staffDuties;
+    }
+
+    public void setStaffDuties(Integer staffDuties) {
+        this.staffDuties = staffDuties;
+    }
+
     @Override
     public String toString() {
         return "StaffModifyReq{" +
@@ -105,6 +141,9 @@ public class StaffModifyReq {
                 ", staffJoinTime=" + staffJoinTime +
                 ", staffPhone='" + staffPhone + '\'' +
                 ", depId=" + depId +
+                ", staffType=" + staffType +
+                ", staffLevel=" + staffLevel +
+                ", staffDuties=" + staffDuties +
                 '}';
     }
 }

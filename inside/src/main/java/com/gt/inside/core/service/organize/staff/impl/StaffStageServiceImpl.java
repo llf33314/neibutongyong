@@ -7,13 +7,19 @@ import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.api.enums.ResponseEnums;
 import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.core.bean.organize.staff.req.*;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffDutiesRes;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffLevelRes;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffTypeRes;
+import com.gt.inside.core.entity.dict.DictInfo;
 import com.gt.inside.core.entity.organize.staff.Staff;
 import com.gt.inside.core.exception.organize.staff.StaffException;
+import com.gt.inside.core.service.dict.DictApiService;
 import com.gt.inside.core.service.organize.staff.StaffService;
 import com.gt.inside.core.service.organize.staff.StaffStageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +31,19 @@ public class StaffStageServiceImpl implements StaffStageService {
 
     @Autowired
     StaffService staffService;
+
+    @Autowired
+    DictApiService dictApiService;
+
+    private static final Integer StaffTypeDictCode = 1004; // 员工类型（对应字典1004，技术类，专业类）
+
+    private static final Integer StaffLevelDictCodeT = 1005; // 员工等级（对应字典1005 或 字典1006 或 字典 1007，P级或T级）
+
+    private static final Integer StaffLevelDictCodePA = 1006; // 员工等级（对应字典1005 或 字典1006 或 字典 1007，P级或T级）
+
+    private static final Integer StaffLevelDictCodePB = 1007; // 员工等级（对应字典1005 或 字典1006 或 字典 1007，P级或T级）
+
+    private static final Integer StaffDutiesDictCode = 1008; // 员工职务（对应字典1008）
 
     /**
      * 分页获取员工
@@ -73,6 +92,9 @@ public class StaffStageServiceImpl implements StaffStageService {
         staff.setStaffEnName(staffAddReq.getStaffEnName());
         staff.setStaffPhone(staffAddReq.getStaffPhone());
         staff.setStaffStatus(0);
+        staff.setStaffType(staffAddReq.getStaffType());
+        staff.setStaffLevel(staffAddReq.getStaffLevel());
+        staff.setStaffDuties(staffAddReq.getStaffDuties());
         staffService.insertAllColumn(staff);
     }
 
@@ -103,6 +125,9 @@ public class StaffStageServiceImpl implements StaffStageService {
         staff.setStaffName(staffModifyReq.getStaffName());
         staff.setStaffEnName(staffModifyReq.getStaffEnName());
         staff.setStaffPhone(staffModifyReq.getStaffPhone());
+        staff.setStaffType(staffModifyReq.getStaffType());
+        staff.setStaffLevel(staffModifyReq.getStaffLevel());
+        staff.setStaffDuties(staffModifyReq.getStaffDuties());
         staffService.updateAllColumnById(staff);
     }
 
@@ -141,5 +166,66 @@ public class StaffStageServiceImpl implements StaffStageService {
         }
         staff.setStaffStatus(1);
         staffService.updateById(staff);
+    }
+
+    /**
+     * 员工类型列表
+     *
+     * @return
+     */
+    @Override
+    public List<ListStaffTypeRes> listStaffType() {
+        List<DictInfo> dictInfoList = dictApiService.listDictInfoByDictCode(StaffTypeDictCode);
+        List<ListStaffTypeRes> listStaffTypeResList = new ArrayList<>();
+        for (DictInfo dictInfo : dictInfoList){
+            ListStaffTypeRes listStaffTypeRes = new ListStaffTypeRes();
+            listStaffTypeRes.setCode(dictInfo.getInfoCode());
+            listStaffTypeRes.setName(dictInfo.getInfoContent());
+            listStaffTypeResList.add(listStaffTypeRes);
+        }
+        return listStaffTypeResList;
+    }
+
+    /**
+     * 员工级别列表
+     *
+     * @return
+     */
+    @Override
+    public List<ListStaffLevelRes> listStaffLevel(ListStaffLevelReq listStaffLevelReq) {
+        List<DictInfo> dictInfoList = new ArrayList<>();
+        if (listStaffLevelReq.getStaffType().equals(1)){ //  技术类
+            dictInfoList = dictApiService.listDictInfoByDictCode(StaffLevelDictCodeT);
+        } else if (listStaffLevelReq.getStaffType().equals(2)) { // 专业A类
+            dictInfoList = dictApiService.listDictInfoByDictCode(StaffLevelDictCodePA);
+        } else if (listStaffLevelReq.getStaffType().equals(3)) { // 专业B类
+            dictInfoList = dictApiService.listDictInfoByDictCode(StaffLevelDictCodePB);
+        }
+        List<ListStaffLevelRes> listStaffLevelResList = new ArrayList<>();
+        for (DictInfo dictInfo : dictInfoList){
+            ListStaffLevelRes listStaffLevelRes = new ListStaffLevelRes();
+            listStaffLevelRes.setCode(dictInfo.getInfoCode());
+            listStaffLevelRes.setName(dictInfo.getInfoContent());
+            listStaffLevelResList.add(listStaffLevelRes);
+        }
+        return listStaffLevelResList;
+    }
+
+    /**
+     * 员工职务列表
+     *
+     * @return
+     */
+    @Override
+    public List<ListStaffDutiesRes> listStaffDuties() {
+        List<DictInfo> dictInfoList = dictApiService.listDictInfoByDictCode(StaffDutiesDictCode);
+        List<ListStaffDutiesRes> listStaffDutiesResList = new ArrayList<>();
+        for (DictInfo dictInfo : dictInfoList){
+            ListStaffDutiesRes listStaffDutiesRes = new ListStaffDutiesRes();
+            listStaffDutiesRes.setCode(dictInfo.getInfoCode());
+            listStaffDutiesRes.setName(dictInfo.getInfoContent());
+            listStaffDutiesResList.add(listStaffDutiesRes);
+        }
+        return listStaffDutiesResList;
     }
 }

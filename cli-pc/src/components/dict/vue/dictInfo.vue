@@ -13,7 +13,7 @@
         </div>
     <div class="a-admin-table">
       <el-table :data="dictInfoListData" border highlight-current-row style="width: 100%">
-        <el-table-column type="index" width="50"></el-table-column>
+        <el-table-column type="index" width="100"></el-table-column>
         <el-table-column prop="infoContent" label="详情内容"></el-table-column>
         <el-table-column prop="infoCode" label="详情编号"></el-table-column>
         <el-table-column prop="infoRemark" label="详情描述"></el-table-column>
@@ -23,7 +23,7 @@
                 <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
             </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作"  width="200">
             <template slot-scope="scope">
                 <el-button size="small" @click="openModifyDictInfo(scope.row)">编辑</el-button>
                 <el-button size="small" type="danger" @click="delDictInfo(scope.row.id)">删除</el-button>
@@ -42,7 +42,7 @@
             <el-input v-model="dictInfo.infoCode" type='number' auto-complete="off" placeholder="请输入4位数字以内的字典详情编号"></el-input>
           </el-form-item>
           <el-form-item label="字典详情内容：" prop="infoContent" :label-width="formLabelWidth">
-            <el-input v-model="dictInfo.infoContent" auto-complete="off" placeholder="请输入10字以内的字典详情内容"></el-input>
+            <el-input v-model="dictInfo.infoContent" auto-complete="off" placeholder="请输入12字以内的字典详情内容"></el-input>
           </el-form-item>
           <el-form-item label="字典详情描述：" prop="infoRemark" :label-width="formLabelWidth">
             <el-input type="textarea" v-model="dictInfo.infoRemark" placeholder="请输入25字以内的字典详情描述"></el-input>
@@ -97,7 +97,7 @@ export default {
         ],
         infoContent: [
           { required: true, message: '请选输入字典详情内容', trigger: 'blur' },
-          { min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur' }
+          { min: 1, max: 12, message: '长度不超过12个字符', trigger: 'blur' }
         ],
         infoRemark: [{ max: 25, message: '长度不超过25个字符', trigger: 'blur' }]
       }

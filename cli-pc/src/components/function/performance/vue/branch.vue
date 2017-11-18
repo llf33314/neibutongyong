@@ -4,7 +4,7 @@
     <div>
       <div style="margin: 0px 0 10px">
         <el-button type="primary" @click="releaseLevelClick" :disabled="releaseLevelBoolean == false">发布评级</el-button>
-        <el-button type="primary" @click="exportExcelClick">导出数据</el-button>
+        <el-button type="primary" @click="exportExcelClick" :disabled="releaseLevelBoolean == false">导出数据</el-button>
       </div>
       <span class="a-gt-own-span">本月分页员工绩效评级列表</span>
       <el-table :data="branchStaffListData" border highlight-current-row style="width: 100%">
@@ -59,7 +59,8 @@ import {
   requestListLevelDict,
   requestAddLevel,
   requestCheckReleaseLevel,
-  requestReleaseLevel
+  requestReleaseLevel,
+  requestExportExcel
 } from '../api/api';
 export default {
   data() {
@@ -157,6 +158,7 @@ export default {
               type: 'success'
             });
             this.listBranchStaff();
+            this.checkReleaseLevel();
           } else {
             this.$message.error(data.msg + '[错误码：' + _code + ']');
           }
@@ -165,8 +167,20 @@ export default {
     },
     exportExcel() {
       // 导出excel
-      this.$message({
-        message: '功能暂未开放，敬请期待'
+      // this.$message({
+      //   message: '功能暂未开放，敬请期待'
+      // });
+      requestExportExcel().then(function(response) {
+        // window.location.href = URL.createObjectURL(new Blob([response]));
+        const content = response;
+        const elink = document.createElement('a'); // 创建a标签
+        elink.download = '员工绩效评定表.xls'; // 文件名
+        elink.style.display = 'none';
+        const blob = new Blob([content]);
+        elink.href = URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click() // 触发点击a标签事件
+        document.body.removeChild(elink);
       });
     },
     handleCurrentChange(val) {
