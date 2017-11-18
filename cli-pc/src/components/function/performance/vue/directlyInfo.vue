@@ -1,6 +1,17 @@
 // 直属领导评分
+<style lang="less">
+  .function-performace-directlyinfo {
+    .a-gt-own-span {
+      font-size: 14px;
+      color: #666;
+      display: block;
+      padding: 0 18px 25px;
+    }
+  }
+
+</style>
 <template>
-  <div>
+  <div class="function-performace-directlyinfo">
     <span class="a-gt-own-span">评分员工：{{staffInfo.staffName}}</span>
     <el-table :data="directlyInfoListData" border show-summary style="width: 100%">
       <el-table-column type="index" label="评分项" width="180"></el-table-column>
@@ -21,99 +32,95 @@
   </div>
 </template>
 <script>
-import { requestListDirectlyInfo, requestAddDirectly } from '../api/api';
-export default {
-  data() {
-    return {
-      directlyModifyBoolean: false,
-      staffInfo: {},
-      listDirectlyInfoReq: {
-        staffId: ''
+  import {
+    requestListDirectlyInfo,
+    requestAddDirectly
+  } from '../api/api';
+  export default {
+    data() {
+      return {
+        directlyModifyBoolean: false,
+        staffInfo: {},
+        listDirectlyInfoReq: {
+          staffId: ''
+        },
+        directlyInfoListData: [],
+        addDirectlyInfoReq: {
+          staffId: '',
+          addDirectlyReqList: []
+        }
+      };
+    },
+    methods: {
+      listDirectlyInfo() {
+        // 分页获取组织关系
+        requestListDirectlyInfo(this.listDirectlyInfoReq).then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.directlyInfoListData = data.data;
+            console.log(this.directlyInfoListData);
+          } else {
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
+          }
+        });
       },
-      directlyInfoListData: [],
-      addDirectlyInfoReq: {
-        staffId: '',
-        addDirectlyReqList: []
+      addDirectly() {
+        // 新增直属领导评分信息
+        this.addDirectlyInfoReq.addDirectlyReqList = this.directlyInfoListData;
+        console.log(this.addDirectlyInfoReq);
+        requestAddDirectly(this.addDirectlyInfoReq).then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.$message({
+              message: '评分完成',
+              type: 'success'
+            });
+            this.$router.push({
+              path: '/app/performance/directly'
+            });
+          } else {
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
+          }
+        });
+      },
+      modifyDirectly() {
+        this.directlyModifyBoolean = true;
+      },
+      endDirectly() {
+        this.directlyModifyBoolean = false;
+      },
+      uploadOwn() {
+        var _checkData = this.directlyInfoListData;
+        console.log(_checkData);
+        for (var i = 0; i < _checkData.length; i++) {
+          if (
+            _checkData[i].directlyScore == '' ||
+            _checkData[i].directlyScore == null
+          ) {
+            this.$message({
+              message: '请先完成评分!',
+              type: 'warning'
+            });
+            return;
+          }
+        }
+        this.$confirm('上传评分后将不可修改，是否继续上传？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.addDirectly();
+        });
       }
-    };
-  },
-  methods: {
-    listDirectlyInfo() {
-      // 分页获取组织关系
-      requestListDirectlyInfo(this.listDirectlyInfoReq).then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.directlyInfoListData = data.data;
-          console.log(this.directlyInfoListData);
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
-        }
-      });
     },
-    addDirectly() {
-      // 新增直属领导评分信息
-      this.addDirectlyInfoReq.addDirectlyReqList = this.directlyInfoListData;
-      console.log(this.addDirectlyInfoReq);
-      requestAddDirectly(this.addDirectlyInfoReq).then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.$message({
-            message: '评分完成',
-            type: 'success'
-          });
-          this.$router.push({
-            path: '/app/performance/directly'
-          });
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
-        }
-      });
-    },
-    modifyDirectly() {
-      this.directlyModifyBoolean = true;
-    },
-    endDirectly() {
-      this.directlyModifyBoolean = false;
-    },
-    uploadOwn() {
-      var _checkData = this.directlyInfoListData;
-      console.log(_checkData);
-      for (var i = 0; i < _checkData.length; i++) {
-        if (
-          _checkData[i].directlyScore == '' ||
-          _checkData[i].directlyScore == null
-        ) {
-          this.$message({
-            message: '请先完成评分!',
-            type: 'warning'
-          });
-          return;
-        }
-      }
-      this.$confirm('上传评分后将不可修改，是否继续上传？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.addDirectly();
-      });
+    created() {
+      this.staffInfo = this.$route.query;
+      this.listDirectlyInfoReq.staffId = this.$route.query.staffId;
+      this.addDirectlyInfoReq.staffId = this.$route.query.staffId;
+      this.listDirectlyInfo();
     }
-  },
-  created() {
-    this.staffInfo = this.$route.query;
-    this.listDirectlyInfoReq.staffId = this.$route.query.staffId;
-    this.addDirectlyInfoReq.staffId = this.$route.query.staffId;
-    this.listDirectlyInfo();
-  }
-};
+  };
+
 </script>
-<style type="text/css" scoped>
-.a-gt-own-span {
-  font-size: 14px;
-  color: #666;
-  display: block;
-  padding: 0 18px 25px;
-}
-</style>
