@@ -8,9 +8,11 @@ import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.api.enums.ResponseEnums;
 import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.api.util.DateTimeKit;
+import com.gt.inside.api.util.excel.ExcelUtil;
 import com.gt.inside.core.bean.function.performance.dto.ListOrganizeDTO;
 import com.gt.inside.core.bean.function.performance.dto.ListOrganizeInfoDTO;
 import com.gt.inside.core.bean.function.performance.dto.ListOrganizeTotalDTO;
+import com.gt.inside.core.bean.function.performance.dto.PfmExcelDto;
 import com.gt.inside.core.bean.function.performance.req.*;
 import com.gt.inside.core.bean.function.performance.res.*;
 import com.gt.inside.core.entity.dict.DictInfo;
@@ -22,14 +24,14 @@ import com.gt.inside.core.service.dict.DictApiService;
 import com.gt.inside.core.service.function.performance.*;
 import com.gt.inside.core.service.organize.department.DepartmentApiService;
 import com.gt.inside.core.service.organize.staff.StaffApiService;
+import com.psr.tool.agile.AnalyticClass;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.*;
 
 /**
  * Created by psr on 2017/10/31 0031.
@@ -70,11 +72,21 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
 
     private static final Integer StaticInfoDictCode = 1002; // 评分静态信息字典
 
+    private static final Integer StaffLevelDictCodeT = 1005; // 员工等级（对应字典1005 或 字典1006 或 字典 1007，P级或T级）
+
+    private static final Integer StaffLevelDictCodeP = 1006; // 员工等级（对应字典1005 或 字典1006 或 字典 1007，P级或T级）
+
+    private static final Integer StaffDutiesDictCode = 1008; // 员工职务（对应字典1008）
+
     private static Integer directlyCode = 1; // 直属领导代号
 
     private static Integer branchCode = 2; // 分管领导代号
 
     private static Integer levelRelease = 1; // 发布
+
+    private static Integer typeT = 1; // 技术类type 1
+
+    private static Integer typeP = 2; // 专业A类type 2
 
     /**
      * 获取绩效权限
@@ -323,6 +335,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         for (DictInfo dictInfo : dictInfoList){
             ListStaticInfoRes listStaticInfoRes = new ListStaticInfoRes();
             listStaticInfoRes.setStatus(1);
+            listStaticInfoRes.setPerformanceCode(dictInfo.getInfoCode());
             String content = dictInfo.getInfoContent();
             listStaticInfoRes.setPerformanceName(content);
             listStaticInfoRes.setPerformanceContent(dictInfo.getInfoRemark());
@@ -363,6 +376,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             staffPerformanceInfo.setPfmOwnScore(addOwnReq.getOwnScore());
             staffPerformanceInfo.setPfmName(addOwnReq.getPerformanceName());
             staffPerformanceInfo.setPfmStandardScore(addOwnReq.getPerformanceScore());
+            staffPerformanceInfo.setPfmCode(addOwnReq.getPerformanceCode());
             staffPerformanceInfoList.add(staffPerformanceInfo);
             ownTotal += addOwnReq.getOwnScore(); // 增加总分
         }
@@ -691,7 +705,161 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
      * @param userDTO
      */
     @Override
-    public void exportExcel(UserDTO userDTO) {
+    public void exportExcel(UserDTO userDTO, HttpServletResponse response) throws Exception {
+        // 定义导出名
+        response.setContentType("application/octet-stream");
+        // 获取分管领导信息
+        Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
+        if (CommonUtil.isEmpty(staff)){
+            throw new PerformanceException(ResponseEnums.STAFF_NULL);
+        }
+        // 获取月份
+        StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
+        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+            throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
+        }
+        // 获取部门
+        Department department = departmentApiService.selectDepartmentById(staff.getDepId());
+        // 获取分管领导下属员工id
+        EntityWrapper<StaffPerformanceOrganize> entityWrapperOrg = new EntityWrapper<>();
+        entityWrapperOrg.eq("staff_org_code", branchCode);
+        entityWrapperOrg.eq("staff_org_id", staff.getId());
+        List<StaffPerformanceOrganize> staffPerformanceOrganizeList = staffPerformanceOrganizeService.selectList(entityWrapperOrg);
+        List<Integer> staffIds = new ArrayList<>();
+        for (StaffPerformanceOrganize staffPerformanceOrganize : staffPerformanceOrganizeList){
+            staffIds.add(staffPerformanceOrganize.getStaffId());
+        }
+        // 获取分管领导下属员工信息
+        List<Staff> staffList = staffApiService.getStaffByIds(staffIds);
+        // 获取直属领导评分信息
+        List<ListOrganizeInfoDTO> listOrganizeInfoDTOList = staffPerformanceInfoService.selectListByStaffIdsAndMonthIdAndOrgCode(staffIds, staffPerformanceMonth.getId(), directlyCode);
+        // 获取总评分信息
+        List<ListOrganizeTotalDTO> listOrganizeTotalDTOList = staffPerformanceTotalService.selectListByMonIdWithOrgCode(staffIds, directlyCode, null, staffPerformanceMonth.getId());
+        // 获取员工职位
+        Map<Integer, String> dutiesDictMap =  dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
+        // 获取技术类
+        Map<Integer, String> levelTDictMap =  dictApiService.getDictInfoByDictCode(StaffLevelDictCodeT);
+        // 获取专业类
+        Map<Integer, String> levelPDictMap =  dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
+        // 评级等级
+        Map<Integer, String> levelDictMap =  dictApiService.getDictInfoByDictCode(LevelDictCode);
 
+        // 统计信息
+        Map<String, String> map = new HashMap<String, String>();
+        String month = DateTimeKit.formatTime("yyyy年MM月", staffPerformanceMonth.getMonthDate());
+        map.put("title", "技术/专业类员工" + month + "份绩效评定表");
+        map.put("department", department.getDepName());
+
+        int devNum = 0; // 技术类参评人数
+        int devK1Num = 0; // 技术类评K1人数
+        int devK2Num = 0; // 技术类参K2人数
+        int devK3Num = 0; // 技术类参K3人数
+        int devK4Num = 0; // 技术类参K4人数
+
+        int majorNum = 0; // 专业类参评人数
+        int majorK1Num = 0; // 专业类评K1人数
+        int majorK2Num = 0; // 专业类评K2人数
+        int majorK3Num = 0; // 专业类评K3人数
+        int majorK4Num = 0; // 专业类评K4人数
+
+        // 评分信息
+        List<PfmExcelDto> pfmExcelDtoList = new ArrayList<>();
+        for (int i = 0; i < staffList.size(); i++){
+            Staff staffOne = staffList.get(i);
+            PfmExcelDto pfmExcelDto = new PfmExcelDto();
+            pfmExcelDto.setIndex(i + 1);
+            pfmExcelDto.setName(staffOne.getStaffName());
+            pfmExcelDto.setDuties(dutiesDictMap.get(staffOne.getStaffDuties()));
+            Integer type = staffOne.getStaffType();
+            if (typeT.equals(type)){
+                pfmExcelDto.setpLevel(levelTDictMap.get(staffOne.getStaffLevel()));
+            }else if (typeP.equals(type)){
+                pfmExcelDto.setpLevel(levelPDictMap.get(staffOne.getStaffLevel()));
+            }
+            // 循环直属领导评分信息
+            for (ListOrganizeInfoDTO listOrganizeInfoDTO : listOrganizeInfoDTOList){
+                if (staffOne.getId().equals(listOrganizeInfoDTO.getStaffId())){
+                    Integer pfmCode = listOrganizeInfoDTO.getPerformanceCode();
+                    switch (pfmCode){
+                        case 1: // 责任感
+                            pfmExcelDto.setDuty(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                        case 2: // 积极性
+                            pfmExcelDto.setActive(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                        case 3: // 协作性
+                            pfmExcelDto.setCooperation(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                        case 4: // 执行力
+                            pfmExcelDto.setExecute(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                        case 5: // 学习发展能力
+                            pfmExcelDto.setStudy(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                        case 6: // 专业知识与技能
+                            pfmExcelDto.setKnowledge(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                        default:
+                            pfmExcelDto.setWorkContent(listOrganizeInfoDTO.getPerformanceContent());
+                            pfmExcelDto.setWorkScore(listOrganizeInfoDTO.getOrgScore());
+                            break;
+                    }
+//                    listOrganizeInfoDTOList.remove(listOrganizeInfoDTO);
+                }
+            }
+            Integer kType = 0; // 等级
+            // 循环直属领导总评分，分管领导评级
+            for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList){
+                if (staffOne.getId().equals(listOrganizeTotalDTO.getStaffId())){
+                    kType = listOrganizeTotalDTO.getLevelCode();
+                    pfmExcelDto.setTotalScre(listOrganizeTotalDTO.getOrgTotal());
+                    pfmExcelDto.setLevel(levelDictMap.get(kType));
+//                    listOrganizeTotalDTOList.remove(listOrganizeTotalDTO);
+                }
+            }
+            pfmExcelDtoList.add(pfmExcelDto);
+
+            // 统计信息
+            if (typeT.equals(type)){
+                devNum += 1;
+                if (kType.equals(1)){
+                    devK1Num += 1;
+                }else if (kType.equals(2)){
+                    devK2Num += 1;
+                }else if (kType.equals(3)){
+                    devK3Num += 1;
+                }else if (kType.equals(4)){
+                    devK4Num += 1;
+                }
+            }else if (typeP.equals(type)){
+                majorNum += 1;
+                if (kType.equals(1)){
+                    majorK1Num += 1;
+                }else if (kType.equals(2)){
+                    majorK2Num += 1;
+                }else if (kType.equals(3)){
+                    majorK3Num += 1;
+                }else if (kType.equals(4)){
+                    majorK4Num += 1;
+                }
+            }
+        }
+
+        map.put("devNum", devNum + "");
+        map.put("devK1Num", devK1Num + "");
+        map.put("devK2Num", devK2Num + "");
+        map.put("devK3Num", devK3Num + "");
+        map.put("devK4Num", devK4Num + "");
+
+        map.put("majorNum", majorNum + "");
+        map.put("majorK1Num", majorK1Num + "");
+        map.put("majorK2Num", majorK2Num + "");
+        map.put("majorK3Num", majorK3Num + "");
+        map.put("majorK4Num", majorK4Num + "");
+
+        OutputStream stream = response.getOutputStream();
+        ExcelUtil.getInstance().exportObj2ExcelByTemplate(map, "performance-template.xls", stream,
+                pfmExcelDtoList, PfmExcelDto.class, true);
     }
+
 }

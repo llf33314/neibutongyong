@@ -6,6 +6,7 @@
 	<resultMap id="BaseResultMap" type="com.gt.inside.core.entity.function.performance.StaffPerformanceInfo">
 		<id column="id" property="id" />
 		<result column="staff_id" property="staffId" />
+		<result column="pfm_code" property="pfmCode" />
 		<result column="pfm_name" property="pfmName" />
 		<result column="pfm_content" property="pfmContent" />
 		<result column="pfm_standard_score" property="pfmStandardScore" />
@@ -17,6 +18,8 @@
 	<!-- 对应组织绩效详情查询映射结果 -->
 	<resultMap id="OrganizeResultMap" type="com.gt.inside.core.bean.function.performance.dto.ListOrganizeInfoDTO">
 		<result column="id" property="id" />
+		<result column="staff_id" property="staffId" />
+		<result column="pfm_code" property="performanceCode" />
 		<result column="pfm_name" property="performanceName" />
 		<result column="pfm_content" property="performanceContent" />
 		<result column="pfm_standard_score" property="performanceScore" />
@@ -27,19 +30,31 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, staff_id, pfm_name, pfm_content, pfm_standard_score, pfm_own_score, month_id, create_time
+        id, staff_id, pfm_code, pfm_name, pfm_content, pfm_standard_score, pfm_own_score, month_id, create_time
     </sql>
 
 	<!-- 对应组织绩效详情查询结果列 -->
 	<sql id="Organize_Column_List">
-		spi.id, spi.pfm_name, spi.pfm_content, spi.pfm_standard_score, spi.pfm_own_score, spio.staff_org_score, ISNULL(spio.staff_org_score) AS org_score_status
+		spi.id, spi.staff_id, spi.pfm_code, spi.pfm_name, spi.pfm_content, spi.pfm_standard_score, spi.pfm_own_score, spio.staff_org_score, ISNULL(spio.staff_org_score) AS org_score_status
 	</sql>
 
+	<!-- 根据员工，月份，组织id，组织码查询组织评分详情 -->
 	<select id="selectOrganizeListByStaffIdAndMonthIdAndOrgId" resultMap="OrganizeResultMap">
 		SELECT <include refid="Organize_Column_List"/>
 		FROM t_staff_performance_info spi
 		LEFT JOIN t_staff_performance_info_org spio ON spi.id = spio.pfm_info_id AND staff_org_code = #{orgCode} AND staff_org_id = #{orgId}
 		WHERE staff_id = #{staffId} AND month_id = #{monthId}
+	</select>
+
+	<!-- 获取员工们相关组织，相关月份的评分信息 -->
+	<select id="selectListByStaffIdsAndMonthIdAndOrgCode" resultMap="OrganizeResultMap">
+		SELECT <include refid="Organize_Column_List"/>
+		FROM t_staff_performance_info spi
+		LEFT JOIN t_staff_performance_info_org spio ON spi.id = spio.pfm_info_id AND staff_org_code = #{orgCode}
+		WHERE month_id = #{monthId} AND staff_id IN
+		<foreach collection="staffIds" index="index" item="staffId" open="(" separator="," close=")">
+			#{staffId}
+		</foreach>
 	</select>
 
 </mapper>

@@ -5,6 +5,7 @@ import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.core.bean.function.performance.req.*;
 import com.gt.inside.core.bean.function.performance.res.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -125,15 +126,16 @@ public interface PerformanceStageService {
     void releaseLevel(UserDTO userDTO);
 
     /**
-     * 导出Excel
-     * @param userDTO
-     */
-    void exportExcel(UserDTO userDTO);
-
-    /**
      * 获取绩效权限
      * @param userDTO
      * @return
      */
     PowerRes getPower(UserDTO userDTO);
+
+    /**
+     * 导出Excel
+     * @param userDTO
+     * @param response
+     */
+    void exportExcel(UserDTO userDTO, HttpServletResponse response) throws Exception;
 }

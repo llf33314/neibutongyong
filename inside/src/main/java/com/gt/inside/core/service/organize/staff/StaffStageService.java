@@ -2,6 +2,9 @@ package com.gt.inside.core.service.organize.staff;
 
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.core.bean.organize.staff.req.*;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffDutiesRes;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffLevelRes;
+import com.gt.inside.core.bean.organize.staff.res.ListStaffTypeRes;
 import com.gt.inside.core.entity.organize.staff.Staff;
 
 import java.util.List;
@@ -40,4 +43,22 @@ public interface StaffStageService {
      * @param staffQuitReq
      */
     void quitStaff(StaffQuitReq staffQuitReq);
+
+    /**
+     * 员工类型列表
+     * @return
+     */
+    List<ListStaffTypeRes> listStaffType();
+
+    /**
+     * 员工级别列表
+     * @return
+     */
+    List<ListStaffLevelRes> listStaffLevel(ListStaffLevelReq listStaffLevelReq);
+
+    /**
+     * 员工职务列表
+     * @return
+     */
+    List<ListStaffDutiesRes> listStaffDuties();
 }

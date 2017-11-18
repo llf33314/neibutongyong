@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -404,12 +405,12 @@ public class PerformanceStageController extends BaseController {
             @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
     })
     @ApiOperation(value = "导出Excel", notes = "导出Excel")
-    @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
-    public ResponseDTO exportExcel(@RequestHeader String token) {
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+    public ResponseDTO exportExcel(@RequestHeader String token, HttpServletResponse response) {
         try {
             logger.debug("exportExcel");
             UserDTO userDTO = ssoService.getSSOUerDTO(token);
-            performanceStageService.exportExcel(userDTO);
+            performanceStageService.exportExcel(userDTO, response);
             return ResponseDTO.createBySuccessMessage("导出Excel成功");
         } catch (PerformanceException e){
             logger.error(e.getMessage(), e.fillInStackTrace());

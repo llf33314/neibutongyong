@@ -1,6 +1,7 @@
 package com.gt.inside.core.service.organize.department;
 
 import com.gt.inside.core.entity.organize.department.Department;
+import com.gt.inside.core.entity.organize.staff.Staff;
 
 import java.util.List;
 
@@ -15,4 +16,10 @@ public interface DepartmentApiService {
      */
     List<Department> listAllDepartment();
 
+    /**
+     * 根据id获取部门
+     * @param depId
+     * @return
+     */
+    Department selectDepartmentById(Integer depId);
 }

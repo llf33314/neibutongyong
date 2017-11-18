@@ -63,6 +63,18 @@ public class Staff extends Model<Staff> {
      * 员工电话
      */
 	private String staffPhone;
+	/**
+	 * 员工类型（对应字典1005，技术类，专业类）
+	 */
+	private Integer staffType;
+	/**
+	 * 员工等级（对应字典1006 或 字典 1007，P级或T级）
+	 */
+	private Integer staffLevel;
+	/**
+	 * 员工职务（对应字典1008）
+	 */
+	private Integer staffDuties;
     /**
      * 创建时间
      */
@@ -176,5 +188,29 @@ public class Staff extends Model<Staff> {
 
 	public void setStaffEnName(String staffEnName) {
 		this.staffEnName = staffEnName;
+	}
+
+	public Integer getStaffType() {
+		return staffType;
+	}
+
+	public void setStaffType(Integer staffType) {
+		this.staffType = staffType;
+	}
+
+	public Integer getStaffLevel() {
+		return staffLevel;
+	}
+
+	public void setStaffLevel(Integer staffLevel) {
+		this.staffLevel = staffLevel;
+	}
+
+	public Integer getStaffDuties() {
+		return staffDuties;
+	}
+
+	public void setStaffDuties(Integer staffDuties) {
+		this.staffDuties = staffDuties;
 	}
 }

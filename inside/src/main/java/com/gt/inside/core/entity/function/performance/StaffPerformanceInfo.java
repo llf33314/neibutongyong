@@ -36,6 +36,10 @@ public class StaffPerformanceInfo extends Model<StaffPerformanceInfo> {
      */
 	private Integer staffId;
 	/**
+	 * 评分码，对应字典1002详情code
+	 */
+	private Integer pfmCode;
+	/**
 	 * 绩效名称
 	 */
 	private String pfmName;
@@ -122,6 +126,14 @@ public class StaffPerformanceInfo extends Model<StaffPerformanceInfo> {
 
 	public void setPfmStandardScore(Integer pfmStandardScore) {
 		this.pfmStandardScore = pfmStandardScore;
+	}
+
+	public Integer getPfmCode() {
+		return pfmCode;
+	}
+
+	public void setPfmCode(Integer pfmCode) {
+		this.pfmCode = pfmCode;
 	}
 
 	@Override

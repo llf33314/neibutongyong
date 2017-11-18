@@ -13,7 +13,7 @@
         </div>
     <div class="a-admin-table">
       <el-table :data="dictInfoListData" border highlight-current-row style="width: 100%">
-        <el-table-column type="index" width="50"></el-table-column>
+        <el-table-column type="index" width="100"></el-table-column>
         <el-table-column prop="infoContent" label="详情内容"></el-table-column>
         <el-table-column prop="infoCode" label="详情编号"></el-table-column>
         <el-table-column prop="infoRemark" label="详情描述"></el-table-column>
