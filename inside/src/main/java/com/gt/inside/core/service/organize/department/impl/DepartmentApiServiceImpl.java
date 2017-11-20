@@ -1,5 +1,6 @@
 package com.gt.inside.core.service.organize.department.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gt.inside.core.entity.organize.department.Department;
 import com.gt.inside.core.service.organize.department.DepartmentApiService;
 import com.gt.inside.core.service.organize.department.DepartmentService;
@@ -25,5 +26,16 @@ public class DepartmentApiServiceImpl implements DepartmentApiService {
     @Override
     public List<Department> listAllDepartment() {
         return departmentService.listAllDepartment();
+    }
+
+    /**
+     * 根据id获取部门
+     *
+     * @param depId
+     * @return
+     */
+    @Override
+    public Department selectDepartmentById(Integer depId) {
+        return departmentService.selectById(depId);
     }
 }

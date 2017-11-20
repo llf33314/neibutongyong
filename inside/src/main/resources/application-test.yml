@@ -1,9 +1,5 @@
 ################### 内部管理配置（测试环境）
 inside:
-  login:
-    url: http://192.168.3.10:7075/m/login/success/
-  web:
-    url: http://192.168.3.10:7075/manage/#/token/
   sso:
     url: http://192.168.3.10:7078/
     sign:

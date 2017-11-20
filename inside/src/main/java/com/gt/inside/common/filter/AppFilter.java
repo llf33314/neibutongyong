@@ -27,9 +27,6 @@ public class AppFilter implements Filter {
     @Value("${inside.sso.url}")
     private String ssoUrl;
 
-    @Value("${inside.login.url}")
-    private String loginUrl;
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -65,6 +62,7 @@ public class AppFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         }
+
 //        filterChain.doFilter(servletRequest, servletResponse);
     }
 

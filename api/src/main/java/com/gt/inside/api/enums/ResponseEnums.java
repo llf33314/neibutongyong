@@ -33,7 +33,8 @@ public enum ResponseEnums {
     PERFOMANCE_MONTH_NULL(409, "评分月份不存在"),
     PERFOMANCE_NO_RELEASE(410, "评级不可发布"),
     USER_HAS(411, "用户已存在"),
-    USER_NULL(411, "用户不存在"),
+    USER_NULL(412, "用户不存在"),
+    USER_STATUS_STOP(413, "账号已停用"),
     ;
 
     private final int code;

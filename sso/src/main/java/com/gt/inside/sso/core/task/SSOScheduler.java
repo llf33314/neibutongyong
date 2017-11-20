@@ -28,7 +28,7 @@ public class SSOScheduler {
      * 清除userCache（用户登录缓存）
      * 每10分钟清除一次
      */
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = TaskCronContent.userCacheClearCorn)
     public void userCacheClear(){
         logger.debug("userCacheClear start --> over_time : " + overTime);
         try {

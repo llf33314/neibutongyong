@@ -50,11 +50,13 @@ public class UserLoginServiceImpl implements UserLoginService{
         EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
         userEntityWrapper.eq("login_name", loginReq.getLoginName());
         userEntityWrapper.eq("user_pwd", loginReq.getPassword());
-        userEntityWrapper.eq("user_status", 0);
         userEntityWrapper.eq("delete_flag", 0);
         User user = userService.selectOne(userEntityWrapper);
         if (CommonUtil.isEmpty(user)){
             throw new UserException(ResponseEnums.LOGIN_NULL);
+        }
+        if (!user.getUserStatus().equals(0)){
+            throw new UserException(ResponseEnums.USER_STATUS_STOP);
         }
         int userId = user.getId();
         Integer roleStatus = roleService.selectUserRoleStatus(userId);
@@ -63,7 +65,7 @@ public class UserLoginServiceImpl implements UserLoginService{
         userDTO.setUserName(user.getUserName());
         userDTO.setRoleStatus(roleStatus);
         List<MenuDTO> menuDTOList = null;
-        if (roleStatus == 1){
+        if (CommonUtil.isNotEmpty(roleStatus) && roleStatus == 1){
             menuDTOList = menuService.selectListAllMenuDTO();
         }else {
             menuDTOList = menuService.selectListUserRoleMenuDTO(userId);

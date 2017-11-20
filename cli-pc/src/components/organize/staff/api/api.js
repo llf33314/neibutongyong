@@ -1,0 +1,22 @@
+import axios from './../../../../http'
+
+let inside_base = window.INSIDE_BASE_URL;
+
+/* 获取员工列表 */
+export const requestListStaff = params => { return axios.post(`${inside_base}/app/staff/listByPage`, params).then(res => res.data) }
+/* 新增员工 */
+export const requestAddStaff = params => { return axios.post(`${inside_base}/app/staff/add`, params).then(res => res.data) }
+/* 修改员工 */
+export const requestModifyStaff = params => { return axios.post(`${inside_base}/app/staff/modify`, params).then(res => res.data) }
+/* 删除员工 */
+export const requestDelStaff = params => { return axios.post(`${inside_base}/app/staff/del`, params).then(res => res.data) }
+/* 离职员工 */
+export const requestQuitStaff = params => { return axios.post(`${inside_base}/app/staff/quit`, params).then(res => res.data) }
+/* 获取部门列表 */
+export const requestListDepartment = params => { return axios.post(`${inside_base}/app/department/listAll`, params).then(res => res.data) }
+/* 获取员工类型列表 */
+export const requestListStaffType = params => { return axios.post(`${inside_base}/app/staff/listStaffType`, params).then(res => res.data) }
+/* 获取员工职务列表 */
+export const requestListStaffDuties = params => { return axios.post(`${inside_base}/app/staff/listStaffDuties`, params).then(res => res.data) }
+/* 获取员工级别列表 */
+export const requestListStaffLevel = params => { return axios.post(`${inside_base}/app/staff/listStaffLevel`, params).then(res => res.data) }

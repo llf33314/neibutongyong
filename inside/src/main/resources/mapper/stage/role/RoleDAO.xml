@@ -32,11 +32,12 @@
         r.id, r.role_name, r.role_power, r.role_remark, r.create_time, ISNULL(ur.user_id) AS user_has
     </sql>
 
+	<!-- 分页获取用户角色关系 -->
 	<select id="listRoleUserHas" resultMap="RoleUserHasResultMap">
 		SELECT <include refid="Role_User_Has_Column_List"/>
 		FROM t_role r
 		LEFT JOIN t_user_role ur ON r.id = ur.role_id AND user_id = #{userId}
-		WHERE r.delete_flag = 0
+		WHERE r.delete_flag = 0 AND r.role_power = 0
 	</select>
 
 </mapper>

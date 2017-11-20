@@ -3,6 +3,8 @@ package com.gt.inside.core.service.organize.staff;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gt.inside.core.entity.organize.staff.Staff;
 
+import java.util.List;
+
 /**
  * Created by psr on 2017/10/26 0026.
  */
@@ -22,4 +24,11 @@ public interface StaffApiService {
      * @param departmentId
      */
     Page<Staff> listStaffByPageWithDepart(Integer current, Integer size, Integer departmentId);
+
+    /**
+     * 根据id，获取相关用户信息
+     * @param staffIds
+     * @return
+     */
+    List<Staff> getStaffByIds(List<Integer> staffIds);
 }

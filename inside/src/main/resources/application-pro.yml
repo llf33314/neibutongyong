@@ -1,9 +1,5 @@
 ################### 内部管理配置（生产环境）
 inside:
-  login:
-    url: http://sck.duofee.com/m/login/success/
-  web:
-    url: http://sck.duofee.com/manage/#/token/
   sso:
     url: http://sso.duofee.com/
     sign:

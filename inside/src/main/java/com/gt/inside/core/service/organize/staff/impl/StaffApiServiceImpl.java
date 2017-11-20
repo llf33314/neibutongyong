@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by psr on 2017/10/26 0026.
  */
@@ -53,5 +55,16 @@ public class StaffApiServiceImpl implements StaffApiService {
             entityWrapper.eq("dep_id", departmentId);
         }
         return staffService.selectPage(page, entityWrapper);
+    }
+
+    /**
+     * 根据id，获取相关用户信息
+     *
+     * @param staffIds
+     * @return
+     */
+    @Override
+    public List<Staff> getStaffByIds(List<Integer> staffIds) {
+        return staffService.selectBatchIds(staffIds);
     }
 }

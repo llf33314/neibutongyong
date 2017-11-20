@@ -13,8 +13,14 @@ public class ListOrganizeInfoDTO {
     @ApiModelProperty(value = "自评分id")
     private Integer id; // 自评分id
 
+    @ApiModelProperty(value = "员工id")
+    private Integer staffId; // 员工id
+
     @ApiModelProperty(value = "评价状态（0：已评，1：未评）")
     private Integer orgScoreStatus; // 评价状态（0：已评，1：未评）")
+
+    @ApiModelProperty(value = "评分码，对应字典1002详情code")
+    private Integer performanceCode; // 评分码，对应字典1002详情code
 
     @ApiModelProperty(value = "评级纬度")
     private String performanceName; // 评级纬度
@@ -85,6 +91,22 @@ public class ListOrganizeInfoDTO {
 
     public void setOrgScore(Integer orgScore) {
         this.orgScore = orgScore;
+    }
+
+    public Integer getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
+    }
+
+    public Integer getPerformanceCode() {
+        return performanceCode;
+    }
+
+    public void setPerformanceCode(Integer performanceCode) {
+        this.performanceCode = performanceCode;
     }
 
     @Override

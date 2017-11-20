@@ -33,4 +33,13 @@ public interface StaffPerformanceInfoService extends IService<StaffPerformanceIn
      * @return
      */
     List<ListOrganizeInfoDTO> selectOrganizeListByStaffIdAndMonthIdAndOrgId(Integer staffId, Integer monthId, Integer orgId, Integer orgCode);
+
+    /**
+     * 获取员工们相关组织，相关月份的评分信息
+     * @param staffIds
+     * @param monthId
+     * @param orgCode
+     * @return
+     */
+    List<ListOrganizeInfoDTO> selectListByStaffIdsAndMonthIdAndOrgCode(List<Integer> staffIds, Integer monthId, Integer orgCode);
 }

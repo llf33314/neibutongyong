@@ -1,15 +1,26 @@
 // 自评分
+<style lang="less">
+  .function-performance-own {
+    .a-gt-own-span {
+      font-size: 14px;
+      color: #666;
+      display: block;
+      padding: 0 18px 25px;
+    }
+  }
+
+</style>
 <template>
-  <div>
+  <div class="function-performance-own">
     <span class="a-gt-own-span">{{checkOwnInfoData.userName}}自评分，当前月份：{{checkOwnInfoData.monthDate}}</span>
     <el-table :data="listStaticInfoData" border show-summary style="width: 100%">
       <el-table-column type="index" label="评分项" width="180"></el-table-column>
       <el-table-column prop="performanceName" label="评级纬度"></el-table-column>
       <el-table-column prop="performanceContent" label="评价内容">
         <template slot-scope="scope">
-          <el-input v-if="ownModifyBoolean == true && scope.row.status == 0" v-model="scope.row.performanceContent"type="textarea"
-           auto-complete="off" placeholder="主要工作项目或内容/完成标准（100字以内）"></el-input>
-           <span v-else>{{scope.row.performanceContent == '' ? "无" : scope.row.performanceContent}}</span>
+          <el-input v-if="ownModifyBoolean == true && scope.row.status == 0" v-model="scope.row.performanceContent" type="textarea"
+            auto-complete="off" placeholder="主要工作项目或内容/完成标准（100字以内）"></el-input>
+          <span v-else>{{scope.row.performanceContent == '' ? "无" : scope.row.performanceContent}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="performanceScore" label="标准分"></el-table-column>
@@ -28,121 +39,122 @@
   </div>
 </template>
 <script>
-import {
-  requestListStaticInfo,
-  requestCheckOwnInfo,
-  requestListOwnInfo,
-  requestAddOwn
-} from '../api/api';
-export default {
-  data() {
-    return {
-      ownModifyBoolean: false,
-      listStaticInfoData: [
-        {
+  import {
+    requestListStaticInfo,
+    requestCheckOwnInfo,
+    requestListOwnInfo,
+    requestAddOwn
+  } from '../api/api';
+  export default {
+    data() {
+      return {
+        ownModifyBoolean: false,
+        listStaticInfoData: [{
           status: 0,
           performanceName: '工作业绩（60分）',
           performanceContent: '',
           performanceScore: 60,
           ownScore: ''
-        }
-      ],
-      checkOwnInfoData: {
-        userName: '',
-        checkOwnInfoBoolean: true, // true：已评，false：未评
-        monthDate: ''
-      },
-      Boolean: false
-    };
-  },
-  methods: {
-    listStaticInfo() {
-      // 获取必填信息（未评）
-      requestListStaticInfo().then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.listStaticInfoData = this.listStaticInfoData.concat(data.data);
-          console.log(this.listStaticInfoData);
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
-        }
-      });
+        }],
+        checkOwnInfoData: {
+          userName: '',
+          checkOwnInfoBoolean: true, // true：已评，false：未评
+          monthDate: ''
+        },
+        Boolean: false
+      };
     },
-    listOwnInfo() {
-      // 获取信息（已评）
-      requestListOwnInfo().then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.listStaticInfoData = data.data;
-          console.log(this.listStaticInfoData);
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
-        }
-      });
-    },
-    checkOwnInfo() {
-      // 获取用户信息
-      requestCheckOwnInfo().then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.checkOwnInfoData = data.data;
-          if (this.checkOwnInfoData.checkOwnInfoBoolean == true) {
-            // 已评
-            this.listOwnInfo();
+    methods: {
+      listStaticInfo() {
+        // 获取必填信息（未评）
+        requestListStaticInfo().then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.listStaticInfoData = this.listStaticInfoData.concat(data.data);
+            console.log(this.listStaticInfoData);
           } else {
-            // 未评
-            this.listStaticInfo();
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
           }
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
+        });
+      },
+      listOwnInfo() {
+        // 获取信息（已评）
+        requestListOwnInfo().then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.listStaticInfoData = data.data;
+            console.log(this.listStaticInfoData);
+          } else {
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
+          }
+        });
+      },
+      checkOwnInfo() {
+        // 获取用户信息
+        requestCheckOwnInfo().then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.checkOwnInfoData = data.data;
+            if (this.checkOwnInfoData.checkOwnInfoBoolean == true) {
+              // 已评
+              this.listOwnInfo();
+            } else {
+              // 未评
+              this.listStaticInfo();
+            }
+          } else {
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
+          }
+        });
+      },
+      addOwn() {
+        // 新增自评分信息
+        requestAddOwn(this.listStaticInfoData).then(data => {
+          console.log(data);
+          var _code = data.code;
+          if (_code == 100) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+            this.checkOwnInfo();
+          } else {
+            this.$message.error(data.msg + '[错误码：' + _code + ']');
+          }
+        });
+      },
+      modifyOwn() {
+        this.ownModifyBoolean = true;
+      },
+      endOwn() {
+        this.ownModifyBoolean = false;
+      },
+      uploadOwn() {
+        var _checkData = this.listStaticInfoData;
+        for (var i = 0; i < _checkData.length; i++) {
+          if (_checkData[i].ownScore == '' || _checkData[i].ownScore == null) {
+            this.$message({
+              message: '请先完成评分!',
+              type: 'warning'
+            });
+            return;
+          }
         }
-      });
+        this.$confirm('上传评分后将不可修改，是否继续上传？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.addOwn();
+        });
+      }
     },
-    addOwn() {
-      // 新增自评分信息
-      requestAddOwn(this.listStaticInfoData).then(data => {
-        console.log(data);
-        var _code = data.code;
-        if (_code == 100) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          });
-          this.checkOwnInfo();
-        } else {
-          this.$message.error(data.msg + '[错误码：' + _code + ']');
-        }
-      });
-    },
-    modifyOwn() {
-      this.ownModifyBoolean = true;
-    },
-    endOwn() {
-      this.ownModifyBoolean = false;
-    },
-    uploadOwn() {
-      this.$confirm('上传评分后将不可修改，是否继续上传？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.addOwn();
-      });
+    created() {
+      this.checkOwnInfo();
     }
-  },
-  created() {
-    this.checkOwnInfo();
-  }
-};
+  };
+
 </script>
-<style type="text/css" scoped>
-  .a-gt-own-span{
-    font-size: 14px;
-    color: #666;
-    display: block;
-    padding:0 18px 25px;
-  }
-</style>

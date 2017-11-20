@@ -13,6 +13,9 @@
 		<result column="staff_join_time" property="staffJoinTime" />
 		<result column="staff_status" property="staffStatus" />
 		<result column="staff_phone" property="staffPhone" />
+		<result column="staff_type" property="staffType" />
+		<result column="staff_level" property="staffLevel" />
+		<result column="staff_duties" property="staffDuties" />
 		<result column="create_time" property="createTime" />
 		<result column="create_user" property="createUser" />
 		<result column="delete_flag" property="deleteFlag" />
@@ -20,7 +23,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, dep_id, staff_code, staff_name, staff_en_name, staff_join_time, staff_status, staff_phone, create_time, create_user, delete_flag
+        id, user_id, dep_id, staff_code, staff_name, staff_en_name, staff_join_time, staff_status, staff_phone, staff_type, staff_level, staff_duties, create_time, create_user, delete_flag
     </sql>
 
 </mapper>
