@@ -4,6 +4,8 @@ inside:
     url: http://192.168.3.10:7078/
     sign:
       key: GTRYANSSO
+  socket:
+    url: http://192.168.3.97:9111
 
 ################ redis and mysql
 spring:

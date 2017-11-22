@@ -5,7 +5,7 @@
 
 	<groupId>com.gt.inside.root</groupId>
 	<artifactId>root</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>root</name>
@@ -34,6 +34,7 @@
 		<dev.lib.velocity>1.7</dev.lib.velocity>
 		<dev.lib.poi>3.15</dev.lib.poi>
 		<dev.lib.beanUtils>1.9.3</dev.lib.beanUtils>
+		<dev.lib.socketio>1.0.0</dev.lib.socketio>
 	</properties>
 
 	<dependencies>
@@ -146,6 +147,13 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>${dev.lib.beanUtils}</version>
+		</dependency>
+
+		<!-- socket.io-client -->
+		<dependency>
+			<groupId>io.socket</groupId>
+			<artifactId>socket.io-client</artifactId>
+			<version>${dev.lib.socketio}</version>
 		</dependency>
 
 		<!-- 自动填充数据 -->
