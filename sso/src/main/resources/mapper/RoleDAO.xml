@@ -17,10 +17,11 @@
     </sql>
 
 	<select id="selectUserRoleStatus" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-		SELECT tr.role_power
+		SELECT COUNT(tr.role_power)
 		FROM t_role tr, t_user_role tur
 		WHERE tur.role_id = tr.id
-		AND tur.user_id = #{userId, jdbcType=INTEGER};
+		AND tur.user_id = #{userId, jdbcType=INTEGER}
+		ORDER BY role_power DESC LIMIT 1
 	</select>
 
 </mapper>
