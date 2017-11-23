@@ -1,15 +1,5 @@
 <style lang="less">
   .manage-menu {
-    .a-admin-head {
-      padding: 35px 0 35px 25px;
-    }
-    .a-admin-table {
-      margin: 0 25px 25px;
-    }
-    .el-pagination {
-      float: right;
-      margin-right: 20px;
-    }
 
   }
 
@@ -18,7 +8,7 @@
   <div class="manage-menu">
     <div>
       <div class="a-admin-head">
-        <el-button type="primary" @click="openAddMenu" style="margin-right:15px;">新增</el-button>
+        <el-button type="primary" @click="openAddMenu">新增</el-button>
         <el-input placeholder="菜单名" icon="search" v-model="menuListReq.menuSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
       </div>
       <div class="a-admin-table">

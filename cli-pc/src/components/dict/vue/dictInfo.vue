@@ -1,15 +1,6 @@
 <style lang="less">
   .dict-dictinfo {
-    .a-list-top {
-      padding: 25px;
-    }
-    .a-list-head {
-      padding: 0 0 35px 25px;
-    }
-
-    .a-admin-table {
-      margin: 0 25px 25px;
-    }
+   
   }
 
 </style>
@@ -23,7 +14,7 @@
         </el-breadcrumb>
       </div>
       <div class="a-list-head">
-        <el-button type="primary" @click="openAddDictInfo" style="margin-right: 20px;">新增</el-button>
+        <el-button type="primary" @click="openAddDictInfo">新增</el-button>
         <el-input placeholder="字典详情编号/字典详情内容" icon="search" v-model="dictInfoListReq.dictSearch" :on-icon-click="searchClick" style="width:250px!important;"></el-input>
       </div>
       <div class="a-admin-table">
