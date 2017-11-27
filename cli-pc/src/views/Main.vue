@@ -104,7 +104,7 @@
                         "title": "首页"
                     }]
                 }
-                return [obj]
+                //return [obj]
                 return this.$store.state.app.menuList;
             },
             pageTagsList() {
