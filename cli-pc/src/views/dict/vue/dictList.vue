@@ -10,7 +10,11 @@
     <div>
       <div class="a-admin-head">
         <el-button type="primary" @click="openAddDict">新增</el-button>
-        <el-input placeholder="字典编号/字典名" icon="search" v-model="dictListReq.dictSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
+        <el-input
+        placeholder="字典编号/字典名"
+        v-model="dictListReq.dictSearch" style="width:250px;">
+        <i slot="suffix" class="el-input__icon el-icon-search" @click="searchClick"></i>
+      </el-input>
       </div>
       <div class="a-admin-table">
         <el-table :data="dictListData" border highlight-current-row style="width: 100%">

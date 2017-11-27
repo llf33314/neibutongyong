@@ -10,7 +10,10 @@
     <div>
       <div class="a-admin-head">
         <el-button type="primary" @click="openAddUser">新增</el-button>
-        <el-input placeholder="登录账号/真实姓名" icon="search" v-model="userListReq.userSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
+        <el-input placeholder="登录账号/真实姓名" v-model="userListReq.userSearch" style="width:250px;">
+          <i slot="suffix" class="el-input__icon el-icon-search" @click="searchClick"></i>
+        </el-input>
+
         <el-select v-model="userListReq.userStatus" @change="changeStatus" style="width:80px!important;">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>

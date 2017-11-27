@@ -2,7 +2,6 @@
     <Breadcrumb>
         <BreadcrumbItem 
             v-for="item in currentPath" 
-            :href="item.path" 
             :key="item.name"
         >{{ itemTitle(item) }}</BreadcrumbItem>
     </Breadcrumb>

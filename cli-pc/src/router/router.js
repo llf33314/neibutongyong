@@ -66,17 +66,18 @@ export const otherRouter = {
 export const appRouter = [
     {
         path: '/index',
-        icon: 'home',
+        icon: 'gt-shouye',
         name: 'home',
         title: '首页',
         component: Main,
+        redirect: 'index',
         children: [
-            { path: 'index', title: '首页', name: 'home_index', component: resolve => { require(['@/views/home/vue/home.vue'], resolve); } }
+            { path: '/index', title: '首页', name: 'home_index', component: resolve => { require(['@/views/home/vue/home.vue'], resolve); } }
         ]
     },
     {
         path: '/',
-        icon: 'ios-book',
+        icon: 'gt-zidian',
         name: 'dict',
         title: '字典管理',
         component: Main,
@@ -86,7 +87,7 @@ export const appRouter = [
     },
     {
         path: '/',
-        icon: 'grid',
+        icon: 'gt-xitongguanli',
         name: 'dict',
         title: '后台管理',
         component: Main,
@@ -98,7 +99,7 @@ export const appRouter = [
     },
     {
         path: '/',
-        icon: 'person-stalker',
+        icon: 'gt-zuzhi',
         name: 'organize',
         title: '组织管理',
         component: Main,
@@ -109,7 +110,7 @@ export const appRouter = [
     },
     {
         path: '/',
-        icon: 'person-stalker',
+        icon: 'gt-xiangmu',
         name: 'function',
         title: '功能管理',
         component: Main,

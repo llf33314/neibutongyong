@@ -9,7 +9,10 @@
     <div>
       <div class="a-admin-head">
         <el-button type="primary" @click="openAddStaff">新增</el-button>
-        <el-input placeholder="员工编号/姓名/手机号" icon="search" v-model="staffListReq.staffSearch" :on-icon-click="searchClick" style="width:250px!important;margin-right: 20px;"></el-input>
+        <el-input placeholder="员工编号/姓名/手机号" v-model="staffListReq.staffSearch" style="width:250px;">
+          <i slot="suffix" class="el-input__icon el-icon-search" @click="searchClick"></i>
+        </el-input>
+
         <el-select v-model="staffListReq.staffStatus" style="width:80px!important;">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>

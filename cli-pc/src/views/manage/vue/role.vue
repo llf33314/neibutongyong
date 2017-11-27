@@ -10,7 +10,9 @@
     <div>
       <div class="a-admin-head">
         <el-button type="primary" @click="openAddRole">新增</el-button>
-        <el-input placeholder="角色名" icon="search" v-model="roleListReq.roleSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
+        <el-input placeholder="角色名" v-model="roleListReq.roleSearch" style="width:250px;">
+          <i slot="suffix" class="el-input__icon el-icon-search" @click="searchClick"></i>
+        </el-input>
       </div>
       <div class="a-admin-table">
         <el-table :data="roleListData" border highlight-current-row style="width: 100%">

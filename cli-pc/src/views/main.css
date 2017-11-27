@@ -123,7 +123,7 @@ body {
   right: 0;
   top: 0;
   height: 100%;
-  width: 300px;
+  width: 180px;
 }
 .main-header .header-avator-con .switch-theme-con {
   display: inline-block;
@@ -217,4 +217,7 @@ body {
 .logo-con img {
   height: 44px;
   width: auto;
+}
+.main .iconfont {
+  font-size: 13px;
 }

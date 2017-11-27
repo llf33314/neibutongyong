@@ -1,23 +1,27 @@
 <style lang="less">
     @import '../styles/menu.less';
+   
 </style>
 
 <template>
     <Menu ref="sideMenu" :active-name="$route.name" :open-names="openNames" :theme="menuTheme" width="auto" @on-select="changeMenu">
         <template v-for="item in menuList">
             <MenuItem v-if="item.children.length<=1" :name="item.children[0].name" :key="item.path">
-                <Icon :type="item.icon" :size="iconSize" :key="item.path"></Icon>
+                <!-- <Icon :type="item.icon" :size="iconSize" :key="item.path"></Icon> -->
+                <i :class="'ivu-icon iconfont '+ item.icon"></i>
                 <span class="layout-text" :key="item.path">{{ itemTitle(item) }}</span>
             </MenuItem>
 
             <Submenu v-if="item.children.length > 1" :name="item.name" :key="item.path">
                 <template slot="title">
-                    <Icon :type="item.icon" :size="iconSize"></Icon>
+                    <!-- <Icon :type="item.icon" :size="iconSize"></Icon> -->
+                    <i :class="'ivu-icon iconfont '+ item.icon"></i>
                     <span class="layout-text">{{ itemTitle(item) }}</span>
                 </template>
                 <template v-for="child in item.children">
                     <MenuItem :name="child.name" :key="child.name">
-                        <Icon :type="child.icon" :size="iconSize" :key="child.name"></Icon>
+                        <!-- <Icon :type="child.icon" :size="iconSize" :key="child.name"></Icon> -->
+                        <i class="ivu-icon"></i>
                         <span class="layout-text" :key="child.name">{{ child.title }}</span>
                     </MenuItem>
                 </template>

@@ -1,15 +1,14 @@
 <style lang="less">
-  .manage-menu {
-
-  }
-
+  .manage-menu {}
 </style>
 <template>
   <div class="manage-menu">
     <div>
       <div class="a-admin-head">
         <el-button type="primary" @click="openAddMenu">新增</el-button>
-        <el-input placeholder="菜单名" icon="search" v-model="menuListReq.menuSearch" :on-icon-click="searchClick" style="width:250px;"></el-input>
+        <el-input placeholder="菜单名" v-model="menuListReq.menuSearch" style="width:250px;">
+          <i slot="suffix" class="el-input__icon el-icon-search" @click="searchClick"></i>
+        </el-input>
       </div>
       <div class="a-admin-table">
         <el-table :data="menuListData" border highlight-current-row style="width: 100%">
@@ -180,7 +179,7 @@
           path: '/app/menuInfo',
           query: {
             id: menu.id,
-            title:'子菜单详情'
+            title: '子菜单详情'
           }
         });
       },
@@ -235,5 +234,4 @@
       this.getMenuList();
     }
   };
-
 </script>
