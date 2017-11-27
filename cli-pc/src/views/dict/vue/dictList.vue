@@ -15,10 +15,10 @@
       <div class="a-admin-table">
         <el-table :data="dictListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" width="100"></el-table-column>
-          <el-table-column prop="dictName" label="名称"></el-table-column>
-          <el-table-column prop="dictCode" label="编号"></el-table-column>
-          <el-table-column prop="dictRemark" label="描述"></el-table-column>
-          <el-table-column label="创建时间">
+          <el-table-column prop="dictName" label="名称" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="dictCode" label="编号" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="dictRemark" label="描述" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column label="创建时间" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <el-icon name="time"></el-icon>
               <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>

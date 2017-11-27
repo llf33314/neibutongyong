@@ -1,7 +1,5 @@
 import axios from 'axios'
-import Promise from 'promise'
 import {router} from './../router/index'
-import qs from 'qs'
 
 const Axios = axios.create({
   //  baseURL: "http://192.168.3.98:7072",

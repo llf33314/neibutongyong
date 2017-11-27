@@ -14,10 +14,10 @@
       <div class="a-admin-table">
         <el-table :data="dictInfoListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" width="100"></el-table-column>
-          <el-table-column prop="infoContent" label="详情内容"></el-table-column>
-          <el-table-column prop="infoCode" label="详情编号"></el-table-column>
-          <el-table-column prop="infoRemark" label="详情描述"></el-table-column>
-          <el-table-column label="创建时间">
+          <el-table-column prop="infoContent" label="详情内容" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="infoCode" label="详情编号" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="infoRemark" label="详情描述" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column label="创建时间" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <el-icon name="time"></el-icon>
               <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>

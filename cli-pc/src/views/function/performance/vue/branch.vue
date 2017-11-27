@@ -22,7 +22,7 @@
       <span class="a-gt-own-span">本月分页员工绩效评级列表</span>
       <el-table :data="branchStaffListData" border highlight-current-row style="width: 100%">
         <el-table-column type="index" label="序号" width="180"></el-table-column>
-        <el-table-column prop="staffName" label="姓名"></el-table-column>
+        <el-table-column prop="staffName" label="姓名" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="staffCode" label="编号"></el-table-column>
         <el-table-column label="自评总分">
           <template slot-scope="scope">

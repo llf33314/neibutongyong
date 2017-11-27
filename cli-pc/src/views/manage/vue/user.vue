@@ -19,14 +19,14 @@
         <el-table :data="userListData" border highlight-current-row style="width: 100%">
           <el-table-column type="index" width="50"></el-table-column>
           <el-table-column prop="loginName" label="登录账号"></el-table-column>
-          <el-table-column prop="userName" label="真实姓名"></el-table-column>
-          <el-table-column prop="staffName" label="员工姓名"></el-table-column>
+          <el-table-column prop="userName" label="真实姓名" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="staffName" label="员工姓名" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="userStatus" label="状态">
             <template slot-scope="scope">
               {{scope.row.userStatus == 0 ? '正常' : '停用'}}
             </template>
           </el-table-column>
-          <el-table-column label="创建时间">
+          <el-table-column label="创建时间" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <el-icon name="createTime"></el-icon>
               <span style="margin-left: 10px">{{ $util.DateFormat(scope.row.createTime, "yyyy-MM-dd hh:mm") }}</span>
