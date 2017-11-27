@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>iView admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <link rel="stylesheet" href="/dist/main.css">
+    <link rel="stylesheet" name="theme" href="">
+    <link rel="icon" href="./td_icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_450433_qouy234i7nidx6r.css" />
+    <script>
+        var HOME_URL = "http://localhost:8080";
+        var INSIDE_BASE_URL = "http://192.168.3.10:7075";
+        var SSO_BASE_URL = "http://192.168.3.10:7078";
+        var SSO_LOGIN_URL = SSO_BASE_URL + "/m/route/login?redirectUrl=" + HOME_URL + "/<>/token/";
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/javascript" src="/dist/vender-base.js"></script>
+    <script type="text/javascript" src="/dist/vender-exten.js"></script>
+    <script type="text/javascript" src="/dist/main.js"></script>
+</body>
+
+</html>
