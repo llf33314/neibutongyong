@@ -11,9 +11,9 @@
     <link rel="stylesheet" name="theme" href="">
     <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_450433_qouy234i7nidx6r.css" />
     <script>
-        var HOME_URL = "http://localhost:8080";
-        var INSIDE_BASE_URL = "http://192.168.3.10:7075";
-        var SSO_BASE_URL = "http://192.168.3.10:7078";
+        var HOME_URL = "<%= htmlWebpackPlugin.options.HOME_URL %>";
+        var INSIDE_BASE_URL = "<%= htmlWebpackPlugin.options.INSIDE_BASE_URL %>";
+        var SSO_BASE_URL = "<%= htmlWebpackPlugin.options.SSO_BASE_URL %>";
         var SSO_LOGIN_URL = SSO_BASE_URL + "/m/route/login?redirectUrl=" + HOME_URL + "/<>/token/";
     </script>
 </head>

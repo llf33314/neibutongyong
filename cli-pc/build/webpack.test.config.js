@@ -18,7 +18,7 @@ fs.open('./build/env.js', 'w', function(err, fd) {
 
 module.exports = merge(webpackBaseConfig, {
     output: {
-        publicPath: server.prod.resources,  // 修改 https://iv...admin 这部分为你的服务器域名 
+        publicPath: server.test.resources,  // 修改 https://iv...admin 这部分为你的服务器域名 
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].chunk.js'
     },
@@ -75,14 +75,14 @@ module.exports = merge(webpackBaseConfig, {
             ]
         }),
         new HtmlWebpackPlugin({
-            title: '管理系统',
+            title: '管理系统test',
             favicon: './td_icon.ico',
             filename: '../index.html',
             template: './src/template/index.ejs',
             inject: false,
-            HOME_URL:server.prod.HOME_URL,
-            INSIDE_BASE_URL:server.prod.INSIDE_BASE_URL,
-            SSO_BASE_URL:server.prod.SSO_BASE_URL,
+            HOME_URL:server.test.HOME_URL,
+            INSIDE_BASE_URL:server.test.INSIDE_BASE_URL,
+            SSO_BASE_URL:server.test.SSO_BASE_URL,
         })
     ]
 });

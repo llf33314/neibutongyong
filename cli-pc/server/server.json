@@ -1,5 +1,18 @@
+// 编译正式： npm run prod  
+// 编译测试： npm run test  
+// 启动服务：npm run server
 {
     "prod":{
-        "resources": "http://localhost:8080/dist/"
+        "resources": "http://localhost:8080/dist/",
+        "HOME_URL":"http://localhost:8088",
+        "INSIDE_BASE_URL":"http://192.168.3.10:7075",
+        "SSO_BASE_URL":"http://192.168.3.10:7078"
+    },
+    "test":{
+        "resources": "http://localhost:8080/dist/",
+        "HOME_URL":"http://localhost:80811",
+        "INSIDE_BASE_URL":"http://192.168.3.10:7075",
+        "SSO_BASE_URL":"http://192.168.3.10:7078"
     }
+  
 }
