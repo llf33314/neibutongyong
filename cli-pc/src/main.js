@@ -14,6 +14,8 @@ Vue.use(ElementUI);
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.prototype.$util = util
+Vue.config.productionTip = true
+Vue.config.devtools = true
 new Vue({
     el: '#app',
     router: router,
