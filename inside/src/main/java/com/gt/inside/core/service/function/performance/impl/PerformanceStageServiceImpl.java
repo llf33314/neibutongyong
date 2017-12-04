@@ -380,6 +380,9 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             staffPerformanceInfoList.add(staffPerformanceInfo);
             ownTotal += addOwnReq.getOwnScore(); // 增加总分
         }
+        if (ownTotal > 100){
+            throw new PerformanceException(ResponseEnums.INFONULL);
+        }
         staffPerformanceInfoService.insertBatch(staffPerformanceInfoList);
         StaffPerformanceTotal staffPerformanceTotal = new StaffPerformanceTotal();
         staffPerformanceTotal.setCreateTime(new Date());
