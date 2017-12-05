@@ -227,13 +227,13 @@
     <el-dialog title="修改密码" :visible.sync="dialogEditPassword">
       <el-form :model="modifyPwdFrom" :rules="modifyPwdRules" ref="modifyPwdFrom">
         <el-form-item label="旧密码：" prop="newPwd" :label-width="formLabelWidth">
-          <el-input v-model="modifyPwdFrom.newPwd"></el-input>
+          <el-input v-model="modifyPwdFrom.newPwd" type="password"></el-input>
         </el-form-item>
         <el-form-item label="新密码：" prop="oldPwd" :label-width="formLabelWidth">
-          <el-input v-model="modifyPwdFrom.oldPwd"></el-input>
+          <el-input v-model="modifyPwdFrom.oldPwd" type="password"></el-input>
         </el-form-item>
         <el-form-item label="确认密码：" prop="oldPwd2" :label-width="formLabelWidth">
-          <el-input v-model="modifyPwdFrom.oldPwd2"></el-input>
+          <el-input v-model="modifyPwdFrom.oldPwd2" type="password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -369,15 +369,14 @@
               console.log(res)
               if (res.code == 100) {
                 this.$message({
-                  showClose: true,
-                  message: '修改成功',
+                  message:res.msg,
                   type: 'success',
                   onClose: () => {
                     this.loginOut()
                   }
                 });
               } else {
-                this.$message.error(data.msg + "[错误码：" + res.code + "]");
+                this.$message.error(res.msg + "[错误码：" + res.code + "]");
               }
             })
           } else {
