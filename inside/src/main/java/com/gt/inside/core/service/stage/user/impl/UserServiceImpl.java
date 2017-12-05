@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.gt.inside.api.dto.PageDTO;
 import com.gt.inside.api.dto.ResponseDTO;
+import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.api.enums.ResponseEnums;
 import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.core.bean.stage.role.dto.RoleUserHasDTO;
@@ -248,5 +249,26 @@ public class UserServiceImpl extends ServiceImpl<UserDAO, User> implements UserS
             throw new UserException(ResponseEnums.VAILD);
         }
         userRoleService.delete(entityWrapper);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param modifyPwdReq
+     */
+    @Override
+    public void modifyPwd(UserDTO userDTO, ModifyPwdReq modifyPwdReq) {
+        User user = selectById(userDTO.getUserId());
+        if (CommonUtil.isEmpty(user)){
+            throw new UserException(ResponseEnums.USER_NULL);
+        }
+        if (user.getDeleteFlag().equals(1)){
+            throw new UserException(ResponseEnums.USER_NULL);
+        }
+        if (!user.getUserPwd().equals(modifyPwdReq.getOldPwd())){
+            throw new UserException(ResponseEnums.USER_PWD_FAIL);
+        }
+        user.setUserPwd(modifyPwdReq.getNewPwd());
+        updateById(user);
     }
 }

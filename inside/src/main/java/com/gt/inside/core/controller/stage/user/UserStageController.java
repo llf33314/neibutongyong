@@ -5,6 +5,7 @@ import com.gt.inside.api.dto.MenuDTO;
 import com.gt.inside.api.dto.ResponseDTO;
 import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.api.exception.SystemException;
+import com.gt.inside.api.util.CommonUtil;
 import com.gt.inside.core.bean.stage.role.dto.RoleUserHasDTO;
 import com.gt.inside.core.bean.stage.user.req.*;
 import com.gt.inside.core.bean.stage.user.res.ListUserRes;
@@ -154,6 +155,28 @@ public class UserStageController extends BaseController {
             logger.debug(restPwdReq.toString());
             userService.restPwd(restPwdReq);
             return ResponseDTO.createBySuccessMessage("重置密码成功");
+        } catch (UserException e){
+            logger.error(e.getMessage(), e.fillInStackTrace());
+            return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseDTO.createByError();
+        }
+    }
+
+    // 修改密码
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "统一响应对象", response = ResponseDTO.class),
+    })
+    @ApiOperation(value = "修改密码", notes = "修改密码")
+    @RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
+    public ResponseDTO modifyPwd(@RequestBody @ApiParam("请求对象") @Valid ModifyPwdReq modifyPwdReq, BindingResult bindingResult, @RequestHeader String token) {
+        InvalidParameter(bindingResult);
+        try {
+            logger.debug(modifyPwdReq.toString());
+            UserDTO userDTO = ssoService.getSSOUerDTO(token);
+            userService.modifyPwd(userDTO, modifyPwdReq);
+            return ResponseDTO.createBySuccessMessage("修改密码成功");
         } catch (UserException e){
             logger.error(e.getMessage(), e.fillInStackTrace());
             return ResponseDTO.createByErrorCodeMessage(e.getCode(), e.getMessage());
