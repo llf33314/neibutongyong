@@ -4,7 +4,7 @@
       padding: 35px 0 35px 25px;
     }
     .a-admin-table {
-      margin: 0 25px 25px;
+      margin: 0 20px 20px;
     }
     .el-pagination {
       float: right;

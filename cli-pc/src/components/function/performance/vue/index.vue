@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 25px;">
+  <div style="padding: 20px;">
     <el-tabs v-model="manage" type="card" @tab-click="handleClick" style="margin-bottom: 15px;">
       <el-tab-pane label="绩效总览" name="total"></el-tab-pane>
       <el-tab-pane v-if="powerData.organizeSetFlag" label="组织关系设置" name="organize"></el-tab-pane>

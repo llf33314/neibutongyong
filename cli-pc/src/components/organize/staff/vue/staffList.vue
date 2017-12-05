@@ -5,7 +5,7 @@
     }
 
     .a-admin-table {
-      margin: 0 25px 25px;
+      margin: 0 20px 20px;
     }
 
     .el-pagination {
