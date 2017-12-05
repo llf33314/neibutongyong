@@ -341,15 +341,29 @@
             }
           ],
           newPwd: [{
-            required: true,
-            validator: validatePass,
-            trigger: 'blur'
-          }],
+              required: true,
+              validator: validatePass,
+              trigger: 'blur'
+            },
+            {
+              min: 6,
+              max: 20,
+              message: '长度在 6 到 20 个字符',
+              trigger: 'blur'
+            }
+          ],
           newPwd2: [{
-            required: true,
-            validator: validatePass2,
-            trigger: 'blur'
-          }]
+              required: true,
+              validator: validatePass2,
+              trigger: 'blur'
+            },
+            {
+              min: 6,
+              max: 20,
+              message: '长度在 6 到 20 个字符',
+              trigger: 'blur'
+            }
+          ]
         }
       };
     },
