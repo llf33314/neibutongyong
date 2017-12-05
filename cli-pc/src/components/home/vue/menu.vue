@@ -226,14 +226,14 @@
     </div>
     <el-dialog title="修改密码" :visible.sync="dialogEditPassword">
       <el-form :model="modifyPwdFrom" :rules="modifyPwdRules" ref="modifyPwdFrom">
-        <el-form-item label="旧密码：" prop="newPwd" :label-width="formLabelWidth">
-          <el-input v-model="modifyPwdFrom.newPwd" type="password"></el-input>
-        </el-form-item>
-        <el-form-item label="新密码：" prop="oldPwd" :label-width="formLabelWidth">
+        <el-form-item label="旧密码：" prop="oldPwd" :label-width="formLabelWidth">
           <el-input v-model="modifyPwdFrom.oldPwd" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码：" prop="oldPwd2" :label-width="formLabelWidth">
-          <el-input v-model="modifyPwdFrom.oldPwd2" type="password"></el-input>
+        <el-form-item label="新密码：" prop="newPwd" :label-width="formLabelWidth">
+          <el-input v-model="modifyPwdFrom.newPwd" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码：" prop="newPwd2" :label-width="formLabelWidth">
+          <el-input v-model="modifyPwdFrom.newPwd2" type="password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -292,8 +292,8 @@
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.modifyPwdFrom.oldPwd2 !== '') {
-            this.$refs.modifyPwdFrom.validateField('oldPwd2');
+          if (this.modifyPwdFrom.newPwd !== '') {
+            this.$refs.modifyPwdFrom.validateField('newPwd2');
           }
           callback();
         }
@@ -301,7 +301,7 @@
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.modifyPwdFrom.oldPwd) {
+        } else if (value !== this.modifyPwdFrom.newPwd) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -323,12 +323,12 @@
         dialogEditPassword: false,
         formLabelWidth: '100px',
         modifyPwdFrom: {
-          newPwd: '',
           oldPwd: '',
-          oldPwd2: ''
+          newPwd: '',
+          newPwd2: ''
         },
         modifyPwdRules: {
-          newPwd: [{
+          oldPwd: [{
               required: true,
               message: '请输入旧密码',
               trigger: 'blur'
@@ -340,12 +340,12 @@
               trigger: 'blur'
             }
           ],
-          oldPwd: [{
+          newPwd: [{
             required: true,
             validator: validatePass,
             trigger: 'blur'
           }],
-          oldPwd2: [{
+          newPwd2: [{
             required: true,
             validator: validatePass2,
             trigger: 'blur'
@@ -369,7 +369,7 @@
               console.log(res)
               if (res.code == 100) {
                 this.$message({
-                  message:res.msg,
+                  message: res.msg,
                   type: 'success',
                   onClose: () => {
                     this.loginOut()
