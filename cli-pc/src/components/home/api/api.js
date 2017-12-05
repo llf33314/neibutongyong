@@ -9,3 +9,8 @@ export const requestSSOLoginOut = params => { return axios.post(`${sso_base}/m/l
 export const requestUserMenu = params => { return axios.post(`${inside_base}/app/user/getUserMenus`, params).then(res => res.data) }
 /* 测试cookie */
 export const requestTest = params => { return axios.post(`${inside_base}/app/test/test`, params).then(res => res.data) }
+/* 修改密码 */
+export const requestModifyPwd = params => { return axios.post(`${inside_base}/app/user/modifyPwd`, params).then(res => res.data) }
+
+
+

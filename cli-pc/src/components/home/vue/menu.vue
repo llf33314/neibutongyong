@@ -52,8 +52,8 @@
 
     .right {
       float: right;
-      padding-right: 30px;
-      font-size: 14px;
+      padding-right: 20px;
+      margin-top: 12px;
     }
 
     .head-msg {
@@ -195,7 +195,7 @@
       line-height: 45px;
       border-bottom: 1px solid rgb(236, 233, 233);
       padding: 0px 10px;
-      position: absolute;
+      /* position: absolute; */
       width: 100%;
       z-index: 999;
       background-color: #fff;
@@ -212,9 +212,35 @@
       </div>
       <p class="left-name">多粉管理控制台</p>
       <div class="right">
-        <el-button @click="loginOut()">退出登录</el-button>
+        <el-dropdown trigger="click" @command="handleCommand">
+          <el-button type="primary" size="mini" split-button="true">
+            设置
+            <i class="el-icon-edit"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="editPassword">修改密码</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-button @click="loginOut()" size="mini" type="danger">退出登录</el-button>
       </div>
     </div>
+    <el-dialog title="修改密码" :visible.sync="dialogEditPassword">
+      <el-form :model="modifyPwdFrom" :rules="modifyPwdRules" ref="modifyPwdFrom">
+        <el-form-item label="旧密码：" prop="newPwd" :label-width="formLabelWidth">
+          <el-input v-model="modifyPwdFrom.newPwd"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码：" prop="oldPwd" :label-width="formLabelWidth">
+          <el-input v-model="modifyPwdFrom.oldPwd"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码：" prop="oldPwd2" :label-width="formLabelWidth">
+          <el-input v-model="modifyPwdFrom.oldPwd2"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="modifyPwdSubmitForm('modifyPwdFrom')">确认</el-button>
+        <el-button @click="modifyPwdResetForm('modifyPwdFrom')">取消</el-button>
+      </div>
+    </el-dialog>
     <div class="menus">
       <div class="open-menu" @click="isCollapse = !isCollapse">
         <i class="iconfont gt-caidan"></i>
@@ -256,11 +282,31 @@
 <script>
   import {
     requestSSOLoginOut,
-    requestUserMenu
+    requestUserMenu,
+    requestModifyPwd
   } from "../api/api";
   export default {
     name: "menu",
     data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.modifyPwdFrom.oldPwd2 !== '') {
+            this.$refs.modifyPwdFrom.validateField('oldPwd2');
+          }
+          callback();
+        }
+      }
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.modifyPwdFrom.oldPwd) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      }
       return {
         isCollapse: false,
         activeIndex: "0",
@@ -273,10 +319,76 @@
           menuUrl: "",
           menuName: "",
           menuIcon: ""
-        }]
+        }],
+        dialogEditPassword: false,
+        formLabelWidth: '100px',
+        modifyPwdFrom: {
+          newPwd: '',
+          oldPwd: '',
+          oldPwd2: ''
+        },
+        modifyPwdRules: {
+          newPwd: [{
+              required: true,
+              message: '请输入旧密码',
+              trigger: 'blur'
+            },
+            {
+              min: 6,
+              max: 20,
+              message: '长度在 6 到 20 个字符',
+              trigger: 'blur'
+            }
+          ],
+          oldPwd: [{
+            required: true,
+            validator: validatePass,
+            trigger: 'blur'
+          }],
+          oldPwd2: [{
+            required: true,
+            validator: validatePass2,
+            trigger: 'blur'
+          }]
+        }
       };
     },
     methods: {
+      handleCommand(command) {
+        if (command == "editPassword") {
+          this.dialogEditPassword = true
+        }
+      },
+      modifyPwdSubmitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            requestModifyPwd({
+              newPwd: this.modifyPwdFrom.newPwd,
+              oldPwd: this.modifyPwdFrom.oldPwd,
+            }).then(res => {
+              console.log(res)
+              if (res.code == 100) {
+                this.$message({
+                  showClose: true,
+                  message: '修改成功',
+                  type: 'success',
+                  onClose: () => {
+                    this.loginOut()
+                  }
+                });
+              } else {
+                this.$message.error(data.msg + "[错误码：" + res.code + "]");
+              }
+            })
+          } else {
+            return false;
+          }
+        });
+      },
+      modifyPwdResetForm(formName) {
+        this.$refs[formName].resetFields();
+        this.dialogEditPassword = false
+      },
       gtToRouter(menuRouter) {
         console.log(menuRouter);
         this.$router.push({
