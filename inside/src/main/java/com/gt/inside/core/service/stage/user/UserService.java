@@ -2,6 +2,7 @@ package com.gt.inside.core.service.stage.user;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.gt.inside.api.dto.ResponseDTO;
+import com.gt.inside.api.dto.UserDTO;
 import com.gt.inside.core.bean.stage.role.dto.RoleUserHasDTO;
 import com.gt.inside.core.bean.stage.user.req.*;
 import com.gt.inside.core.bean.stage.user.res.ListUserRes;
@@ -88,4 +89,10 @@ public interface UserService extends IService<User> {
      * @param cancelRelationRoleReq
      */
     void cancelRelationRole(CancelRelationRoleReq cancelRelationRoleReq);
+
+    /**
+     * 修改密码
+     * @param modifyPwdReq
+     */
+    void modifyPwd(UserDTO userDTO, ModifyPwdReq modifyPwdReq);
 }

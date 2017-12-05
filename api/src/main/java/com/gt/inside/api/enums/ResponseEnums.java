@@ -35,6 +35,7 @@ public enum ResponseEnums {
     USER_HAS(411, "用户已存在"),
     USER_NULL(412, "用户不存在"),
     USER_STATUS_STOP(413, "账号已停用"),
+    USER_PWD_FAIL(414, "旧密码错误"),
     ;
 
     private final int code;
