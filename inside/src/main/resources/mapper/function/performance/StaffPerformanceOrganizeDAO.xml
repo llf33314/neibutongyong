@@ -17,6 +17,7 @@
 		<result column="staff_org_id" property="staffOrgId" />
 		<result column="staff_name" property="staffName" />
 		<result column="staff_code" property="staffCode" />
+		<result column="staff_duties" property="staffDuties" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
@@ -26,7 +27,7 @@
 
 	<!-- 对应组织关系查询结果列 -->
 	<sql id="Organize_Column_List">
-		spo.staff_id, spo.staff_org_id, s.staff_name, s.staff_code
+		spo.staff_id, spo.staff_org_id, s.staff_name, s.staff_code, s.staff_duties
 	</sql>
 
 	<select id="selectListByOrgCode" resultMap="OrganizeResultMap">

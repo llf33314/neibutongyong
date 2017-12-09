@@ -24,7 +24,6 @@ import com.gt.inside.core.service.dict.DictApiService;
 import com.gt.inside.core.service.function.performance.*;
 import com.gt.inside.core.service.organize.department.DepartmentApiService;
 import com.gt.inside.core.service.organize.staff.StaffApiService;
-import com.psr.tool.agile.AnalyticClass;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,11 +96,11 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public PowerRes getPower(UserDTO userDTO) {
         PowerRes powerRes = new PowerRes();
-        if (userDTO.getRoleStatus().equals(1)){
+        if (userDTO.getRoleStatus().equals(1)) {
             powerRes.setOrganizeSetFlag(true);
         }
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             powerRes.setOwnFlag(false);
             return powerRes;
         }
@@ -109,14 +108,14 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         entityWrapperDirectly.eq("staff_org_id", staff.getId());
         entityWrapperDirectly.eq("staff_org_code", directlyCode);
         int countDirectly = staffPerformanceOrganizeService.selectCount(entityWrapperDirectly);
-        if (countDirectly > 0){
+        if (countDirectly > 0) {
             powerRes.setDirectlyFlag(true);
         }
         EntityWrapper<StaffPerformanceOrganize> entityWrapperBranch = new EntityWrapper<>();
         entityWrapperBranch.eq("staff_org_id", staff.getId());
         entityWrapperBranch.eq("staff_org_code", branchCode);
         int countBranch = staffPerformanceOrganizeService.selectCount(entityWrapperBranch);
-        if (countBranch > 0){
+        if (countBranch > 0) {
             powerRes.setBranchFlag(true);
         }
         return powerRes;
@@ -132,11 +131,11 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     public List<ListTotalRes> listTotal(UserDTO userDTO) {
         List<ListTotalRes> listPerformanceTotalResList = new ArrayList<>();
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             staffPerformanceMonth = new StaffPerformanceMonth();
             staffPerformanceMonth.setCreateTime(new Date());
             staffPerformanceMonth.setMonthDate(new Date());
@@ -146,22 +145,22 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         entityWrapperTotal.eq("staff_id", staff.getId());
         entityWrapperTotal.eq("level_release", levelRelease);
         List<StaffPerformanceTotal> staffPerformanceTotalList = staffPerformanceTotalService.selectList(entityWrapperTotal);
-        if (CommonUtil.isEmpty(staffPerformanceTotalList) || staffPerformanceTotalList.size() <= 0){
+        if (CommonUtil.isEmpty(staffPerformanceTotalList) || staffPerformanceTotalList.size() <= 0) {
             return listPerformanceTotalResList;
         }
         List<Integer> monthIds = new ArrayList<>();
-        for (StaffPerformanceTotal staffPerformanceTotal : staffPerformanceTotalList){
+        for (StaffPerformanceTotal staffPerformanceTotal : staffPerformanceTotalList) {
             monthIds.add(staffPerformanceTotal.getMonthId());
         }
         List<StaffPerformanceMonth> staffPerformanceMonthList = staffPerformanceMonthService.selectBatchIds(monthIds);
         Map<Integer, String> dictInfoMap = dictApiService.getDictInfoByDictCode(LevelDictCode);
-        for (StaffPerformanceTotal staffPerformanceTotal : staffPerformanceTotalList){
+        for (StaffPerformanceTotal staffPerformanceTotal : staffPerformanceTotalList) {
             ListTotalRes listPerformanceTotalRes = new ListTotalRes();
             Integer level = staffPerformanceTotal.getLevelCode();
             listPerformanceTotalRes.setLevel(dictInfoMap.get(level));
             listPerformanceTotalRes.setStaffName(staff.getStaffName());
-            for (StaffPerformanceMonth spfm : staffPerformanceMonthList){
-                if (spfm.getId().equals(staffPerformanceTotal.getMonthId())){
+            for (StaffPerformanceMonth spfm : staffPerformanceMonthList) {
+                if (spfm.getId().equals(staffPerformanceTotal.getMonthId())) {
                     listPerformanceTotalRes.setMonthTime(spfm.getMonthDate());
                     break;
                 }
@@ -184,13 +183,13 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         Page<Staff> staffPage = staffApiService.listStaffByPageWithDepart(listOrganizeReq.getCurrent(), listOrganizeReq.getSize(), listOrganizeReq.getDepartmentId());
         List<Department> departmentList = departmentApiService.listAllDepartment(); // 部门信息
         List<Integer> staffIdList = new ArrayList<>();
-        for (Staff staff : staffPage.getRecords()){
+        for (Staff staff : staffPage.getRecords()) {
             staffIdList.add(staff.getId());
             ListOrganizeRes listOrganizeRes = new ListOrganizeRes();
             listOrganizeRes.setStaffId(staff.getId());
             listOrganizeRes.setStaffName(staff.getStaffName());
-            for (Department department : departmentList){
-                if (department.getId().equals(staff.getDepId())){
+            for (Department department : departmentList) {
+                if (department.getId().equals(staff.getDepId())) {
                     listOrganizeRes.setDepartmentName(department.getDepName());
                     break;
                 }
@@ -199,16 +198,16 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         }
         List<ListOrganizeDTO> directlyList = staffPerformanceOrganizeService.selectListByOrgCode(directlyCode, staffIdList);
         List<ListOrganizeDTO> branchList = staffPerformanceOrganizeService.selectListByOrgCode(branchCode, staffIdList);
-        for (ListOrganizeRes lor : listOrganizeResList){
-            for (ListOrganizeDTO listOrganizeDTO : directlyList){
-                if (lor.getStaffId().equals(listOrganizeDTO.getStaffId())){
+        for (ListOrganizeRes lor : listOrganizeResList) {
+            for (ListOrganizeDTO listOrganizeDTO : directlyList) {
+                if (lor.getStaffId().equals(listOrganizeDTO.getStaffId())) {
                     lor.setDirectlyId(listOrganizeDTO.getStaffOrgId());
                     lor.setDirectlyName(listOrganizeDTO.getStaffName());
                     break;
                 }
             }
-            for (ListOrganizeDTO listOrganizeDTO : branchList){
-                if (lor.getStaffId().equals(listOrganizeDTO.getStaffId())){
+            for (ListOrganizeDTO listOrganizeDTO : branchList) {
+                if (lor.getStaffId().equals(listOrganizeDTO.getStaffId())) {
                     lor.setBranchId(listOrganizeDTO.getStaffOrgId());
                     lor.setBranchName(listOrganizeDTO.getStaffName());
                     break;
@@ -230,14 +229,14 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         entityWrapper.eq("staff_id", addOrModifyOrganizeReq.getStaffId());
         entityWrapper.eq("staff_org_code", 1);
         StaffPerformanceOrganize staffPerformanceOrganize = staffPerformanceOrganizeService.selectOne(entityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceOrganize)){
+        if (CommonUtil.isEmpty(staffPerformanceOrganize)) {
             staffPerformanceOrganize = new StaffPerformanceOrganize();
             staffPerformanceOrganize.setStaffId(addOrModifyOrganizeReq.getStaffId());
             staffPerformanceOrganize.setStaffOrgId(addOrModifyOrganizeReq.getStaffOrgId());
             staffPerformanceOrganize.setCreateTime(new Date());
             staffPerformanceOrganize.setStaffOrgCode(1);
             staffPerformanceOrganizeService.insert(staffPerformanceOrganize);
-        }else {
+        } else {
             staffPerformanceOrganize.setStaffOrgId(addOrModifyOrganizeReq.getStaffOrgId());
             staffPerformanceOrganizeService.updateById(staffPerformanceOrganize);
         }
@@ -254,14 +253,14 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         entityWrapper.eq("staff_id", addOrModifyOrganizeReq.getStaffId());
         entityWrapper.eq("staff_org_code", 2);
         StaffPerformanceOrganize staffPerformanceOrganize = staffPerformanceOrganizeService.selectOne(entityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceOrganize)){
+        if (CommonUtil.isEmpty(staffPerformanceOrganize)) {
             staffPerformanceOrganize = new StaffPerformanceOrganize();
             staffPerformanceOrganize.setStaffId(addOrModifyOrganizeReq.getStaffId());
             staffPerformanceOrganize.setStaffOrgId(addOrModifyOrganizeReq.getStaffOrgId());
             staffPerformanceOrganize.setCreateTime(new Date());
             staffPerformanceOrganize.setStaffOrgCode(2);
             staffPerformanceOrganizeService.insert(staffPerformanceOrganize);
-        }else {
+        } else {
             staffPerformanceOrganize.setStaffOrgId(addOrModifyOrganizeReq.getStaffOrgId());
             staffPerformanceOrganizeService.updateById(staffPerformanceOrganize);
         }
@@ -276,7 +275,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     public CheckOwnInfoRes checkOwnInfo(UserDTO userDTO) {
         CheckOwnInfoRes checkOwnInfoRes = new CheckOwnInfoRes();
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
@@ -284,7 +283,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         checkEntityWrapper.eq("staff_id", staff.getId());
         checkEntityWrapper.eq("month_id", staffPerformanceMonth.getId());
         List<StaffPerformanceInfo> staffPerformanceInfoCheckList = staffPerformanceInfoService.selectList(checkEntityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceInfoCheckList) || staffPerformanceInfoCheckList.size() <= 0){
+        if (CommonUtil.isEmpty(staffPerformanceInfoCheckList) || staffPerformanceInfoCheckList.size() <= 0) {
             checkOwnInfoRes.setCheckOwnInfoBoolean(false);
         }
         checkOwnInfoRes.setUserName(userDTO.getUserName());
@@ -301,16 +300,16 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public List<ListOwnInfoRes> listOwnInfo(UserDTO userDTO) {
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
         List<StaffPerformanceInfo> staffPerformanceInfoList = staffPerformanceInfoService.selectListByStaffIdAndMonthId(staff.getId(), staffPerformanceMonth.getId());
-        if (CommonUtil.isEmpty(staffPerformanceInfoList) && staffPerformanceInfoList.size() <= 0){
+        if (CommonUtil.isEmpty(staffPerformanceInfoList) && staffPerformanceInfoList.size() <= 0) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_INFO_NULL);
         }
         List<ListOwnInfoRes> listOwnInfoResList = new ArrayList<>();
-        for (StaffPerformanceInfo staffPerformanceInfo : staffPerformanceInfoList){
+        for (StaffPerformanceInfo staffPerformanceInfo : staffPerformanceInfoList) {
             ListOwnInfoRes listOwnInfoRes = new ListOwnInfoRes();
             listOwnInfoRes.setId(staffPerformanceInfo.getId());
             listOwnInfoRes.setOwnScore(staffPerformanceInfo.getPfmOwnScore());
@@ -332,7 +331,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     public List<ListStaticInfoRes> listStaticInfo() {
         List<ListStaticInfoRes> listStaticInfoResList = new ArrayList<>();
         List<DictInfo> dictInfoList = dictApiService.listDictInfoByDictCode(StaticInfoDictCode);
-        for (DictInfo dictInfo : dictInfoList){
+        for (DictInfo dictInfo : dictInfoList) {
             ListStaticInfoRes listStaticInfoRes = new ListStaticInfoRes();
             listStaticInfoRes.setStatus(1);
             listStaticInfoRes.setPerformanceCode(dictInfo.getInfoCode());
@@ -354,7 +353,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public void addOwn(UserDTO userDTO, List<AddOwnReq> addOwnReqs) {
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
@@ -362,12 +361,12 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         checkEntityWrapper.eq("staff_id", staff.getId());
         checkEntityWrapper.eq("month_id", staffPerformanceMonth.getId());
         List<StaffPerformanceInfo> staffPerformanceInfoCheckList = staffPerformanceInfoService.selectList(checkEntityWrapper);
-        if (CommonUtil.isNotEmpty(staffPerformanceInfoCheckList) && staffPerformanceInfoCheckList.size() > 0){
+        if (CommonUtil.isNotEmpty(staffPerformanceInfoCheckList) && staffPerformanceInfoCheckList.size() > 0) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_INFO_HAS);
         }
         List<StaffPerformanceInfo> staffPerformanceInfoList = new ArrayList<>();
         int ownTotal = 0;
-        for (AddOwnReq addOwnReq : addOwnReqs){
+        for (AddOwnReq addOwnReq : addOwnReqs) {
             StaffPerformanceInfo staffPerformanceInfo = new StaffPerformanceInfo();
             staffPerformanceInfo.setCreateTime(new Date());
             staffPerformanceInfo.setMonthId(staffPerformanceMonth.getId());
@@ -380,7 +379,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             staffPerformanceInfoList.add(staffPerformanceInfo);
             ownTotal += addOwnReq.getOwnScore(); // 增加总分
         }
-        if (ownTotal > 100){
+        if (ownTotal > 100) {
             throw new PerformanceException(ResponseEnums.INFONULL);
         }
         staffPerformanceInfoService.insertBatch(staffPerformanceInfoList);
@@ -403,7 +402,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     public ResponseDTO<List<ListDirectlyStaffRes>> listDirectlyStaffByPage(UserDTO userDTO, ListDirectlyStaffReq listDirectlyStaffReq) {
         List<ListDirectlyStaffRes> listDirectlyStaffResList = new ArrayList<>();
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         Page<ListOrganizeDTO> page = new Page<>(listDirectlyStaffReq.getCurrent(), listDirectlyStaffReq.getSize());
@@ -412,10 +411,10 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         List<ListOrganizeDTO> listOrganizeDTOPage = staffPerformanceOrganizeService.selectPageByOrgIdAndCode(page, staffOrgId, code);
         PageDTO pageDTO = new PageDTO(page.getPages(), page.getTotal());
         List<Integer> staffIds = new ArrayList<>();
-        if (CommonUtil.isEmpty(listOrganizeDTOPage) || listOrganizeDTOPage.size() <= 0){
+        if (CommonUtil.isEmpty(listOrganizeDTOPage) || listOrganizeDTOPage.size() <= 0) {
             return ResponseDTO.createBySuccessPage("获取直属员工列表成功", listDirectlyStaffResList, pageDTO);
         }
-        for (ListOrganizeDTO listOrganizeDTO : listOrganizeDTOPage){
+        for (ListOrganizeDTO listOrganizeDTO : listOrganizeDTOPage) {
             staffIds.add(listOrganizeDTO.getStaffId());
             ListDirectlyStaffRes listDirectlyStaffRes = new ListDirectlyStaffRes();
             listDirectlyStaffRes.setStaffId(listOrganizeDTO.getStaffId());
@@ -424,16 +423,16 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             listDirectlyStaffResList.add(listDirectlyStaffRes);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         Integer monthId = staffPerformanceMonth.getId();
         List<ListOrganizeTotalDTO> listOrganizeTotalDTOList = staffPerformanceTotalService.selectListByMonIdWithOrgCode(staffIds, code, staffOrgId, monthId);
-        for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList){
-            for (ListDirectlyStaffRes listDirectlyStaffRes : listDirectlyStaffResList){
-                if (listOrganizeTotalDTO.getStaffId().equals(listDirectlyStaffRes.getStaffId())){
+        for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList) {
+            for (ListDirectlyStaffRes listDirectlyStaffRes : listDirectlyStaffResList) {
+                if (listOrganizeTotalDTO.getStaffId().equals(listDirectlyStaffRes.getStaffId())) {
                     listDirectlyStaffRes.setOwnTotal(listOrganizeTotalDTO.getOwnTotal());
-                    if (CommonUtil.isNotEmpty(listOrganizeTotalDTO.getOrgTotal())){
+                    if (CommonUtil.isNotEmpty(listOrganizeTotalDTO.getOrgTotal())) {
                         listDirectlyStaffRes.setDirectlyTotal(listOrganizeTotalDTO.getOrgTotal());
                         listDirectlyStaffRes.setDirectlyBoolean(true);
                     }
@@ -458,7 +457,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         Integer orgId = userDTO.getUserId();
         Integer code = directlyCode;
         List<ListOrganizeInfoDTO> listOrganizeInfoDTOList = staffPerformanceInfoService.selectOrganizeListByStaffIdAndMonthIdAndOrgId(staffId, monthId, orgId, code);
-        for (ListOrganizeInfoDTO listOrganizeInfoDTO : listOrganizeInfoDTOList){
+        for (ListOrganizeInfoDTO listOrganizeInfoDTO : listOrganizeInfoDTOList) {
             ListDirectlyInfoRes listDirectlyInfoRes = new ListDirectlyInfoRes();
             listDirectlyInfoRes.setId(listOrganizeInfoDTO.getId());
             listDirectlyInfoRes.setPerformanceName(listOrganizeInfoDTO.getPerformanceName());
@@ -482,18 +481,18 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public void addDirectly(UserDTO userDTO, AddDirectlyInfoReq addDirectlyInfoReq) {
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         EntityWrapper<StaffPerformanceTotal> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("staff_id", addDirectlyInfoReq.getStaffId());
         entityWrapper.eq("month_id", staffPerformanceMonth.getId());
         StaffPerformanceTotal staffPerformanceTotal = staffPerformanceTotalService.selectOne(entityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceTotal)){
+        if (CommonUtil.isEmpty(staffPerformanceTotal)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_INFO_NULL);
         }
         EntityWrapper<StaffPerformanceTotalOrg> entityWrapperTotalOrg = new EntityWrapper<>();
@@ -501,13 +500,13 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         entityWrapperTotalOrg.eq("pfm_total_id", staffPerformanceTotal.getId());
         entityWrapperTotalOrg.eq("staff_org_id", staff.getId());
         StaffPerformanceTotalOrg staffPerformanceTotalOrgCheck = staffPerformanceTotalOrgService.selectOne(entityWrapperTotalOrg);
-        if (CommonUtil.isNotEmpty(staffPerformanceTotalOrgCheck)){
+        if (CommonUtil.isNotEmpty(staffPerformanceTotalOrgCheck)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_INFO_HAS);
         }
         List<StaffPerformanceInfoOrg> staffPerformanceInfoOrgList = new ArrayList<>();
         List<AddDirectlyReq> addDirectlyReqList = addDirectlyInfoReq.getAddDirectlyReqList();
         int orgTotal = 0;
-        for (AddDirectlyReq addDirectlyReq : addDirectlyReqList){
+        for (AddDirectlyReq addDirectlyReq : addDirectlyReqList) {
             StaffPerformanceInfoOrg staffPerformanceInfoOrg = new StaffPerformanceInfoOrg();
             staffPerformanceInfoOrg.setCreateTime(new Date());
             staffPerformanceInfoOrg.setPfmInfoId(addDirectlyReq.getId());
@@ -538,7 +537,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     public ResponseDTO<List<ListBranchStaffRes>> listBranchStaffByPage(UserDTO userDTO, ListBranchStaffReq listBranchStaffReq) {
         List<ListBranchStaffRes> listBranchStaffResList = new ArrayList<>();
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         Page<ListOrganizeDTO> page = new Page<>(listBranchStaffReq.getCurrent(), listBranchStaffReq.getSize());
@@ -547,34 +546,37 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         List<ListOrganizeDTO> listOrganizeDTOPage = staffPerformanceOrganizeService.selectPageByOrgIdAndCode(page, staffOrgId, code);
         PageDTO pageDTO = new PageDTO(page.getPages(), page.getTotal());
         List<Integer> staffIds = new ArrayList<>();
-        if (CommonUtil.isEmpty(listOrganizeDTOPage) || listOrganizeDTOPage.size() <= 0){
+        if (CommonUtil.isEmpty(listOrganizeDTOPage) || listOrganizeDTOPage.size() <= 0) {
             return ResponseDTO.createBySuccessPage("分页获取分管员工列表成功", listBranchStaffResList, pageDTO);
         }
-        for (ListOrganizeDTO listOrganizeDTO : listOrganizeDTOPage){
+        // 获取员工职位
+        Map<Integer, String> dutiesDictMap = dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
+        for (ListOrganizeDTO listOrganizeDTO : listOrganizeDTOPage) {
             staffIds.add(listOrganizeDTO.getStaffId());
             ListBranchStaffRes listBranchStaffRes = new ListBranchStaffRes();
             listBranchStaffRes.setStaffId(listOrganizeDTO.getStaffId());
             listBranchStaffRes.setStaffName(listOrganizeDTO.getStaffName());
             listBranchStaffRes.setStaffCode(listOrganizeDTO.getStaffCode());
+            listBranchStaffRes.setStaffDuties(dutiesDictMap.get(listOrganizeDTO.getStaffDuties()));
             listBranchStaffResList.add(listBranchStaffRes);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         Integer monthId = staffPerformanceMonth.getId();
         List<ListOrganizeTotalDTO> listOrganizeTotalDTOList = staffPerformanceTotalService.selectListAllByMonIdWithOrgCode(staffIds, directlyCode, monthId);
         Map<Integer, String> dictInfoMap = dictApiService.getDictInfoByDictCode(LevelDictCode);
-        for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList){
-            for (ListBranchStaffRes listBranchStaffRes : listBranchStaffResList){
-                if (listOrganizeTotalDTO.getStaffId().equals(listBranchStaffRes.getStaffId())){
+        for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList) {
+            for (ListBranchStaffRes listBranchStaffRes : listBranchStaffResList) {
+                if (listOrganizeTotalDTO.getStaffId().equals(listBranchStaffRes.getStaffId())) {
                     listBranchStaffRes.setOwnTotal(listOrganizeTotalDTO.getOwnTotal());
                     listBranchStaffRes.setDirectlyTotal(listOrganizeTotalDTO.getOrgTotal());
-                    if (CommonUtil.isNotEmpty(listOrganizeTotalDTO.getLevelCode())){
+                    if (CommonUtil.isNotEmpty(listOrganizeTotalDTO.getLevelCode())) {
                         String level = dictInfoMap.get(listOrganizeTotalDTO.getLevelCode());
                         listBranchStaffRes.setLevel(level);
                     }
-                    if (levelRelease.equals(listOrganizeTotalDTO.getLevelRelease())){
+                    if (levelRelease.equals(listOrganizeTotalDTO.getLevelRelease())) {
                         listBranchStaffRes.setLevelBoolean(true);
                     }
                 }
@@ -593,7 +595,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     public List<ListLevelDictRes> listLevelDict(UserDTO userDTO) {
         List<ListLevelDictRes> listLevelDictResList = new ArrayList<>();
         List<DictInfo> dictInfoList = dictApiService.listDictInfoByDictCode(LevelDictCode);
-        for (DictInfo dictInfo : dictInfoList){
+        for (DictInfo dictInfo : dictInfoList) {
             ListLevelDictRes listLevelDictRes = new ListLevelDictRes();
             listLevelDictRes.setLevelCode(dictInfo.getInfoCode());
             listLevelDictRes.setLevelName(dictInfo.getInfoContent());
@@ -611,14 +613,14 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public void addLevel(UserDTO userDTO, AddLevelReq addLevelReq) {
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         EntityWrapper<StaffPerformanceTotal> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("month_id", staffPerformanceMonth.getId());
         entityWrapper.eq("staff_id", addLevelReq.getStaffId());
         StaffPerformanceTotal staffPerformanceTotal = staffPerformanceTotalService.selectOne(entityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceTotal)){
+        if (CommonUtil.isEmpty(staffPerformanceTotal)) {
             throw new PerformanceException(ResponseEnums.MODIFY_NULL);
         }
         staffPerformanceTotal.setLevelCode(addLevelReq.getLevel());
@@ -634,7 +636,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public boolean checkReleaseLevel(UserDTO userDTO) {
         List<StaffPerformanceTotal> staffPerformanceTotalList = getReleaseLevelTotalIds(userDTO);
-        if (CommonUtil.isEmpty(staffPerformanceTotalList) || staffPerformanceTotalList.size() <= 0){
+        if (CommonUtil.isEmpty(staffPerformanceTotalList) || staffPerformanceTotalList.size() <= 0) {
             return false;
         }
         return true;
@@ -648,39 +650,39 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
      */
     private List<StaffPerformanceTotal> getReleaseLevelTotalIds(UserDTO userDTO) {
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         EntityWrapper<StaffPerformanceOrganize> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("staff_org_id", staff.getId());
         entityWrapper.eq("staff_org_code", branchCode);
         List<StaffPerformanceOrganize> staffPerformanceOrganizeList = staffPerformanceOrganizeService.selectList(entityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceOrganizeList)){
+        if (CommonUtil.isEmpty(staffPerformanceOrganizeList)) {
             return null;
         }
         List<Integer> staffIdList = new ArrayList<>();
-        for (StaffPerformanceOrganize staffPerformanceOrganize : staffPerformanceOrganizeList){
+        for (StaffPerformanceOrganize staffPerformanceOrganize : staffPerformanceOrganizeList) {
             staffIdList.add(staffPerformanceOrganize.getStaffId());
         }
         EntityWrapper<StaffPerformanceTotal> totalEntityWrapper = new EntityWrapper<>();
         totalEntityWrapper.in("staff_id", staffIdList);
         totalEntityWrapper.eq("month_id", staffPerformanceMonth.getId());
         List<StaffPerformanceTotal> staffPerformanceTotalList = staffPerformanceTotalService.selectList(totalEntityWrapper);
-        if (CommonUtil.isEmpty(staffPerformanceTotalList)){
+        if (CommonUtil.isEmpty(staffPerformanceTotalList)) {
             return null;
         }
-        if(staffPerformanceOrganizeList.size() != staffPerformanceTotalList.size()){
+        if (staffPerformanceOrganizeList.size() != staffPerformanceTotalList.size()) {
             return null;
         }
-        for (StaffPerformanceTotal staffPerformanceTotal : staffPerformanceTotalList){
-            if (CommonUtil.isEmpty(staffPerformanceTotal.getLevelCode())){
+        for (StaffPerformanceTotal staffPerformanceTotal : staffPerformanceTotalList) {
+            if (CommonUtil.isEmpty(staffPerformanceTotal.getLevelCode())) {
                 return null;
             }
-            if (levelRelease.equals(staffPerformanceTotal.getLevelRelease())){
+            if (levelRelease.equals(staffPerformanceTotal.getLevelRelease())) {
                 return null;
             }
             staffPerformanceTotal.setLevelRelease(levelRelease);
@@ -696,7 +698,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
     @Override
     public void releaseLevel(UserDTO userDTO) {
         List<StaffPerformanceTotal> staffPerformanceTotalList = getReleaseLevelTotalIds(userDTO);
-        if (CommonUtil.isEmpty(staffPerformanceTotalList) || staffPerformanceTotalList.size() <= 0){
+        if (CommonUtil.isEmpty(staffPerformanceTotalList) || staffPerformanceTotalList.size() <= 0) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_NO_RELEASE);
         }
         staffPerformanceTotalService.updateBatchById(staffPerformanceTotalList);
@@ -713,12 +715,12 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         response.setContentType("application/octet-stream");
         // 获取分管领导信息
         Staff staff = staffApiService.getStaffByUserId(userDTO.getUserId());
-        if (CommonUtil.isEmpty(staff)){
+        if (CommonUtil.isEmpty(staff)) {
             throw new PerformanceException(ResponseEnums.STAFF_NULL);
         }
         // 获取月份
         StaffPerformanceMonth staffPerformanceMonth = staffPerformanceMonthService.getNowMonth();
-        if (CommonUtil.isEmpty(staffPerformanceMonth)){
+        if (CommonUtil.isEmpty(staffPerformanceMonth)) {
             throw new PerformanceException(ResponseEnums.PERFOMANCE_MONTH_NULL);
         }
         // 获取部门
@@ -729,7 +731,7 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         entityWrapperOrg.eq("staff_org_id", staff.getId());
         List<StaffPerformanceOrganize> staffPerformanceOrganizeList = staffPerformanceOrganizeService.selectList(entityWrapperOrg);
         List<Integer> staffIds = new ArrayList<>();
-        for (StaffPerformanceOrganize staffPerformanceOrganize : staffPerformanceOrganizeList){
+        for (StaffPerformanceOrganize staffPerformanceOrganize : staffPerformanceOrganizeList) {
             staffIds.add(staffPerformanceOrganize.getStaffId());
         }
         // 获取分管领导下属员工信息
@@ -739,13 +741,13 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
         // 获取总评分信息
         List<ListOrganizeTotalDTO> listOrganizeTotalDTOList = staffPerformanceTotalService.selectListByMonIdWithOrgCode(staffIds, directlyCode, null, staffPerformanceMonth.getId());
         // 获取员工职位
-        Map<Integer, String> dutiesDictMap =  dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
+        Map<Integer, String> dutiesDictMap = dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
         // 获取技术类
-        Map<Integer, String> levelTDictMap =  dictApiService.getDictInfoByDictCode(StaffLevelDictCodeT);
+        Map<Integer, String> levelTDictMap = dictApiService.getDictInfoByDictCode(StaffLevelDictCodeT);
         // 获取专业类
-        Map<Integer, String> levelPDictMap =  dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
+        Map<Integer, String> levelPDictMap = dictApiService.getDictInfoByDictCode(StaffDutiesDictCode);
         // 评级等级
-        Map<Integer, String> levelDictMap =  dictApiService.getDictInfoByDictCode(LevelDictCode);
+        Map<Integer, String> levelDictMap = dictApiService.getDictInfoByDictCode(LevelDictCode);
 
         // 统计信息
         Map<String, String> map = new HashMap<String, String>();
@@ -767,23 +769,23 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
 
         // 评分信息
         List<PfmExcelDto> pfmExcelDtoList = new ArrayList<>();
-        for (int i = 0; i < staffList.size(); i++){
+        for (int i = 0; i < staffList.size(); i++) {
             Staff staffOne = staffList.get(i);
             PfmExcelDto pfmExcelDto = new PfmExcelDto();
             pfmExcelDto.setIndex(i + 1);
             pfmExcelDto.setName(staffOne.getStaffName());
             pfmExcelDto.setDuties(dutiesDictMap.get(staffOne.getStaffDuties()));
             Integer type = staffOne.getStaffType();
-            if (typeT.equals(type)){
+            if (typeT.equals(type)) {
                 pfmExcelDto.setpLevel(levelTDictMap.get(staffOne.getStaffLevel()));
-            }else if (typeP.equals(type)){
+            } else if (typeP.equals(type)) {
                 pfmExcelDto.setpLevel(levelPDictMap.get(staffOne.getStaffLevel()));
             }
             // 循环直属领导评分信息
-            for (ListOrganizeInfoDTO listOrganizeInfoDTO : listOrganizeInfoDTOList){
-                if (staffOne.getId().equals(listOrganizeInfoDTO.getStaffId())){
+            for (ListOrganizeInfoDTO listOrganizeInfoDTO : listOrganizeInfoDTOList) {
+                if (staffOne.getId().equals(listOrganizeInfoDTO.getStaffId())) {
                     Integer pfmCode = listOrganizeInfoDTO.getPerformanceCode();
-                    switch (pfmCode){
+                    switch (pfmCode) {
                         case 1: // 责任感
                             pfmExcelDto.setDuty(listOrganizeInfoDTO.getOrgScore());
                             break;
@@ -812,8 +814,8 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             }
             Integer kType = 0; // 等级
             // 循环直属领导总评分，分管领导评级
-            for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList){
-                if (staffOne.getId().equals(listOrganizeTotalDTO.getStaffId())){
+            for (ListOrganizeTotalDTO listOrganizeTotalDTO : listOrganizeTotalDTOList) {
+                if (staffOne.getId().equals(listOrganizeTotalDTO.getStaffId())) {
                     kType = listOrganizeTotalDTO.getLevelCode();
                     pfmExcelDto.setTotalScre(listOrganizeTotalDTO.getOrgTotal());
                     pfmExcelDto.setLevel(levelDictMap.get(kType));
@@ -823,26 +825,26 @@ public class PerformanceStageServiceImpl implements PerformanceStageService {
             pfmExcelDtoList.add(pfmExcelDto);
 
             // 统计信息
-            if (typeT.equals(type)){
+            if (typeT.equals(type)) {
                 devNum += 1;
-                if (kType.equals(1)){
+                if (kType.equals(1)) {
                     devK1Num += 1;
-                }else if (kType.equals(2)){
+                } else if (kType.equals(2)) {
                     devK2Num += 1;
-                }else if (kType.equals(3)){
+                } else if (kType.equals(3)) {
                     devK3Num += 1;
-                }else if (kType.equals(4)){
+                } else if (kType.equals(4)) {
                     devK4Num += 1;
                 }
-            }else if (typeP.equals(type)){
+            } else if (typeP.equals(type)) {
                 majorNum += 1;
-                if (kType.equals(1)){
+                if (kType.equals(1)) {
                     majorK1Num += 1;
-                }else if (kType.equals(2)){
+                } else if (kType.equals(2)) {
                     majorK2Num += 1;
-                }else if (kType.equals(3)){
+                } else if (kType.equals(3)) {
                     majorK3Num += 1;
-                }else if (kType.equals(4)){
+                } else if (kType.equals(4)) {
                     majorK4Num += 1;
                 }
             }

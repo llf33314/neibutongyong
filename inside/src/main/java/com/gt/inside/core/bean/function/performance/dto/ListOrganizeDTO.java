@@ -13,6 +13,8 @@ public class ListOrganizeDTO {
 
     private String staffCode; // 员工编号
 
+    private Integer staffDuties; // 员工职务
+
     public Integer getStaffId() {
         return staffId;
     }
@@ -45,6 +47,14 @@ public class ListOrganizeDTO {
         this.staffCode = staffCode;
     }
 
+    public Integer getStaffDuties() {
+        return staffDuties;
+    }
+
+    public void setStaffDuties(Integer staffDuties) {
+        this.staffDuties = staffDuties;
+    }
+
     @Override
     public String toString() {
         return "ListOrganizeDTO{" +
@@ -52,6 +62,7 @@ public class ListOrganizeDTO {
                 ", staffOrgId=" + staffOrgId +
                 ", staffName='" + staffName + '\'' +
                 ", staffCode='" + staffCode + '\'' +
+                ", staffDuties=" + staffDuties +
                 '}';
     }
 }

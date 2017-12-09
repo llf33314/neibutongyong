@@ -27,6 +27,14 @@
         <el-table-column type="index" label="序号" width="180"></el-table-column>
         <el-table-column prop="staffName" label="姓名"></el-table-column>
         <el-table-column prop="staffCode" label="编号"></el-table-column>
+        <!-- <el-table-column prop="staffDuties" label="职务"></el-table-column> -->
+
+        <el-table-column prop="staffDuties" label="职务" :filters="dutiesFilters" :filter-method="filterTag" filter-placement="bottom-end">
+          <template slot-scope="scope">
+            {{scope.row.staffDuties}}
+          </template>
+        </el-table-column>
+
         <el-table-column label="自评总分">
           <template slot-scope="scope">
             <span>{{scope.row.ownTotal == '' || scope.row.ownTotal == null ? "暂未自评分" : scope.row.ownTotal}}</span>
@@ -97,12 +105,22 @@
         },
         levelData: [],
         releaseLevelBoolean: false,
-        gradeDialogBoolean: false
+        gradeDialogBoolean: false,
+        dutiesFilters: [
+          { text: '项目负责人', value: '项目负责人（Java）' }, 
+          { text: '项目负责人', value: '项目负责人（安卓）' }, 
+          { text: 'Java/Web/安卓', value: 'Java' }, 
+          { text: 'Java/Web/安卓', value: 'Web' }, 
+          { text: 'Java/Web/安卓', value: '安卓' }, 
+          { text: '测试', value: '测试' },
+          { text: '管理', value: '部门经理' },
+          { text: '管理', value: '总经理' },
+        ]
       };
     },
     methods: {
       listBranchStaff() {
-        // 分页获取组织关系
+        // 分页获取分管员工
         requestListBranchStaff(this.listBranchStaffReq).then(data => {
           console.log(data);
           var _code = data.code;
@@ -228,6 +246,9 @@
       exportExcelClick() {
         // 导出数据
         this.exportExcel();
+      },
+      filterTag(value, row) {
+        return row.staffDuties === value;
       }
     },
     created() {

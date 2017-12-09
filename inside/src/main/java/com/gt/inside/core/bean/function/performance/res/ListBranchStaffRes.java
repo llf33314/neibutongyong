@@ -18,6 +18,9 @@ public class ListBranchStaffRes {
     @ApiModelProperty(value = "员工编号")
     private String staffCode; // 员工编号
 
+    @ApiModelProperty(value = "员工职位")
+    private String staffDuties; // 员工职位
+
     @ApiModelProperty(value = "自评总分")
     private Integer ownTotal; // 自评总分
 
@@ -84,5 +87,13 @@ public class ListBranchStaffRes {
 
     public void setLevelBoolean(Boolean levelBoolean) {
         this.levelBoolean = levelBoolean;
+    }
+
+    public String getStaffDuties() {
+        return staffDuties;
+    }
+
+    public void setStaffDuties(String staffDuties) {
+        this.staffDuties = staffDuties;
     }
 }
