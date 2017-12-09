@@ -107,14 +107,14 @@
         releaseLevelBoolean: false,
         gradeDialogBoolean: false,
         dutiesFilters: [
-          { text: '项目负责人', value: '项目负责人（Java）' }, 
-          { text: '项目负责人', value: '项目负责人（安卓）' }, 
-          { text: 'Java/Web/安卓', value: 'Java' }, 
-          { text: 'Java/Web/安卓', value: 'Web' }, 
-          { text: 'Java/Web/安卓', value: '安卓' }, 
+          { text: '项目负责人（Java）', value: '项目负责人（Java）' }, 
+          { text: '项目负责人（安卓）', value: '项目负责人（安卓）' }, 
+          { text: 'Java', value: 'Java' }, 
+          { text: 'Web', value: 'Web' }, 
+          { text: '安卓', value: '安卓' }, 
           { text: '测试', value: '测试' },
-          { text: '管理', value: '部门经理' },
-          { text: '管理', value: '总经理' },
+          { text: '管理（部门经理）', value: '部门经理' },
+          { text: '管理（总经理）', value: '总经理' },
         ]
       };
     },
