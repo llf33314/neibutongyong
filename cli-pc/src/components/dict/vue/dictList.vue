@@ -4,13 +4,12 @@
       padding: 35px 0 35px 25px;
     }
     .a-admin-table {
-      margin: 0 25px 25px;
+      margin: 0 20px 20px;
     }
     .el-pagination {
       float: right;
       margin-right: 20px;
     }
-    
   }
 
 </style>
@@ -42,8 +41,8 @@
           </el-table-column>
         </el-table>
       </div>
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="dictListReq.current"
-        :page-sizes="[10, 20, 50, 100]" :page-size="dictListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
+      <el-pagination @size-change="handleSizeChange" style="text-align: right; margin-right: 15px;" @current-change="handleCurrentChange" :current-page.sync="dictListReq.current" :page-sizes="[10, 20, 50, 100]"
+        :page-size="dictListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
       </el-pagination>
     </div>
     <div>

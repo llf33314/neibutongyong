@@ -272,7 +272,7 @@
       </el-menu>
     </div>
     <div class="content">
-      <section style="padding:50px 0;">
+      <section style="margin:50px 0;">
         <router-view></router-view>
       </section>
     </div>

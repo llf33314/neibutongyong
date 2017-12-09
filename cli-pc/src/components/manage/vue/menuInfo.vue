@@ -9,7 +9,7 @@
     }
 
     .a-admin-table {
-      margin: 0 25px 25px;
+      margin: 0 20px 20px;
     }
   }
 
@@ -45,7 +45,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="menuSubListReq.current"
+      <el-pagination @size-change="handleSizeChange" style="text-align: right; margin-right: 15px;" @current-change="handleCurrentChange" :current-page.sync="menuSubListReq.current"
         :page-sizes="[10, 20, 50, 100]" :page-size="menuSubListReq.size" layout="total, sizes, prev, pager, next" :total="page.totalNums">
       </el-pagination>
     </div>
