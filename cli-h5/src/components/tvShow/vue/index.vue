@@ -7,10 +7,13 @@
     <swiper :options="swiperOption" :style="style">
       <swiper-slide v-for="(item,index) in swiperSlides" :key="index">
         <ul class="project-item" v-for="(child,index) in item" :key="index">
-          <li v-text="child.projectName"></li>
-          <li v-if="child.endDayNum !=0">
+          <li>
+            <div v-text="child.projectName" style="margin-top: 115px;"></div>
+            <div v-text="child.projectValue" class="dps"></div>
+          </li>
+          <li class="item" v-if="child.endDayNum !=0">
             <span style="font-size:250%">{{child.endDayNum}}</span> 天</li>
-          <li v-if="child.endDayNum ==0">
+          <li class="item" v-if="child.endDayNum ==0">
             <span style="font-size:200%">今天</span>验收</li>
         </ul>
       </swiper-slide>
@@ -124,21 +127,26 @@
       line-height: 100%;
       font-weight: 700;
       font-size: 300%;
-      /* Firefox */
+      color: #e9e9e9;
+      .dps {
+        font-size: 50%;
+        margin-top: 20px;
+        font-weight: 500;
+        padding: 0 20px;
+        line-height: 1.5;
+      }
+    }
+    .project-item li.item {
       display: -moz-box;
       -moz-box-pack: center;
       -moz-box-align: center;
-      /* Safari、Opera 以及 Chrome */
       display: -webkit-box;
       -webkit-box-pack: center;
       -webkit-box-align: center;
-      /* W3C */
       display: box;
       box-pack: center;
       box-align: center;
-      color: #e9e9e9;
     }
-
     .project-item li:first-child {
       border-right: 1px solid #6c6c6c;
     }
