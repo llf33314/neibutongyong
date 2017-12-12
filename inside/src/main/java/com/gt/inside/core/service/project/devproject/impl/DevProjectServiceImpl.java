@@ -46,6 +46,7 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectDAO, DevProject
         for (DevProject devProject : devProjectList){
             DevProjectVO devProjectVO = new DevProjectVO();
             devProjectVO.setProjectName(devProject.getProjectName());
+            devProjectVO.setProjectValue(devProject.getProjectValue());
             int dayNum = DateTimeKit.daysBetween(new Date(), devProject.getProjectTime());
             String endDayNum = String.valueOf(dayNum);
             devProjectVO.setEndDayNum(endDayNum);

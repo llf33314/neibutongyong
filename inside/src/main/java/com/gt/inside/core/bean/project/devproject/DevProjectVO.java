@@ -15,6 +15,9 @@ public class DevProjectVO {
     @ApiModelProperty("项目结束天数")
     private String endDayNum;
 
+    @ApiModelProperty(value = "项目内容")
+    private String projectValue;
+
     public String getProjectName() {
         return projectName;
     }
@@ -31,11 +34,11 @@ public class DevProjectVO {
         this.endDayNum = endDayNum;
     }
 
-    @Override
-    public String toString() {
-        return "DevProjectVO{" +
-                "projectName='" + projectName + '\'' +
-                ", endDayNum='" + endDayNum + '\'' +
-                '}';
+    public String getProjectValue() {
+        return projectValue;
+    }
+
+    public void setProjectValue(String projectValue) {
+        this.projectValue = projectValue;
     }
 }

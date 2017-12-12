@@ -1,15 +1,14 @@
 package com.gt.inside.core.entity.project.devproject;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -43,6 +42,10 @@ public class DevProject extends Model<DevProject> {
      * 项目状态（0：进行中，1：已完成）
      */
 	private Integer projectStatus;
+	/**
+	 * 项目内容
+	 */
+	private String projectValue;
 
 	public Integer getId() {
 		return id;
@@ -74,6 +77,14 @@ public class DevProject extends Model<DevProject> {
 
 	public void setProjectStatus(Integer projectStatus) {
 		this.projectStatus = projectStatus;
+	}
+
+	public String getProjectValue() {
+		return projectValue;
+	}
+
+	public void setProjectValue(String projectValue) {
+		this.projectValue = projectValue;
 	}
 
 	@Override

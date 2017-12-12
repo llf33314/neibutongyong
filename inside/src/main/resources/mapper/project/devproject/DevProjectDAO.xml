@@ -8,11 +8,12 @@
 		<result column="project_name" property="projectName" />
 		<result column="project_time" property="projectTime" />
 		<result column="project_status" property="projectStatus" />
+		<result column="project_value" property="projectValue" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, project_name, project_time, project_status
+        id, project_name, project_time, project_status, project_value
     </sql>
 
 </mapper>
