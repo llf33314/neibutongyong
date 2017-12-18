@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "element-ui": "^1.1.2",
+    "gt-js": "^1.0.4",
     "gt-pc-ui": "^1.0.9",
     "marked": "^0.3.6",
     "promise": "^8.0.1",

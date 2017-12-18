@@ -1,6 +1,5 @@
 <style lang="less">
 
-
 </style>
 <template>
   <div style="padding:20px;">
@@ -12,24 +11,23 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        activeName: 'my'
-      };
-    },
-    watch: {
-      activeName(){
-        this.$router.push({
-          path:'/weekly/'+this.activeName
-        })
-      }
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      }
+export default {
+  data() {
+    return {
+      activeName: "my"
+    };
+  },
+  watch: {
+    activeName() {
+      this.$router.push({
+        path: "/weekly/" + this.activeName
+      });
     }
-  };
-
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    }
+  }
+};
 </script>
