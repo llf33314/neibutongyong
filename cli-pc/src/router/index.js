@@ -13,6 +13,8 @@ import { departRouter } from '@/components/organize/department/router.js'
 import { performanceAppRouter } from '@/components/function/performance/router.js'
 // 后台管理
 import { manageAppRouter } from '@/components/manage/router.js'
+//周报
+import { weeklyRouter } from '@/components/weekly/router/index.js'
 
 const menu = () => import('@/components/home/vue/menu')
 const home = () => import('@/components/home/vue/home')
@@ -28,6 +30,8 @@ childrenRouter = childrenRouter.concat(staffAppRouter);
 childrenRouter = childrenRouter.concat(departRouter);
 childrenRouter = childrenRouter.concat(performanceAppRouter);
 childrenRouter = childrenRouter.concat(manageAppRouter);
+childrenRouter = childrenRouter.concat(weeklyRouter);
+
 
 // 主路由
 var routes = [{
